@@ -1,0 +1,10 @@
+/compilers/cobra/build/CMakeFiles/intrinsics_gen.dir
+/compilers/cobra/build/CMakeFiles/vt_gen.dir
+/compilers/cobra/build/CMakeFiles/omp_gen.dir
+/compilers/cobra/build/CMakeFiles/acc_gen.dir
+/compilers/cobra/build/CMakeFiles/ARMTargetParserTableGen.dir
+/compilers/cobra/build/CMakeFiles/AArch64TargetParserTableGen.dir
+/compilers/cobra/build/CMakeFiles/RISCVTargetParserTableGen.dir
+/compilers/cobra/build/CMakeFiles/prog.dir
+/compilers/cobra/build/CMakeFiles/edit_cache.dir
+/compilers/cobra/build/CMakeFiles/rebuild_cache.dir
