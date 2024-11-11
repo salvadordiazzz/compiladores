@@ -52,6 +52,9 @@ public:
   virtual void enterBlock(CobraParser::BlockContext * /*ctx*/) override { }
   virtual void exitBlock(CobraParser::BlockContext * /*ctx*/) override { }
 
+  virtual void enterReturnBlock(CobraParser::ReturnBlockContext * /*ctx*/) override { }
+  virtual void exitReturnBlock(CobraParser::ReturnBlockContext * /*ctx*/) override { }
+
   virtual void enterConditional(CobraParser::ConditionalContext * /*ctx*/) override { }
   virtual void exitConditional(CobraParser::ConditionalContext * /*ctx*/) override { }
 

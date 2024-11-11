@@ -21,6 +21,53 @@
 using namespace antlr4;
 using namespace llvm;
 using namespace  std;
+class SymbolTable {
+private:
+    // Una pila de mapas, cada mapa representa un scope
+    std::vector<std::map<std::string, llvm::Value*>> scopes;
+
+public:
+    SymbolTable() {
+        // Crear el scope global
+        enterScope();
+    }
+
+    void enterScope() {
+        scopes.push_back(std::map<std::string, llvm::Value*>());
+    }
+
+    void exitScope() {
+        if (!scopes.empty()) {
+            scopes.pop_back();
+        }
+    }
+
+    bool define(const std::string& name, llvm::Value* value) {
+        if (scopes.empty()) return false;
+        // Define en el scope actual (último scope)
+        scopes.back()[name] = value;
+        return true;
+    }
+
+    llvm::Value* resolve(const std::string& name) {
+        // Buscar desde el scope más interno al más externo
+        for (auto it = scopes.rbegin(); it != scopes.rend(); ++it) {
+            auto found = it->find(name);
+            if (found != it->end()) {
+                return found->second;
+            }
+        }
+        return nullptr;
+    }
+
+    llvm::Type* getType(const std::string& name) {
+        llvm::Value* value = resolve(name);
+        if (value) {
+            return value->getType();
+        }
+        return nullptr;
+    }
+};
 
 class CobraDriver : public CobraBaseVisitor {
 private:
@@ -32,10 +79,17 @@ private:
     Function *memsetFunc;
     FunctionCallee getcharFunc;
     FunctionCallee putcharFunc;
-
+    SymbolTable symbolTable; 
     std::unordered_map<std::string, llvm::Value*> namedValues;
+    llvm::Function *currentFunction = nullptr;
 
-    
+    llvm::AllocaInst *CreateEntryBlockAlloca(llvm::Function *function, const std::string &varName) {
+        llvm::IRBuilder<> TmpB(&function->getEntryBlock(), 
+                              function->getEntryBlock().begin());
+        return TmpB.CreateAlloca(llvm::Type::getInt32Ty(C), 
+                                0, 
+                                varName.c_str());
+    }
 public:
   CobraDriver() : M(new Module("CobraModule", C)), irBuilder(nullptr) {
         declareString();
@@ -146,12 +200,12 @@ void callPrintf(Value *valueToPrint) {
 
 
     std::any visitProgram(CobraParser::ProgramContext *ctx) override {
-    mainFunc = Function::Create(FunctionType::get(Type::getInt32Ty(C), false),
-                                Function::ExternalLinkage, "main", M);
-        
-    irBuilder = new IRBuilder<>(BasicBlock::Create(C, "begin", mainFunc));
+    //mainFunc = Function::Create(FunctionType::get(Type::getInt32Ty(C), false),
+    //                            Function::ExternalLinkage, "main", M);
     
-
+    //irBuilder = new IRBuilder<>(BasicBlock::Create(C, "begin", mainFunc));
+    
+    irBuilder = new IRBuilder<>(C);
     for (auto child : ctx->children) {
             // Verifica el tipo de cada hijo y visita según corresponda
             if (auto statement = dynamic_cast<CobraParser::StatementContext*>(child)) {
@@ -177,7 +231,7 @@ void callPrintf(Value *valueToPrint) {
             }
             // Aquí podrías agregar más tipos de declaraciones si es necesario
         }
-    irBuilder->CreateRet(llvm::ConstantInt::get(llvm::Type::getInt32Ty(C), 1));
+    //irBuilder->CreateRet(llvm::ConstantInt::get(llvm::Type::getInt32Ty(C), 1));
 
         // Imprimir el IR generado
     M->print(llvm::outs(), nullptr);
@@ -199,7 +253,7 @@ void callPrintf(Value *valueToPrint) {
 
     std::any visitVarDeclaration(CobraParser::VarDeclarationContext *ctx) override {
     // Obtiene el tipo de la variable desde el contexto
-    std::any result = ctx->dataType()->accept(this);
+    std::any result = ctx->dataType()->accept(this); // number val= 0;
 
     // Comprobar si el tipo devuelto es un Type*
     if (result.type() != typeid(Type*)) {
@@ -350,13 +404,114 @@ std::any visitDisplay(CobraParser::DisplayContext *ctx) override {
     return visitChildren(ctx);
   }
 
-    std::any visitFunctionDef(CobraParser::FunctionDefContext *ctx) override {
-    return visitChildren(ctx);
-  }
+std::any visitFunctionDef(CobraParser::FunctionDefContext *ctx) override {
+    std::string functionName = ctx->IDENTIFIER(0)->getText();
+    
+    // First analyze the return type by looking at the return block if it exists
+    llvm::Type* returnType = nullptr;
+    if (ctx->returnBlock()) {
+        auto returnExpr = ctx->returnBlock()->expression();
+        if (returnExpr) {
+            // Visit the expression to determine its type
+            std::any result = visit(returnExpr);
+            llvm::Value* returnValue = std::any_cast<llvm::Value*>(result);
+            returnType = returnValue->getType();
+        }
+    }
+    
+    // If no return type could be determined, default to double
+    if (!returnType) {
+        returnType = llvm::Type::getDoubleTy(C);
+    }
 
-    std::any visitBlock(CobraParser::BlockContext *ctx) override {
-    return visitChildren(ctx);
-  }
+    std::vector<std::string> paramNames;
+    std::vector<llvm::Type*> paramTypes;
+
+    // Collecting parameter names and types
+    for (size_t i = 1; i < ctx->IDENTIFIER().size(); i++) {
+        paramNames.push_back(ctx->IDENTIFIER(i)->getText());
+        paramTypes.push_back(llvm::Type::getDoubleTy(C));
+    }
+    
+    llvm::FunctionType* functionType = llvm::FunctionType::get(returnType, paramTypes, false);
+    llvm::Function* function = llvm::Function::Create(functionType, llvm::Function::ExternalLinkage, functionName, M);
+
+    // Create the entry block for the function
+    llvm::BasicBlock* entryBB = llvm::BasicBlock::Create(C, "entry", function);
+    irBuilder->SetInsertPoint(entryBB);
+    
+    currentFunction = function;
+
+    // Handle function parameters
+    size_t idx = 0;
+    for (auto &arg : function->args()) {
+        arg.setName(paramNames[idx]);
+        llvm::AllocaInst* alloca = irBuilder->CreateAlloca(arg.getType(), nullptr, paramNames[idx]);
+        irBuilder->CreateStore(&arg, alloca);
+        namedValues[paramNames[idx]] = alloca;
+        idx++;
+    }
+
+    // Visit either block or returnBlock
+    if (ctx->block()) {
+        visit(ctx->block());
+        // If regular block, add default return since there's no explicit return
+        if (currentFunction->getReturnType()->isDoubleTy()) {
+            irBuilder->CreateRet(llvm::ConstantFP::get(llvm::Type::getDoubleTy(C), 0.0));
+        }
+    } else if (ctx->returnBlock()) {
+        visit(ctx->returnBlock());
+    }
+
+    return function;
+}
+
+std::any visitBlock(CobraParser::BlockContext *ctx) override {
+    symbolTable.enterScope();
+
+    // Visit all statements in the block
+    for (auto statement : ctx->statement()) {
+        visit(statement);
+    }
+
+    symbolTable.exitScope();
+    return nullptr;
+}
+
+std::any visitReturnBlock(CobraParser::ReturnBlockContext *ctx) override {
+    symbolTable.enterScope();
+    
+    // Visit statements before return
+    for (auto statement : ctx->statement()) {
+        visit(statement);
+    }
+    
+    // Handle return expression
+    std::any result = visit(ctx->expression());
+    llvm::Value* returnValue = std::any_cast<llvm::Value*>(result);
+    
+    // Convert return value to match function return type if needed
+    llvm::Type* expectedType = currentFunction->getReturnType();
+    if (returnValue->getType() != expectedType) {
+        if (returnValue->getType()->isIntegerTy() && expectedType->isDoubleTy()) {
+            // Convert integer to double
+            returnValue = irBuilder->CreateSIToFP(returnValue, expectedType, "conv_to_double");
+        } else if (returnValue->getType()->isDoubleTy() && expectedType->isIntegerTy()) {
+            // Convert double to integer
+            returnValue = irBuilder->CreateFPToSI(returnValue, expectedType, "conv_to_int");
+        }
+    }
+    
+    // Create return instruction
+    irBuilder->CreateRet(returnValue);
+    
+    symbolTable.exitScope();
+    return nullptr;
+}
+
+
+
+
 
     std::any visitConditional(CobraParser::ConditionalContext *ctx) override {
     return visitChildren(ctx);

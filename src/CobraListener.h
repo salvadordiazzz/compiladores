@@ -50,6 +50,9 @@ public:
   virtual void enterBlock(CobraParser::BlockContext *ctx) = 0;
   virtual void exitBlock(CobraParser::BlockContext *ctx) = 0;
 
+  virtual void enterReturnBlock(CobraParser::ReturnBlockContext *ctx) = 0;
+  virtual void exitReturnBlock(CobraParser::ReturnBlockContext *ctx) = 0;
+
   virtual void enterConditional(CobraParser::ConditionalContext *ctx) = 0;
   virtual void exitConditional(CobraParser::ConditionalContext *ctx) = 0;
 

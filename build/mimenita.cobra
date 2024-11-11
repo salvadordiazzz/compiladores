@@ -1,0 +1,3 @@
+number mimenuki=69;
+number potito=mimenuki + 5;
+show("respuestita: ",potito-1);

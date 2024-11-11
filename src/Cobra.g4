@@ -26,10 +26,10 @@ assignment: IDENTIFIER '=' expression ';' ;
 display: 'show' '(' (TEXT | IDENTIFIER | expression) (',' (TEXT | IDENTIFIER | expression))* ')'  ';' ;
 getInput: IDENTIFIER '=' 'ask' '(' TEXT ')' ';' ;
 
-functionDef: 'function' IDENTIFIER '(' ')' block;
+functionDef: 'function' IDENTIFIER '(' (IDENTIFIER(','IDENTIFIER)*)? ')' (block | returnBlock);
 
-block: '{' statement* 'done' ';' | statement* 'return' expression 'done' ';';
-
+block: '{' statement* '}'   ;
+returnBlock:'{'statement* 'return' expression ';''}';
 conditional: 'when' '(' expression ')' block ('otherwiseWhen' '(' expression ')' block)* ('otherwise' block)? ';';
 
 loopStruct: 'repeatUntil' '(' expression ')' block ';';
@@ -84,4 +84,4 @@ ADD   : '+' ;
 SUB   : '-' ;
 MUL   : '*' ;
 DIV   : '/' ;
-POW   : '^' ;
+POW   : '^' ; 

@@ -1,0 +1,14 @@
+
+function f2(){
+	decimal var3=8;
+	return 1;
+}
+function f1 (){
+	decimal var1=10.0;
+	return 5;
+}
+function main(){
+	number val1=2;
+	return 0;
+}
+

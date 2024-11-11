@@ -16,19 +16,19 @@ public:
     T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14, 
     T__14 = 15, T__15 = 16, T__16 = 17, T__17 = 18, T__18 = 19, T__19 = 20, 
     T__20 = 21, T__21 = 22, T__22 = 23, T__23 = 24, T__24 = 25, T__25 = 26, 
-    T__26 = 27, T__27 = 28, T__28 = 29, T__29 = 30, TIME = 31, BOOLEAN = 32, 
-    INTEGER = 33, DECIMAL = 34, CHARACTER = 35, TEXT = 36, IDENTIFIER = 37, 
-    WS = 38, COMMENT = 39, ASSIGN = 40, LPAR = 41, RPAR = 42, ADD = 43, 
-    SUB = 44, MUL = 45, DIV = 46, POW = 47
+    T__26 = 27, T__27 = 28, T__28 = 29, TIME = 30, BOOLEAN = 31, INTEGER = 32, 
+    DECIMAL = 33, CHARACTER = 34, TEXT = 35, IDENTIFIER = 36, WS = 37, COMMENT = 38, 
+    ASSIGN = 39, LPAR = 40, RPAR = 41, ADD = 42, SUB = 43, MUL = 44, DIV = 45, 
+    POW = 46
   };
 
   enum {
     RuleProgram = 0, RuleStatement = 1, RuleVarDeclaration = 2, RuleInferredVarDeclaration = 3, 
     RuleRangeDeclaration = 4, RuleCollection = 5, RuleAssignment = 6, RuleDisplay = 7, 
-    RuleGetInput = 8, RuleFunctionDef = 9, RuleBlock = 10, RuleConditional = 11, 
-    RuleLoopStruct = 12, RuleRepeatStruct = 13, RuleWaitLoop = 14, RuleObjectDecl = 15, 
-    RuleArrayDecl = 16, RuleMatrixDecl = 17, RuleParameterList = 18, RuleDataType = 19, 
-    RuleExpression = 20, RuleLiteral = 21
+    RuleGetInput = 8, RuleFunctionDef = 9, RuleBlock = 10, RuleReturnBlock = 11, 
+    RuleConditional = 12, RuleLoopStruct = 13, RuleRepeatStruct = 14, RuleWaitLoop = 15, 
+    RuleObjectDecl = 16, RuleArrayDecl = 17, RuleMatrixDecl = 18, RuleParameterList = 19, 
+    RuleDataType = 20, RuleExpression = 21, RuleLiteral = 22
   };
 
   explicit CobraParser(antlr4::TokenStream *input);
@@ -59,6 +59,7 @@ public:
   class GetInputContext;
   class FunctionDefContext;
   class BlockContext;
+  class ReturnBlockContext;
   class ConditionalContext;
   class LoopStructContext;
   class RepeatStructContext;
@@ -283,10 +284,12 @@ public:
   public:
     FunctionDefContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    antlr4::tree::TerminalNode *IDENTIFIER();
+    std::vector<antlr4::tree::TerminalNode *> IDENTIFIER();
+    antlr4::tree::TerminalNode* IDENTIFIER(size_t i);
     antlr4::tree::TerminalNode *LPAR();
     antlr4::tree::TerminalNode *RPAR();
     BlockContext *block();
+    ReturnBlockContext *returnBlock();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -303,7 +306,6 @@ public:
     virtual size_t getRuleIndex() const override;
     std::vector<StatementContext *> statement();
     StatementContext* statement(size_t i);
-    ExpressionContext *expression();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -313,6 +315,23 @@ public:
   };
 
   BlockContext* block();
+
+  class  ReturnBlockContext : public antlr4::ParserRuleContext {
+  public:
+    ReturnBlockContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    ExpressionContext *expression();
+    std::vector<StatementContext *> statement();
+    StatementContext* statement(size_t i);
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  ReturnBlockContext* returnBlock();
 
   class  ConditionalContext : public antlr4::ParserRuleContext {
   public:

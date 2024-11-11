@@ -63,6 +63,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitReturnBlock(CobraParser::ReturnBlockContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitConditional(CobraParser::ConditionalContext *ctx) override {
     return visitChildren(ctx);
   }

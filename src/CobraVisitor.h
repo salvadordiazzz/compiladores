@@ -43,6 +43,8 @@ public:
 
     virtual std::any visitBlock(CobraParser::BlockContext *context) = 0;
 
+    virtual std::any visitReturnBlock(CobraParser::ReturnBlockContext *context) = 0;
+
     virtual std::any visitConditional(CobraParser::ConditionalContext *context) = 0;
 
     virtual std::any visitLoopStruct(CobraParser::LoopStructContext *context) = 0;
