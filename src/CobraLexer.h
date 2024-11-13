@@ -16,10 +16,10 @@ public:
     T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14, 
     T__14 = 15, T__15 = 16, T__16 = 17, T__17 = 18, T__18 = 19, T__19 = 20, 
     T__20 = 21, T__21 = 22, T__22 = 23, T__23 = 24, T__24 = 25, T__25 = 26, 
-    T__26 = 27, T__27 = 28, T__28 = 29, TIME = 30, BOOLEAN = 31, INTEGER = 32, 
-    DECIMAL = 33, CHARACTER = 34, TEXT = 35, IDENTIFIER = 36, WS = 37, COMMENT = 38, 
-    ASSIGN = 39, LPAR = 40, RPAR = 41, ADD = 42, SUB = 43, MUL = 44, DIV = 45, 
-    POW = 46
+    T__26 = 27, T__27 = 28, T__28 = 29, T__29 = 30, WHEN = 31, OTHERWISEWHEN = 32, 
+    OTHERWISE = 33, TIME = 34, BOOLEAN = 35, INTEGER = 36, DECIMAL = 37, 
+    CHARACTER = 38, TEXT = 39, IDENTIFIER = 40, WS = 41, COMMENT = 42, ASSIGN = 43, 
+    LPAR = 44, RPAR = 45, ADD = 46, SUB = 47, MUL = 48, DIV = 49, POW = 50
   };
 
   explicit CobraLexer(antlr4::CharStream *input);

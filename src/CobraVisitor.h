@@ -47,6 +47,8 @@ public:
 
     virtual std::any visitConditional(CobraParser::ConditionalContext *context) = 0;
 
+    virtual std::any visitComparisonOperator(CobraParser::ComparisonOperatorContext *context) = 0;
+
     virtual std::any visitLoopStruct(CobraParser::LoopStructContext *context) = 0;
 
     virtual std::any visitRepeatStruct(CobraParser::RepeatStructContext *context) = 0;

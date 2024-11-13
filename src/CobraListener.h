@@ -56,6 +56,9 @@ public:
   virtual void enterConditional(CobraParser::ConditionalContext *ctx) = 0;
   virtual void exitConditional(CobraParser::ConditionalContext *ctx) = 0;
 
+  virtual void enterComparisonOperator(CobraParser::ComparisonOperatorContext *ctx) = 0;
+  virtual void exitComparisonOperator(CobraParser::ComparisonOperatorContext *ctx) = 0;
+
   virtual void enterLoopStruct(CobraParser::LoopStructContext *ctx) = 0;
   virtual void exitLoopStruct(CobraParser::LoopStructContext *ctx) = 0;
 

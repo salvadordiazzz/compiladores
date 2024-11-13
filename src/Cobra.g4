@@ -1,12 +1,20 @@
 grammar Cobra;
 
-program: (statement | functionDef | loopStruct | repeatStruct | conditional | objectDecl | arrayDecl | matrixDecl | waitLoop | rangeDeclaration)* EOF;
+program: (functionDef)* EOF; //done
 
-statement: varDeclaration                
+statement: varDeclaration          //done      
          | inferredVarDeclaration       
          | assignment                    
-         | display                       
-         | getInput       
+         | display             //done          
+         | getInput
+         | conditional   //done
+        |     loopStruct
+        | repeatStruct
+        |objectDecl
+        |arrayDecl
+        |matrixDecl
+        |waitLoop
+        |rangeDeclaration
          ;               
 
 // Declaración de variable con tipo explícito
@@ -30,7 +38,11 @@ functionDef: 'function' IDENTIFIER '(' (IDENTIFIER(','IDENTIFIER)*)? ')' (block 
 
 block: '{' statement* '}'   ;
 returnBlock:'{'statement* 'return' expression ';''}';
-conditional: 'when' '(' expression ')' block ('otherwiseWhen' '(' expression ')' block)* ('otherwise' block)? ';';
+conditional: WHEN '(' expression comparisonOperator expression ')' block (OTHERWISEWHEN '(' expression comparisonOperator expression  ')' block)* (OTHERWISE block)? ';';
+WHEN: 'when';
+OTHERWISEWHEN: 'otherwiseWhen';
+OTHERWISE: 'otherwise';
+comparisonOperator: '<' | '<=' | '>' |'>=' | '==' | '!=' ;
 
 loopStruct: 'repeatUntil' '(' expression ')' block ';';
 repeatStruct: 'countFrom' '(' expression ',' expression ',' expression ')' block ';';

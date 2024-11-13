@@ -71,6 +71,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitComparisonOperator(CobraParser::ComparisonOperatorContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitLoopStruct(CobraParser::LoopStructContext *ctx) override {
     return visitChildren(ctx);
   }

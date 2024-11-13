@@ -55,140 +55,144 @@ void cobraParserInitialize() {
     std::vector<std::string>{
       "program", "statement", "varDeclaration", "inferredVarDeclaration", 
       "rangeDeclaration", "collection", "assignment", "display", "getInput", 
-      "functionDef", "block", "returnBlock", "conditional", "loopStruct", 
-      "repeatStruct", "waitLoop", "objectDecl", "arrayDecl", "matrixDecl", 
-      "parameterList", "dataType", "expression", "literal"
+      "functionDef", "block", "returnBlock", "conditional", "comparisonOperator", 
+      "loopStruct", "repeatStruct", "waitLoop", "objectDecl", "arrayDecl", 
+      "matrixDecl", "parameterList", "dataType", "expression", "literal"
     },
     std::vector<std::string>{
       "", "';'", "'auto'", "'scale'", "','", "'['", "']'", "'{'", "':'", 
-      "'}'", "'show'", "'ask'", "'function'", "'return'", "'when'", "'otherwiseWhen'", 
-      "'otherwise'", "'repeatUntil'", "'countFrom'", "'pauseThen'", "'entity'", 
-      "'array'", "'<'", "'>'", "'matrix'", "'number'", "'decimal'", "'letter'", 
-      "'string'", "'flag'", "", "", "", "", "", "", "", "", "", "'='", "'('", 
-      "')'", "'+'", "'-'", "'*'", "'/'", "'^'"
+      "'}'", "'show'", "'ask'", "'function'", "'return'", "'<'", "'<='", 
+      "'>'", "'>='", "'=='", "'!='", "'repeatUntil'", "'countFrom'", "'pauseThen'", 
+      "'entity'", "'array'", "'matrix'", "'number'", "'decimal'", "'letter'", 
+      "'string'", "'flag'", "'when'", "'otherwiseWhen'", "'otherwise'", 
+      "", "", "", "", "", "", "", "", "", "'='", "'('", "')'", "'+'", "'-'", 
+      "'*'", "'/'", "'^'"
     },
     std::vector<std::string>{
       "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", 
-      "", "", "", "", "", "", "", "", "", "", "", "", "", "TIME", "BOOLEAN", 
-      "INTEGER", "DECIMAL", "CHARACTER", "TEXT", "IDENTIFIER", "WS", "COMMENT", 
-      "ASSIGN", "LPAR", "RPAR", "ADD", "SUB", "MUL", "DIV", "POW"
+      "", "", "", "", "", "", "", "", "", "", "", "", "", "", "WHEN", "OTHERWISEWHEN", 
+      "OTHERWISE", "TIME", "BOOLEAN", "INTEGER", "DECIMAL", "CHARACTER", 
+      "TEXT", "IDENTIFIER", "WS", "COMMENT", "ASSIGN", "LPAR", "RPAR", "ADD", 
+      "SUB", "MUL", "DIV", "POW"
     }
   );
   static const int32_t serializedATNSegment[] = {
-  	4,1,46,352,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,
+  	4,1,50,359,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,
   	7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,
   	14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,7,20,2,21,7,
-  	21,2,22,7,22,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,5,0,57,8,0,10,0,
-  	12,0,60,9,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,3,1,69,8,1,1,2,1,2,1,2,1,2,3,
-  	2,75,8,2,1,2,1,2,1,3,1,3,1,3,1,3,3,3,83,8,3,1,3,1,3,1,4,1,4,1,4,1,4,1,
-  	4,1,4,1,4,1,4,1,4,1,4,1,4,1,5,1,5,1,5,1,5,5,5,102,8,5,10,5,12,5,105,9,
-  	5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,5,5,117,8,5,10,5,12,5,120,9,
-  	5,1,5,1,5,3,5,124,8,5,1,6,1,6,1,6,1,6,1,6,1,7,1,7,1,7,1,7,1,7,3,7,136,
-  	8,7,1,7,1,7,1,7,1,7,3,7,142,8,7,5,7,144,8,7,10,7,12,7,147,9,7,1,7,1,7,
-  	1,7,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,9,1,9,1,9,1,9,1,9,1,9,5,9,166,8,
-  	9,10,9,12,9,169,9,9,3,9,171,8,9,1,9,1,9,1,9,3,9,176,8,9,1,10,1,10,5,10,
-  	180,8,10,10,10,12,10,183,9,10,1,10,1,10,1,11,1,11,5,11,189,8,11,10,11,
-  	12,11,192,9,11,1,11,1,11,1,11,1,11,1,11,1,12,1,12,1,12,1,12,1,12,1,12,
-  	1,12,1,12,1,12,1,12,1,12,5,12,210,8,12,10,12,12,12,213,9,12,1,12,1,12,
-  	3,12,217,8,12,1,12,1,12,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,14,1,14,
-  	1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,15,1,15,1,15,1,15,1,15,
-  	1,15,1,15,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,17,1,17,1,17,1,17,
-  	1,17,1,17,1,17,1,17,1,17,1,17,5,17,264,8,17,10,17,12,17,267,9,17,1,17,
-  	1,17,1,17,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,5,18,
-  	283,8,18,10,18,12,18,286,9,18,1,18,1,18,1,18,1,18,1,18,1,18,5,18,294,
-  	8,18,10,18,12,18,297,9,18,1,18,1,18,5,18,301,8,18,10,18,12,18,304,9,18,
-  	1,18,1,18,1,18,1,19,1,19,1,19,1,19,1,19,1,19,5,19,315,8,19,10,19,12,19,
-  	318,9,19,1,20,1,20,1,21,1,21,1,21,1,21,1,21,1,21,3,21,328,8,21,1,21,1,
-  	21,1,21,1,21,1,21,1,21,1,21,1,21,1,21,5,21,339,8,21,10,21,12,21,342,9,
-  	21,1,22,1,22,1,22,1,22,1,22,1,22,3,22,350,8,22,1,22,0,1,42,23,0,2,4,6,
-  	8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,0,3,1,0,25,29,
-  	1,0,44,45,1,0,42,43,373,0,58,1,0,0,0,2,68,1,0,0,0,4,70,1,0,0,0,6,78,1,
-  	0,0,0,8,86,1,0,0,0,10,123,1,0,0,0,12,125,1,0,0,0,14,130,1,0,0,0,16,151,
-  	1,0,0,0,18,159,1,0,0,0,20,177,1,0,0,0,22,186,1,0,0,0,24,198,1,0,0,0,26,
-  	220,1,0,0,0,28,227,1,0,0,0,30,238,1,0,0,0,32,245,1,0,0,0,34,253,1,0,0,
-  	0,36,271,1,0,0,0,38,308,1,0,0,0,40,319,1,0,0,0,42,327,1,0,0,0,44,349,
-  	1,0,0,0,46,57,3,2,1,0,47,57,3,18,9,0,48,57,3,26,13,0,49,57,3,28,14,0,
-  	50,57,3,24,12,0,51,57,3,32,16,0,52,57,3,34,17,0,53,57,3,36,18,0,54,57,
-  	3,30,15,0,55,57,3,8,4,0,56,46,1,0,0,0,56,47,1,0,0,0,56,48,1,0,0,0,56,
-  	49,1,0,0,0,56,50,1,0,0,0,56,51,1,0,0,0,56,52,1,0,0,0,56,53,1,0,0,0,56,
-  	54,1,0,0,0,56,55,1,0,0,0,57,60,1,0,0,0,58,56,1,0,0,0,58,59,1,0,0,0,59,
-  	61,1,0,0,0,60,58,1,0,0,0,61,62,5,0,0,1,62,1,1,0,0,0,63,69,3,4,2,0,64,
-  	69,3,6,3,0,65,69,3,12,6,0,66,69,3,14,7,0,67,69,3,16,8,0,68,63,1,0,0,0,
-  	68,64,1,0,0,0,68,65,1,0,0,0,68,66,1,0,0,0,68,67,1,0,0,0,69,3,1,0,0,0,
-  	70,71,3,40,20,0,71,74,5,36,0,0,72,73,5,39,0,0,73,75,3,42,21,0,74,72,1,
-  	0,0,0,74,75,1,0,0,0,75,76,1,0,0,0,76,77,5,1,0,0,77,5,1,0,0,0,78,79,5,
-  	2,0,0,79,82,5,36,0,0,80,81,5,39,0,0,81,83,3,42,21,0,82,80,1,0,0,0,82,
-  	83,1,0,0,0,83,84,1,0,0,0,84,85,5,1,0,0,85,7,1,0,0,0,86,87,5,2,0,0,87,
-  	88,5,36,0,0,88,89,5,39,0,0,89,90,5,3,0,0,90,91,5,40,0,0,91,92,3,42,21,
-  	0,92,93,5,4,0,0,93,94,3,42,21,0,94,95,5,41,0,0,95,96,5,1,0,0,96,9,1,0,
-  	0,0,97,98,5,5,0,0,98,103,3,42,21,0,99,100,5,4,0,0,100,102,3,42,21,0,101,
-  	99,1,0,0,0,102,105,1,0,0,0,103,101,1,0,0,0,103,104,1,0,0,0,104,106,1,
-  	0,0,0,105,103,1,0,0,0,106,107,5,6,0,0,107,124,1,0,0,0,108,109,5,7,0,0,
-  	109,110,5,35,0,0,110,111,5,8,0,0,111,118,3,42,21,0,112,113,5,4,0,0,113,
-  	114,5,35,0,0,114,115,5,8,0,0,115,117,3,42,21,0,116,112,1,0,0,0,117,120,
-  	1,0,0,0,118,116,1,0,0,0,118,119,1,0,0,0,119,121,1,0,0,0,120,118,1,0,0,
-  	0,121,122,5,9,0,0,122,124,1,0,0,0,123,97,1,0,0,0,123,108,1,0,0,0,124,
-  	11,1,0,0,0,125,126,5,36,0,0,126,127,5,39,0,0,127,128,3,42,21,0,128,129,
-  	5,1,0,0,129,13,1,0,0,0,130,131,5,10,0,0,131,135,5,40,0,0,132,136,5,35,
-  	0,0,133,136,5,36,0,0,134,136,3,42,21,0,135,132,1,0,0,0,135,133,1,0,0,
-  	0,135,134,1,0,0,0,136,145,1,0,0,0,137,141,5,4,0,0,138,142,5,35,0,0,139,
-  	142,5,36,0,0,140,142,3,42,21,0,141,138,1,0,0,0,141,139,1,0,0,0,141,140,
-  	1,0,0,0,142,144,1,0,0,0,143,137,1,0,0,0,144,147,1,0,0,0,145,143,1,0,0,
-  	0,145,146,1,0,0,0,146,148,1,0,0,0,147,145,1,0,0,0,148,149,5,41,0,0,149,
-  	150,5,1,0,0,150,15,1,0,0,0,151,152,5,36,0,0,152,153,5,39,0,0,153,154,
-  	5,11,0,0,154,155,5,40,0,0,155,156,5,35,0,0,156,157,5,41,0,0,157,158,5,
-  	1,0,0,158,17,1,0,0,0,159,160,5,12,0,0,160,161,5,36,0,0,161,170,5,40,0,
-  	0,162,167,5,36,0,0,163,164,5,4,0,0,164,166,5,36,0,0,165,163,1,0,0,0,166,
-  	169,1,0,0,0,167,165,1,0,0,0,167,168,1,0,0,0,168,171,1,0,0,0,169,167,1,
-  	0,0,0,170,162,1,0,0,0,170,171,1,0,0,0,171,172,1,0,0,0,172,175,5,41,0,
-  	0,173,176,3,20,10,0,174,176,3,22,11,0,175,173,1,0,0,0,175,174,1,0,0,0,
-  	176,19,1,0,0,0,177,181,5,7,0,0,178,180,3,2,1,0,179,178,1,0,0,0,180,183,
-  	1,0,0,0,181,179,1,0,0,0,181,182,1,0,0,0,182,184,1,0,0,0,183,181,1,0,0,
-  	0,184,185,5,9,0,0,185,21,1,0,0,0,186,190,5,7,0,0,187,189,3,2,1,0,188,
-  	187,1,0,0,0,189,192,1,0,0,0,190,188,1,0,0,0,190,191,1,0,0,0,191,193,1,
-  	0,0,0,192,190,1,0,0,0,193,194,5,13,0,0,194,195,3,42,21,0,195,196,5,1,
-  	0,0,196,197,5,9,0,0,197,23,1,0,0,0,198,199,5,14,0,0,199,200,5,40,0,0,
-  	200,201,3,42,21,0,201,202,5,41,0,0,202,211,3,20,10,0,203,204,5,15,0,0,
-  	204,205,5,40,0,0,205,206,3,42,21,0,206,207,5,41,0,0,207,208,3,20,10,0,
-  	208,210,1,0,0,0,209,203,1,0,0,0,210,213,1,0,0,0,211,209,1,0,0,0,211,212,
-  	1,0,0,0,212,216,1,0,0,0,213,211,1,0,0,0,214,215,5,16,0,0,215,217,3,20,
-  	10,0,216,214,1,0,0,0,216,217,1,0,0,0,217,218,1,0,0,0,218,219,5,1,0,0,
-  	219,25,1,0,0,0,220,221,5,17,0,0,221,222,5,40,0,0,222,223,3,42,21,0,223,
-  	224,5,41,0,0,224,225,3,20,10,0,225,226,5,1,0,0,226,27,1,0,0,0,227,228,
-  	5,18,0,0,228,229,5,40,0,0,229,230,3,42,21,0,230,231,5,4,0,0,231,232,3,
-  	42,21,0,232,233,5,4,0,0,233,234,3,42,21,0,234,235,5,41,0,0,235,236,3,
-  	20,10,0,236,237,5,1,0,0,237,29,1,0,0,0,238,239,5,19,0,0,239,240,5,40,
-  	0,0,240,241,5,30,0,0,241,242,5,41,0,0,242,243,3,20,10,0,243,244,5,1,0,
-  	0,244,31,1,0,0,0,245,246,5,20,0,0,246,247,5,36,0,0,247,248,5,40,0,0,248,
-  	249,3,38,19,0,249,250,5,41,0,0,250,251,3,20,10,0,251,252,5,1,0,0,252,
-  	33,1,0,0,0,253,254,5,21,0,0,254,255,5,22,0,0,255,256,3,40,20,0,256,257,
-  	5,23,0,0,257,258,5,36,0,0,258,259,5,39,0,0,259,260,5,5,0,0,260,265,3,
-  	42,21,0,261,262,5,4,0,0,262,264,3,42,21,0,263,261,1,0,0,0,264,267,1,0,
-  	0,0,265,263,1,0,0,0,265,266,1,0,0,0,266,268,1,0,0,0,267,265,1,0,0,0,268,
-  	269,5,6,0,0,269,270,5,1,0,0,270,35,1,0,0,0,271,272,5,24,0,0,272,273,5,
-  	22,0,0,273,274,3,40,20,0,274,275,5,23,0,0,275,276,5,36,0,0,276,277,5,
-  	39,0,0,277,278,5,5,0,0,278,279,5,5,0,0,279,284,3,42,21,0,280,281,5,4,
-  	0,0,281,283,3,42,21,0,282,280,1,0,0,0,283,286,1,0,0,0,284,282,1,0,0,0,
-  	284,285,1,0,0,0,285,287,1,0,0,0,286,284,1,0,0,0,287,302,5,6,0,0,288,289,
-  	5,4,0,0,289,290,5,5,0,0,290,295,3,42,21,0,291,292,5,4,0,0,292,294,3,42,
-  	21,0,293,291,1,0,0,0,294,297,1,0,0,0,295,293,1,0,0,0,295,296,1,0,0,0,
-  	296,298,1,0,0,0,297,295,1,0,0,0,298,299,5,6,0,0,299,301,1,0,0,0,300,288,
-  	1,0,0,0,301,304,1,0,0,0,302,300,1,0,0,0,302,303,1,0,0,0,303,305,1,0,0,
-  	0,304,302,1,0,0,0,305,306,5,6,0,0,306,307,5,1,0,0,307,37,1,0,0,0,308,
-  	309,3,40,20,0,309,316,5,36,0,0,310,311,5,4,0,0,311,312,3,40,20,0,312,
-  	313,5,36,0,0,313,315,1,0,0,0,314,310,1,0,0,0,315,318,1,0,0,0,316,314,
-  	1,0,0,0,316,317,1,0,0,0,317,39,1,0,0,0,318,316,1,0,0,0,319,320,7,0,0,
-  	0,320,41,1,0,0,0,321,322,6,21,-1,0,322,323,5,40,0,0,323,324,3,42,21,0,
-  	324,325,5,41,0,0,325,328,1,0,0,0,326,328,3,44,22,0,327,321,1,0,0,0,327,
-  	326,1,0,0,0,328,340,1,0,0,0,329,330,10,4,0,0,330,331,5,46,0,0,331,339,
-  	3,42,21,5,332,333,10,3,0,0,333,334,7,1,0,0,334,339,3,42,21,4,335,336,
-  	10,2,0,0,336,337,7,2,0,0,337,339,3,42,21,3,338,329,1,0,0,0,338,332,1,
-  	0,0,0,338,335,1,0,0,0,339,342,1,0,0,0,340,338,1,0,0,0,340,341,1,0,0,0,
-  	341,43,1,0,0,0,342,340,1,0,0,0,343,350,5,32,0,0,344,350,5,33,0,0,345,
-  	350,5,34,0,0,346,350,5,35,0,0,347,350,5,31,0,0,348,350,5,36,0,0,349,343,
-  	1,0,0,0,349,344,1,0,0,0,349,345,1,0,0,0,349,346,1,0,0,0,349,347,1,0,0,
-  	0,349,348,1,0,0,0,350,45,1,0,0,0,27,56,58,68,74,82,103,118,123,135,141,
-  	145,167,170,175,181,190,211,216,265,284,295,302,316,327,338,340,349
+  	21,2,22,7,22,2,23,7,23,1,0,5,0,50,8,0,10,0,12,0,53,9,0,1,0,1,0,1,1,1,
+  	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,70,8,1,1,2,1,2,1,2,
+  	1,2,3,2,76,8,2,1,2,1,2,1,3,1,3,1,3,1,3,3,3,84,8,3,1,3,1,3,1,4,1,4,1,4,
+  	1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,5,1,5,1,5,1,5,5,5,103,8,5,10,5,12,5,
+  	106,9,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,5,5,118,8,5,10,5,12,5,
+  	121,9,5,1,5,1,5,3,5,125,8,5,1,6,1,6,1,6,1,6,1,6,1,7,1,7,1,7,1,7,1,7,3,
+  	7,137,8,7,1,7,1,7,1,7,1,7,3,7,143,8,7,5,7,145,8,7,10,7,12,7,148,9,7,1,
+  	7,1,7,1,7,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,9,1,9,1,9,1,9,1,9,1,9,5,9,
+  	167,8,9,10,9,12,9,170,9,9,3,9,172,8,9,1,9,1,9,1,9,3,9,177,8,9,1,10,1,
+  	10,5,10,181,8,10,10,10,12,10,184,9,10,1,10,1,10,1,11,1,11,5,11,190,8,
+  	11,10,11,12,11,193,9,11,1,11,1,11,1,11,1,11,1,11,1,12,1,12,1,12,1,12,
+  	1,12,1,12,1,12,1,12,1,12,1,12,1,12,1,12,1,12,1,12,1,12,5,12,215,8,12,
+  	10,12,12,12,218,9,12,1,12,1,12,3,12,222,8,12,1,12,1,12,1,13,1,13,1,14,
+  	1,14,1,14,1,14,1,14,1,14,1,14,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,
+  	1,15,1,15,1,15,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,17,1,17,1,17,1,17,
+  	1,17,1,17,1,17,1,17,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,
+  	5,18,271,8,18,10,18,12,18,274,9,18,1,18,1,18,1,18,1,19,1,19,1,19,1,19,
+  	1,19,1,19,1,19,1,19,1,19,1,19,1,19,5,19,290,8,19,10,19,12,19,293,9,19,
+  	1,19,1,19,1,19,1,19,1,19,1,19,5,19,301,8,19,10,19,12,19,304,9,19,1,19,
+  	1,19,5,19,308,8,19,10,19,12,19,311,9,19,1,19,1,19,1,19,1,20,1,20,1,20,
+  	1,20,1,20,1,20,5,20,322,8,20,10,20,12,20,325,9,20,1,21,1,21,1,22,1,22,
+  	1,22,1,22,1,22,1,22,3,22,335,8,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,
+  	1,22,1,22,5,22,346,8,22,10,22,12,22,349,9,22,1,23,1,23,1,23,1,23,1,23,
+  	1,23,3,23,357,8,23,1,23,0,1,44,24,0,2,4,6,8,10,12,14,16,18,20,22,24,26,
+  	28,30,32,34,36,38,40,42,44,46,0,4,1,0,14,19,1,0,26,30,1,0,48,49,1,0,46,
+  	47,378,0,51,1,0,0,0,2,69,1,0,0,0,4,71,1,0,0,0,6,79,1,0,0,0,8,87,1,0,0,
+  	0,10,124,1,0,0,0,12,126,1,0,0,0,14,131,1,0,0,0,16,152,1,0,0,0,18,160,
+  	1,0,0,0,20,178,1,0,0,0,22,187,1,0,0,0,24,199,1,0,0,0,26,225,1,0,0,0,28,
+  	227,1,0,0,0,30,234,1,0,0,0,32,245,1,0,0,0,34,252,1,0,0,0,36,260,1,0,0,
+  	0,38,278,1,0,0,0,40,315,1,0,0,0,42,326,1,0,0,0,44,334,1,0,0,0,46,356,
+  	1,0,0,0,48,50,3,18,9,0,49,48,1,0,0,0,50,53,1,0,0,0,51,49,1,0,0,0,51,52,
+  	1,0,0,0,52,54,1,0,0,0,53,51,1,0,0,0,54,55,5,0,0,1,55,1,1,0,0,0,56,70,
+  	3,4,2,0,57,70,3,6,3,0,58,70,3,12,6,0,59,70,3,14,7,0,60,70,3,16,8,0,61,
+  	70,3,24,12,0,62,70,3,28,14,0,63,70,3,30,15,0,64,70,3,34,17,0,65,70,3,
+  	36,18,0,66,70,3,38,19,0,67,70,3,32,16,0,68,70,3,8,4,0,69,56,1,0,0,0,69,
+  	57,1,0,0,0,69,58,1,0,0,0,69,59,1,0,0,0,69,60,1,0,0,0,69,61,1,0,0,0,69,
+  	62,1,0,0,0,69,63,1,0,0,0,69,64,1,0,0,0,69,65,1,0,0,0,69,66,1,0,0,0,69,
+  	67,1,0,0,0,69,68,1,0,0,0,70,3,1,0,0,0,71,72,3,42,21,0,72,75,5,40,0,0,
+  	73,74,5,43,0,0,74,76,3,44,22,0,75,73,1,0,0,0,75,76,1,0,0,0,76,77,1,0,
+  	0,0,77,78,5,1,0,0,78,5,1,0,0,0,79,80,5,2,0,0,80,83,5,40,0,0,81,82,5,43,
+  	0,0,82,84,3,44,22,0,83,81,1,0,0,0,83,84,1,0,0,0,84,85,1,0,0,0,85,86,5,
+  	1,0,0,86,7,1,0,0,0,87,88,5,2,0,0,88,89,5,40,0,0,89,90,5,43,0,0,90,91,
+  	5,3,0,0,91,92,5,44,0,0,92,93,3,44,22,0,93,94,5,4,0,0,94,95,3,44,22,0,
+  	95,96,5,45,0,0,96,97,5,1,0,0,97,9,1,0,0,0,98,99,5,5,0,0,99,104,3,44,22,
+  	0,100,101,5,4,0,0,101,103,3,44,22,0,102,100,1,0,0,0,103,106,1,0,0,0,104,
+  	102,1,0,0,0,104,105,1,0,0,0,105,107,1,0,0,0,106,104,1,0,0,0,107,108,5,
+  	6,0,0,108,125,1,0,0,0,109,110,5,7,0,0,110,111,5,39,0,0,111,112,5,8,0,
+  	0,112,119,3,44,22,0,113,114,5,4,0,0,114,115,5,39,0,0,115,116,5,8,0,0,
+  	116,118,3,44,22,0,117,113,1,0,0,0,118,121,1,0,0,0,119,117,1,0,0,0,119,
+  	120,1,0,0,0,120,122,1,0,0,0,121,119,1,0,0,0,122,123,5,9,0,0,123,125,1,
+  	0,0,0,124,98,1,0,0,0,124,109,1,0,0,0,125,11,1,0,0,0,126,127,5,40,0,0,
+  	127,128,5,43,0,0,128,129,3,44,22,0,129,130,5,1,0,0,130,13,1,0,0,0,131,
+  	132,5,10,0,0,132,136,5,44,0,0,133,137,5,39,0,0,134,137,5,40,0,0,135,137,
+  	3,44,22,0,136,133,1,0,0,0,136,134,1,0,0,0,136,135,1,0,0,0,137,146,1,0,
+  	0,0,138,142,5,4,0,0,139,143,5,39,0,0,140,143,5,40,0,0,141,143,3,44,22,
+  	0,142,139,1,0,0,0,142,140,1,0,0,0,142,141,1,0,0,0,143,145,1,0,0,0,144,
+  	138,1,0,0,0,145,148,1,0,0,0,146,144,1,0,0,0,146,147,1,0,0,0,147,149,1,
+  	0,0,0,148,146,1,0,0,0,149,150,5,45,0,0,150,151,5,1,0,0,151,15,1,0,0,0,
+  	152,153,5,40,0,0,153,154,5,43,0,0,154,155,5,11,0,0,155,156,5,44,0,0,156,
+  	157,5,39,0,0,157,158,5,45,0,0,158,159,5,1,0,0,159,17,1,0,0,0,160,161,
+  	5,12,0,0,161,162,5,40,0,0,162,171,5,44,0,0,163,168,5,40,0,0,164,165,5,
+  	4,0,0,165,167,5,40,0,0,166,164,1,0,0,0,167,170,1,0,0,0,168,166,1,0,0,
+  	0,168,169,1,0,0,0,169,172,1,0,0,0,170,168,1,0,0,0,171,163,1,0,0,0,171,
+  	172,1,0,0,0,172,173,1,0,0,0,173,176,5,45,0,0,174,177,3,20,10,0,175,177,
+  	3,22,11,0,176,174,1,0,0,0,176,175,1,0,0,0,177,19,1,0,0,0,178,182,5,7,
+  	0,0,179,181,3,2,1,0,180,179,1,0,0,0,181,184,1,0,0,0,182,180,1,0,0,0,182,
+  	183,1,0,0,0,183,185,1,0,0,0,184,182,1,0,0,0,185,186,5,9,0,0,186,21,1,
+  	0,0,0,187,191,5,7,0,0,188,190,3,2,1,0,189,188,1,0,0,0,190,193,1,0,0,0,
+  	191,189,1,0,0,0,191,192,1,0,0,0,192,194,1,0,0,0,193,191,1,0,0,0,194,195,
+  	5,13,0,0,195,196,3,44,22,0,196,197,5,1,0,0,197,198,5,9,0,0,198,23,1,0,
+  	0,0,199,200,5,31,0,0,200,201,5,44,0,0,201,202,3,44,22,0,202,203,3,26,
+  	13,0,203,204,3,44,22,0,204,205,5,45,0,0,205,216,3,20,10,0,206,207,5,32,
+  	0,0,207,208,5,44,0,0,208,209,3,44,22,0,209,210,3,26,13,0,210,211,3,44,
+  	22,0,211,212,5,45,0,0,212,213,3,20,10,0,213,215,1,0,0,0,214,206,1,0,0,
+  	0,215,218,1,0,0,0,216,214,1,0,0,0,216,217,1,0,0,0,217,221,1,0,0,0,218,
+  	216,1,0,0,0,219,220,5,33,0,0,220,222,3,20,10,0,221,219,1,0,0,0,221,222,
+  	1,0,0,0,222,223,1,0,0,0,223,224,5,1,0,0,224,25,1,0,0,0,225,226,7,0,0,
+  	0,226,27,1,0,0,0,227,228,5,20,0,0,228,229,5,44,0,0,229,230,3,44,22,0,
+  	230,231,5,45,0,0,231,232,3,20,10,0,232,233,5,1,0,0,233,29,1,0,0,0,234,
+  	235,5,21,0,0,235,236,5,44,0,0,236,237,3,44,22,0,237,238,5,4,0,0,238,239,
+  	3,44,22,0,239,240,5,4,0,0,240,241,3,44,22,0,241,242,5,45,0,0,242,243,
+  	3,20,10,0,243,244,5,1,0,0,244,31,1,0,0,0,245,246,5,22,0,0,246,247,5,44,
+  	0,0,247,248,5,34,0,0,248,249,5,45,0,0,249,250,3,20,10,0,250,251,5,1,0,
+  	0,251,33,1,0,0,0,252,253,5,23,0,0,253,254,5,40,0,0,254,255,5,44,0,0,255,
+  	256,3,40,20,0,256,257,5,45,0,0,257,258,3,20,10,0,258,259,5,1,0,0,259,
+  	35,1,0,0,0,260,261,5,24,0,0,261,262,5,14,0,0,262,263,3,42,21,0,263,264,
+  	5,16,0,0,264,265,5,40,0,0,265,266,5,43,0,0,266,267,5,5,0,0,267,272,3,
+  	44,22,0,268,269,5,4,0,0,269,271,3,44,22,0,270,268,1,0,0,0,271,274,1,0,
+  	0,0,272,270,1,0,0,0,272,273,1,0,0,0,273,275,1,0,0,0,274,272,1,0,0,0,275,
+  	276,5,6,0,0,276,277,5,1,0,0,277,37,1,0,0,0,278,279,5,25,0,0,279,280,5,
+  	14,0,0,280,281,3,42,21,0,281,282,5,16,0,0,282,283,5,40,0,0,283,284,5,
+  	43,0,0,284,285,5,5,0,0,285,286,5,5,0,0,286,291,3,44,22,0,287,288,5,4,
+  	0,0,288,290,3,44,22,0,289,287,1,0,0,0,290,293,1,0,0,0,291,289,1,0,0,0,
+  	291,292,1,0,0,0,292,294,1,0,0,0,293,291,1,0,0,0,294,309,5,6,0,0,295,296,
+  	5,4,0,0,296,297,5,5,0,0,297,302,3,44,22,0,298,299,5,4,0,0,299,301,3,44,
+  	22,0,300,298,1,0,0,0,301,304,1,0,0,0,302,300,1,0,0,0,302,303,1,0,0,0,
+  	303,305,1,0,0,0,304,302,1,0,0,0,305,306,5,6,0,0,306,308,1,0,0,0,307,295,
+  	1,0,0,0,308,311,1,0,0,0,309,307,1,0,0,0,309,310,1,0,0,0,310,312,1,0,0,
+  	0,311,309,1,0,0,0,312,313,5,6,0,0,313,314,5,1,0,0,314,39,1,0,0,0,315,
+  	316,3,42,21,0,316,323,5,40,0,0,317,318,5,4,0,0,318,319,3,42,21,0,319,
+  	320,5,40,0,0,320,322,1,0,0,0,321,317,1,0,0,0,322,325,1,0,0,0,323,321,
+  	1,0,0,0,323,324,1,0,0,0,324,41,1,0,0,0,325,323,1,0,0,0,326,327,7,1,0,
+  	0,327,43,1,0,0,0,328,329,6,22,-1,0,329,330,5,44,0,0,330,331,3,44,22,0,
+  	331,332,5,45,0,0,332,335,1,0,0,0,333,335,3,46,23,0,334,328,1,0,0,0,334,
+  	333,1,0,0,0,335,347,1,0,0,0,336,337,10,4,0,0,337,338,5,50,0,0,338,346,
+  	3,44,22,5,339,340,10,3,0,0,340,341,7,2,0,0,341,346,3,44,22,4,342,343,
+  	10,2,0,0,343,344,7,3,0,0,344,346,3,44,22,3,345,336,1,0,0,0,345,339,1,
+  	0,0,0,345,342,1,0,0,0,346,349,1,0,0,0,347,345,1,0,0,0,347,348,1,0,0,0,
+  	348,45,1,0,0,0,349,347,1,0,0,0,350,357,5,36,0,0,351,357,5,37,0,0,352,
+  	357,5,38,0,0,353,357,5,39,0,0,354,357,5,35,0,0,355,357,5,40,0,0,356,350,
+  	1,0,0,0,356,351,1,0,0,0,356,352,1,0,0,0,356,353,1,0,0,0,356,354,1,0,0,
+  	0,356,355,1,0,0,0,357,47,1,0,0,0,26,51,69,75,83,104,119,124,136,142,146,
+  	168,171,176,182,191,216,221,272,291,302,309,323,334,345,347,356
   };
   staticData->serializedATN = antlr4::atn::SerializedATNView(serializedATNSegment, sizeof(serializedATNSegment) / sizeof(serializedATNSegment[0]));
 
@@ -247,84 +251,12 @@ tree::TerminalNode* CobraParser::ProgramContext::EOF() {
   return getToken(CobraParser::EOF, 0);
 }
 
-std::vector<CobraParser::StatementContext *> CobraParser::ProgramContext::statement() {
-  return getRuleContexts<CobraParser::StatementContext>();
-}
-
-CobraParser::StatementContext* CobraParser::ProgramContext::statement(size_t i) {
-  return getRuleContext<CobraParser::StatementContext>(i);
-}
-
 std::vector<CobraParser::FunctionDefContext *> CobraParser::ProgramContext::functionDef() {
   return getRuleContexts<CobraParser::FunctionDefContext>();
 }
 
 CobraParser::FunctionDefContext* CobraParser::ProgramContext::functionDef(size_t i) {
   return getRuleContext<CobraParser::FunctionDefContext>(i);
-}
-
-std::vector<CobraParser::LoopStructContext *> CobraParser::ProgramContext::loopStruct() {
-  return getRuleContexts<CobraParser::LoopStructContext>();
-}
-
-CobraParser::LoopStructContext* CobraParser::ProgramContext::loopStruct(size_t i) {
-  return getRuleContext<CobraParser::LoopStructContext>(i);
-}
-
-std::vector<CobraParser::RepeatStructContext *> CobraParser::ProgramContext::repeatStruct() {
-  return getRuleContexts<CobraParser::RepeatStructContext>();
-}
-
-CobraParser::RepeatStructContext* CobraParser::ProgramContext::repeatStruct(size_t i) {
-  return getRuleContext<CobraParser::RepeatStructContext>(i);
-}
-
-std::vector<CobraParser::ConditionalContext *> CobraParser::ProgramContext::conditional() {
-  return getRuleContexts<CobraParser::ConditionalContext>();
-}
-
-CobraParser::ConditionalContext* CobraParser::ProgramContext::conditional(size_t i) {
-  return getRuleContext<CobraParser::ConditionalContext>(i);
-}
-
-std::vector<CobraParser::ObjectDeclContext *> CobraParser::ProgramContext::objectDecl() {
-  return getRuleContexts<CobraParser::ObjectDeclContext>();
-}
-
-CobraParser::ObjectDeclContext* CobraParser::ProgramContext::objectDecl(size_t i) {
-  return getRuleContext<CobraParser::ObjectDeclContext>(i);
-}
-
-std::vector<CobraParser::ArrayDeclContext *> CobraParser::ProgramContext::arrayDecl() {
-  return getRuleContexts<CobraParser::ArrayDeclContext>();
-}
-
-CobraParser::ArrayDeclContext* CobraParser::ProgramContext::arrayDecl(size_t i) {
-  return getRuleContext<CobraParser::ArrayDeclContext>(i);
-}
-
-std::vector<CobraParser::MatrixDeclContext *> CobraParser::ProgramContext::matrixDecl() {
-  return getRuleContexts<CobraParser::MatrixDeclContext>();
-}
-
-CobraParser::MatrixDeclContext* CobraParser::ProgramContext::matrixDecl(size_t i) {
-  return getRuleContext<CobraParser::MatrixDeclContext>(i);
-}
-
-std::vector<CobraParser::WaitLoopContext *> CobraParser::ProgramContext::waitLoop() {
-  return getRuleContexts<CobraParser::WaitLoopContext>();
-}
-
-CobraParser::WaitLoopContext* CobraParser::ProgramContext::waitLoop(size_t i) {
-  return getRuleContext<CobraParser::WaitLoopContext>(i);
-}
-
-std::vector<CobraParser::RangeDeclarationContext *> CobraParser::ProgramContext::rangeDeclaration() {
-  return getRuleContexts<CobraParser::RangeDeclarationContext>();
-}
-
-CobraParser::RangeDeclarationContext* CobraParser::ProgramContext::rangeDeclaration(size_t i) {
-  return getRuleContext<CobraParser::RangeDeclarationContext>(i);
 }
 
 
@@ -366,82 +298,17 @@ CobraParser::ProgramContext* CobraParser::program() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(58);
+    setState(51);
     _errHandler->sync(this);
     _la = _input->LA(1);
-    while ((((_la & ~ 0x3fULL) == 0) &&
-      ((1ULL << _la) & 69780526084) != 0)) {
-      setState(56);
-      _errHandler->sync(this);
-      switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 0, _ctx)) {
-      case 1: {
-        setState(46);
-        statement();
-        break;
-      }
-
-      case 2: {
-        setState(47);
-        functionDef();
-        break;
-      }
-
-      case 3: {
-        setState(48);
-        loopStruct();
-        break;
-      }
-
-      case 4: {
-        setState(49);
-        repeatStruct();
-        break;
-      }
-
-      case 5: {
-        setState(50);
-        conditional();
-        break;
-      }
-
-      case 6: {
-        setState(51);
-        objectDecl();
-        break;
-      }
-
-      case 7: {
-        setState(52);
-        arrayDecl();
-        break;
-      }
-
-      case 8: {
-        setState(53);
-        matrixDecl();
-        break;
-      }
-
-      case 9: {
-        setState(54);
-        waitLoop();
-        break;
-      }
-
-      case 10: {
-        setState(55);
-        rangeDeclaration();
-        break;
-      }
-
-      default:
-        break;
-      }
-      setState(60);
+    while (_la == CobraParser::T__11) {
+      setState(48);
+      functionDef();
+      setState(53);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
-    setState(61);
+    setState(54);
     match(CobraParser::EOF);
    
   }
@@ -478,6 +345,38 @@ CobraParser::DisplayContext* CobraParser::StatementContext::display() {
 
 CobraParser::GetInputContext* CobraParser::StatementContext::getInput() {
   return getRuleContext<CobraParser::GetInputContext>(0);
+}
+
+CobraParser::ConditionalContext* CobraParser::StatementContext::conditional() {
+  return getRuleContext<CobraParser::ConditionalContext>(0);
+}
+
+CobraParser::LoopStructContext* CobraParser::StatementContext::loopStruct() {
+  return getRuleContext<CobraParser::LoopStructContext>(0);
+}
+
+CobraParser::RepeatStructContext* CobraParser::StatementContext::repeatStruct() {
+  return getRuleContext<CobraParser::RepeatStructContext>(0);
+}
+
+CobraParser::ObjectDeclContext* CobraParser::StatementContext::objectDecl() {
+  return getRuleContext<CobraParser::ObjectDeclContext>(0);
+}
+
+CobraParser::ArrayDeclContext* CobraParser::StatementContext::arrayDecl() {
+  return getRuleContext<CobraParser::ArrayDeclContext>(0);
+}
+
+CobraParser::MatrixDeclContext* CobraParser::StatementContext::matrixDecl() {
+  return getRuleContext<CobraParser::MatrixDeclContext>(0);
+}
+
+CobraParser::WaitLoopContext* CobraParser::StatementContext::waitLoop() {
+  return getRuleContext<CobraParser::WaitLoopContext>(0);
+}
+
+CobraParser::RangeDeclarationContext* CobraParser::StatementContext::rangeDeclaration() {
+  return getRuleContext<CobraParser::RangeDeclarationContext>(0);
 }
 
 
@@ -517,41 +416,97 @@ CobraParser::StatementContext* CobraParser::statement() {
     exitRule();
   });
   try {
-    setState(68);
+    setState(69);
     _errHandler->sync(this);
-    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 2, _ctx)) {
+    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 1, _ctx)) {
     case 1: {
       enterOuterAlt(_localctx, 1);
-      setState(63);
+      setState(56);
       varDeclaration();
       break;
     }
 
     case 2: {
       enterOuterAlt(_localctx, 2);
-      setState(64);
+      setState(57);
       inferredVarDeclaration();
       break;
     }
 
     case 3: {
       enterOuterAlt(_localctx, 3);
-      setState(65);
+      setState(58);
       assignment();
       break;
     }
 
     case 4: {
       enterOuterAlt(_localctx, 4);
-      setState(66);
+      setState(59);
       display();
       break;
     }
 
     case 5: {
       enterOuterAlt(_localctx, 5);
-      setState(67);
+      setState(60);
       getInput();
+      break;
+    }
+
+    case 6: {
+      enterOuterAlt(_localctx, 6);
+      setState(61);
+      conditional();
+      break;
+    }
+
+    case 7: {
+      enterOuterAlt(_localctx, 7);
+      setState(62);
+      loopStruct();
+      break;
+    }
+
+    case 8: {
+      enterOuterAlt(_localctx, 8);
+      setState(63);
+      repeatStruct();
+      break;
+    }
+
+    case 9: {
+      enterOuterAlt(_localctx, 9);
+      setState(64);
+      objectDecl();
+      break;
+    }
+
+    case 10: {
+      enterOuterAlt(_localctx, 10);
+      setState(65);
+      arrayDecl();
+      break;
+    }
+
+    case 11: {
+      enterOuterAlt(_localctx, 11);
+      setState(66);
+      matrixDecl();
+      break;
+    }
+
+    case 12: {
+      enterOuterAlt(_localctx, 12);
+      setState(67);
+      waitLoop();
+      break;
+    }
+
+    case 13: {
+      enterOuterAlt(_localctx, 13);
+      setState(68);
+      rangeDeclaration();
       break;
     }
 
@@ -630,21 +585,21 @@ CobraParser::VarDeclarationContext* CobraParser::varDeclaration() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(70);
-    dataType();
     setState(71);
+    dataType();
+    setState(72);
     match(CobraParser::IDENTIFIER);
-    setState(74);
+    setState(75);
     _errHandler->sync(this);
 
     _la = _input->LA(1);
     if (_la == CobraParser::ASSIGN) {
-      setState(72);
-      match(CobraParser::ASSIGN);
       setState(73);
+      match(CobraParser::ASSIGN);
+      setState(74);
       expression(0);
     }
-    setState(76);
+    setState(77);
     match(CobraParser::T__0);
    
   }
@@ -714,21 +669,21 @@ CobraParser::InferredVarDeclarationContext* CobraParser::inferredVarDeclaration(
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(78);
-    match(CobraParser::T__1);
     setState(79);
+    match(CobraParser::T__1);
+    setState(80);
     match(CobraParser::IDENTIFIER);
-    setState(82);
+    setState(83);
     _errHandler->sync(this);
 
     _la = _input->LA(1);
     if (_la == CobraParser::ASSIGN) {
-      setState(80);
-      match(CobraParser::ASSIGN);
       setState(81);
+      match(CobraParser::ASSIGN);
+      setState(82);
       expression(0);
     }
-    setState(84);
+    setState(85);
     match(CobraParser::T__0);
    
   }
@@ -809,25 +764,25 @@ CobraParser::RangeDeclarationContext* CobraParser::rangeDeclaration() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(86);
-    match(CobraParser::T__1);
     setState(87);
-    match(CobraParser::IDENTIFIER);
+    match(CobraParser::T__1);
     setState(88);
-    match(CobraParser::ASSIGN);
+    match(CobraParser::IDENTIFIER);
     setState(89);
-    match(CobraParser::T__2);
+    match(CobraParser::ASSIGN);
     setState(90);
-    match(CobraParser::LPAR);
+    match(CobraParser::T__2);
     setState(91);
-    expression(0);
+    match(CobraParser::LPAR);
     setState(92);
-    match(CobraParser::T__3);
-    setState(93);
     expression(0);
+    setState(93);
+    match(CobraParser::T__3);
     setState(94);
-    match(CobraParser::RPAR);
+    expression(0);
     setState(95);
+    match(CobraParser::RPAR);
+    setState(96);
     match(CobraParser::T__0);
    
   }
@@ -934,29 +889,29 @@ CobraParser::CollectionContext* CobraParser::collection() {
     exitRule();
   });
   try {
-    setState(123);
+    setState(124);
     _errHandler->sync(this);
     switch (_input->LA(1)) {
       case CobraParser::T__4: {
         _localctx = _tracker.createInstance<CobraParser::ListCollectionContext>(_localctx);
         enterOuterAlt(_localctx, 1);
-        setState(97);
-        match(CobraParser::T__4);
         setState(98);
+        match(CobraParser::T__4);
+        setState(99);
         expression(0);
-        setState(103);
+        setState(104);
         _errHandler->sync(this);
         _la = _input->LA(1);
         while (_la == CobraParser::T__3) {
-          setState(99);
-          match(CobraParser::T__3);
           setState(100);
+          match(CobraParser::T__3);
+          setState(101);
           expression(0);
-          setState(105);
+          setState(106);
           _errHandler->sync(this);
           _la = _input->LA(1);
         }
-        setState(106);
+        setState(107);
         match(CobraParser::T__5);
         break;
       }
@@ -964,31 +919,31 @@ CobraParser::CollectionContext* CobraParser::collection() {
       case CobraParser::T__6: {
         _localctx = _tracker.createInstance<CobraParser::DictCollectionContext>(_localctx);
         enterOuterAlt(_localctx, 2);
-        setState(108);
-        match(CobraParser::T__6);
         setState(109);
-        match(CobraParser::TEXT);
+        match(CobraParser::T__6);
         setState(110);
-        match(CobraParser::T__7);
+        match(CobraParser::TEXT);
         setState(111);
+        match(CobraParser::T__7);
+        setState(112);
         expression(0);
-        setState(118);
+        setState(119);
         _errHandler->sync(this);
         _la = _input->LA(1);
         while (_la == CobraParser::T__3) {
-          setState(112);
-          match(CobraParser::T__3);
           setState(113);
-          match(CobraParser::TEXT);
+          match(CobraParser::T__3);
           setState(114);
-          match(CobraParser::T__7);
+          match(CobraParser::TEXT);
           setState(115);
+          match(CobraParser::T__7);
+          setState(116);
           expression(0);
-          setState(120);
+          setState(121);
           _errHandler->sync(this);
           _la = _input->LA(1);
         }
-        setState(121);
+        setState(122);
         match(CobraParser::T__8);
         break;
       }
@@ -1063,13 +1018,13 @@ CobraParser::AssignmentContext* CobraParser::assignment() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(125);
-    match(CobraParser::IDENTIFIER);
     setState(126);
-    match(CobraParser::ASSIGN);
+    match(CobraParser::IDENTIFIER);
     setState(127);
-    expression(0);
+    match(CobraParser::ASSIGN);
     setState(128);
+    expression(0);
+    setState(129);
     match(CobraParser::T__0);
    
   }
@@ -1159,27 +1114,27 @@ CobraParser::DisplayContext* CobraParser::display() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(130);
-    match(CobraParser::T__9);
     setState(131);
+    match(CobraParser::T__9);
+    setState(132);
     match(CobraParser::LPAR);
-    setState(135);
+    setState(136);
     _errHandler->sync(this);
-    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 8, _ctx)) {
+    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 7, _ctx)) {
     case 1: {
-      setState(132);
+      setState(133);
       match(CobraParser::TEXT);
       break;
     }
 
     case 2: {
-      setState(133);
+      setState(134);
       match(CobraParser::IDENTIFIER);
       break;
     }
 
     case 3: {
-      setState(134);
+      setState(135);
       expression(0);
       break;
     }
@@ -1187,29 +1142,29 @@ CobraParser::DisplayContext* CobraParser::display() {
     default:
       break;
     }
-    setState(145);
+    setState(146);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while (_la == CobraParser::T__3) {
-      setState(137);
+      setState(138);
       match(CobraParser::T__3);
-      setState(141);
+      setState(142);
       _errHandler->sync(this);
-      switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 9, _ctx)) {
+      switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 8, _ctx)) {
       case 1: {
-        setState(138);
+        setState(139);
         match(CobraParser::TEXT);
         break;
       }
 
       case 2: {
-        setState(139);
+        setState(140);
         match(CobraParser::IDENTIFIER);
         break;
       }
 
       case 3: {
-        setState(140);
+        setState(141);
         expression(0);
         break;
       }
@@ -1217,13 +1172,13 @@ CobraParser::DisplayContext* CobraParser::display() {
       default:
         break;
       }
-      setState(147);
+      setState(148);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
-    setState(148);
-    match(CobraParser::RPAR);
     setState(149);
+    match(CobraParser::RPAR);
+    setState(150);
     match(CobraParser::T__0);
    
   }
@@ -1300,19 +1255,19 @@ CobraParser::GetInputContext* CobraParser::getInput() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(151);
-    match(CobraParser::IDENTIFIER);
     setState(152);
-    match(CobraParser::ASSIGN);
+    match(CobraParser::IDENTIFIER);
     setState(153);
-    match(CobraParser::T__10);
+    match(CobraParser::ASSIGN);
     setState(154);
-    match(CobraParser::LPAR);
+    match(CobraParser::T__10);
     setState(155);
-    match(CobraParser::TEXT);
+    match(CobraParser::LPAR);
     setState(156);
-    match(CobraParser::RPAR);
+    match(CobraParser::TEXT);
     setState(157);
+    match(CobraParser::RPAR);
+    setState(158);
     match(CobraParser::T__0);
    
   }
@@ -1394,45 +1349,45 @@ CobraParser::FunctionDefContext* CobraParser::functionDef() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(159);
-    match(CobraParser::T__11);
     setState(160);
-    match(CobraParser::IDENTIFIER);
+    match(CobraParser::T__11);
     setState(161);
+    match(CobraParser::IDENTIFIER);
+    setState(162);
     match(CobraParser::LPAR);
-    setState(170);
+    setState(171);
     _errHandler->sync(this);
 
     _la = _input->LA(1);
     if (_la == CobraParser::IDENTIFIER) {
-      setState(162);
+      setState(163);
       match(CobraParser::IDENTIFIER);
-      setState(167);
+      setState(168);
       _errHandler->sync(this);
       _la = _input->LA(1);
       while (_la == CobraParser::T__3) {
-        setState(163);
-        match(CobraParser::T__3);
         setState(164);
+        match(CobraParser::T__3);
+        setState(165);
         match(CobraParser::IDENTIFIER);
-        setState(169);
+        setState(170);
         _errHandler->sync(this);
         _la = _input->LA(1);
       }
     }
-    setState(172);
+    setState(173);
     match(CobraParser::RPAR);
-    setState(175);
+    setState(176);
     _errHandler->sync(this);
-    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 13, _ctx)) {
+    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 12, _ctx)) {
     case 1: {
-      setState(173);
+      setState(174);
       block();
       break;
     }
 
     case 2: {
-      setState(174);
+      setState(175);
       returnBlock();
       break;
     }
@@ -1504,20 +1459,20 @@ CobraParser::BlockContext* CobraParser::block() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(177);
+    setState(178);
     match(CobraParser::T__6);
-    setState(181);
+    setState(182);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while ((((_la & ~ 0x3fULL) == 0) &&
-      ((1ULL << _la) & 69759665156) != 0)) {
-      setState(178);
+      ((1ULL << _la) & 1103805547524) != 0)) {
+      setState(179);
       statement();
-      setState(183);
+      setState(184);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
-    setState(184);
+    setState(185);
     match(CobraParser::T__8);
    
   }
@@ -1587,26 +1542,26 @@ CobraParser::ReturnBlockContext* CobraParser::returnBlock() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(186);
+    setState(187);
     match(CobraParser::T__6);
-    setState(190);
+    setState(191);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while ((((_la & ~ 0x3fULL) == 0) &&
-      ((1ULL << _la) & 69759665156) != 0)) {
-      setState(187);
+      ((1ULL << _la) & 1103805547524) != 0)) {
+      setState(188);
       statement();
-      setState(192);
+      setState(193);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
-    setState(193);
-    match(CobraParser::T__12);
     setState(194);
-    expression(0);
+    match(CobraParser::T__12);
     setState(195);
-    match(CobraParser::T__0);
+    expression(0);
     setState(196);
+    match(CobraParser::T__0);
+    setState(197);
     match(CobraParser::T__8);
    
   }
@@ -1625,6 +1580,10 @@ CobraParser::ConditionalContext::ConditionalContext(ParserRuleContext *parent, s
   : ParserRuleContext(parent, invokingState) {
 }
 
+tree::TerminalNode* CobraParser::ConditionalContext::WHEN() {
+  return getToken(CobraParser::WHEN, 0);
+}
+
 std::vector<tree::TerminalNode *> CobraParser::ConditionalContext::LPAR() {
   return getTokens(CobraParser::LPAR);
 }
@@ -1641,6 +1600,14 @@ CobraParser::ExpressionContext* CobraParser::ConditionalContext::expression(size
   return getRuleContext<CobraParser::ExpressionContext>(i);
 }
 
+std::vector<CobraParser::ComparisonOperatorContext *> CobraParser::ConditionalContext::comparisonOperator() {
+  return getRuleContexts<CobraParser::ComparisonOperatorContext>();
+}
+
+CobraParser::ComparisonOperatorContext* CobraParser::ConditionalContext::comparisonOperator(size_t i) {
+  return getRuleContext<CobraParser::ComparisonOperatorContext>(i);
+}
+
 std::vector<tree::TerminalNode *> CobraParser::ConditionalContext::RPAR() {
   return getTokens(CobraParser::RPAR);
 }
@@ -1655,6 +1622,18 @@ std::vector<CobraParser::BlockContext *> CobraParser::ConditionalContext::block(
 
 CobraParser::BlockContext* CobraParser::ConditionalContext::block(size_t i) {
   return getRuleContext<CobraParser::BlockContext>(i);
+}
+
+std::vector<tree::TerminalNode *> CobraParser::ConditionalContext::OTHERWISEWHEN() {
+  return getTokens(CobraParser::OTHERWISEWHEN);
+}
+
+tree::TerminalNode* CobraParser::ConditionalContext::OTHERWISEWHEN(size_t i) {
+  return getToken(CobraParser::OTHERWISEWHEN, i);
+}
+
+tree::TerminalNode* CobraParser::ConditionalContext::OTHERWISE() {
+  return getToken(CobraParser::OTHERWISE, 0);
 }
 
 
@@ -1696,46 +1675,120 @@ CobraParser::ConditionalContext* CobraParser::conditional() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(198);
-    match(CobraParser::T__13);
     setState(199);
-    match(CobraParser::LPAR);
+    match(CobraParser::WHEN);
     setState(200);
-    expression(0);
+    match(CobraParser::LPAR);
     setState(201);
-    match(CobraParser::RPAR);
+    expression(0);
     setState(202);
+    comparisonOperator();
+    setState(203);
+    expression(0);
+    setState(204);
+    match(CobraParser::RPAR);
+    setState(205);
     block();
-    setState(211);
+    setState(216);
     _errHandler->sync(this);
     _la = _input->LA(1);
-    while (_la == CobraParser::T__14) {
-      setState(203);
-      match(CobraParser::T__14);
-      setState(204);
-      match(CobraParser::LPAR);
-      setState(205);
-      expression(0);
+    while (_la == CobraParser::OTHERWISEWHEN) {
       setState(206);
-      match(CobraParser::RPAR);
+      match(CobraParser::OTHERWISEWHEN);
       setState(207);
+      match(CobraParser::LPAR);
+      setState(208);
+      expression(0);
+      setState(209);
+      comparisonOperator();
+      setState(210);
+      expression(0);
+      setState(211);
+      match(CobraParser::RPAR);
+      setState(212);
       block();
-      setState(213);
+      setState(218);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
-    setState(216);
+    setState(221);
     _errHandler->sync(this);
 
     _la = _input->LA(1);
-    if (_la == CobraParser::T__15) {
-      setState(214);
-      match(CobraParser::T__15);
-      setState(215);
+    if (_la == CobraParser::OTHERWISE) {
+      setState(219);
+      match(CobraParser::OTHERWISE);
+      setState(220);
       block();
     }
-    setState(218);
+    setState(223);
     match(CobraParser::T__0);
+   
+  }
+  catch (RecognitionException &e) {
+    _errHandler->reportError(this, e);
+    _localctx->exception = std::current_exception();
+    _errHandler->recover(this, _localctx->exception);
+  }
+
+  return _localctx;
+}
+
+//----------------- ComparisonOperatorContext ------------------------------------------------------------------
+
+CobraParser::ComparisonOperatorContext::ComparisonOperatorContext(ParserRuleContext *parent, size_t invokingState)
+  : ParserRuleContext(parent, invokingState) {
+}
+
+
+size_t CobraParser::ComparisonOperatorContext::getRuleIndex() const {
+  return CobraParser::RuleComparisonOperator;
+}
+
+void CobraParser::ComparisonOperatorContext::enterRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<CobraListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->enterComparisonOperator(this);
+}
+
+void CobraParser::ComparisonOperatorContext::exitRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<CobraListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->exitComparisonOperator(this);
+}
+
+
+std::any CobraParser::ComparisonOperatorContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<CobraVisitor*>(visitor))
+    return parserVisitor->visitComparisonOperator(this);
+  else
+    return visitor->visitChildren(this);
+}
+
+CobraParser::ComparisonOperatorContext* CobraParser::comparisonOperator() {
+  ComparisonOperatorContext *_localctx = _tracker.createInstance<ComparisonOperatorContext>(_ctx, getState());
+  enterRule(_localctx, 26, CobraParser::RuleComparisonOperator);
+  size_t _la = 0;
+
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
+  auto onExit = finally([=] {
+#endif
+    exitRule();
+  });
+  try {
+    enterOuterAlt(_localctx, 1);
+    setState(225);
+    _la = _input->LA(1);
+    if (!((((_la & ~ 0x3fULL) == 0) &&
+      ((1ULL << _la) & 1032192) != 0))) {
+    _errHandler->recoverInline(this);
+    }
+    else {
+      _errHandler->reportMatch(this);
+      consume();
+    }
    
   }
   catch (RecognitionException &e) {
@@ -1796,7 +1849,7 @@ std::any CobraParser::LoopStructContext::accept(tree::ParseTreeVisitor *visitor)
 
 CobraParser::LoopStructContext* CobraParser::loopStruct() {
   LoopStructContext *_localctx = _tracker.createInstance<LoopStructContext>(_ctx, getState());
-  enterRule(_localctx, 26, CobraParser::RuleLoopStruct);
+  enterRule(_localctx, 28, CobraParser::RuleLoopStruct);
 
 #if __cplusplus > 201703L
   auto onExit = finally([=, this] {
@@ -1807,17 +1860,17 @@ CobraParser::LoopStructContext* CobraParser::loopStruct() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(220);
-    match(CobraParser::T__16);
-    setState(221);
+    setState(227);
+    match(CobraParser::T__19);
+    setState(228);
     match(CobraParser::LPAR);
-    setState(222);
+    setState(229);
     expression(0);
-    setState(223);
+    setState(230);
     match(CobraParser::RPAR);
-    setState(224);
+    setState(231);
     block();
-    setState(225);
+    setState(232);
     match(CobraParser::T__0);
    
   }
@@ -1883,7 +1936,7 @@ std::any CobraParser::RepeatStructContext::accept(tree::ParseTreeVisitor *visito
 
 CobraParser::RepeatStructContext* CobraParser::repeatStruct() {
   RepeatStructContext *_localctx = _tracker.createInstance<RepeatStructContext>(_ctx, getState());
-  enterRule(_localctx, 28, CobraParser::RuleRepeatStruct);
+  enterRule(_localctx, 30, CobraParser::RuleRepeatStruct);
 
 #if __cplusplus > 201703L
   auto onExit = finally([=, this] {
@@ -1894,25 +1947,25 @@ CobraParser::RepeatStructContext* CobraParser::repeatStruct() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(227);
-    match(CobraParser::T__17);
-    setState(228);
-    match(CobraParser::LPAR);
-    setState(229);
-    expression(0);
-    setState(230);
-    match(CobraParser::T__3);
-    setState(231);
-    expression(0);
-    setState(232);
-    match(CobraParser::T__3);
-    setState(233);
-    expression(0);
     setState(234);
-    match(CobraParser::RPAR);
+    match(CobraParser::T__20);
     setState(235);
-    block();
+    match(CobraParser::LPAR);
     setState(236);
+    expression(0);
+    setState(237);
+    match(CobraParser::T__3);
+    setState(238);
+    expression(0);
+    setState(239);
+    match(CobraParser::T__3);
+    setState(240);
+    expression(0);
+    setState(241);
+    match(CobraParser::RPAR);
+    setState(242);
+    block();
+    setState(243);
     match(CobraParser::T__0);
    
   }
@@ -1974,7 +2027,7 @@ std::any CobraParser::WaitLoopContext::accept(tree::ParseTreeVisitor *visitor) {
 
 CobraParser::WaitLoopContext* CobraParser::waitLoop() {
   WaitLoopContext *_localctx = _tracker.createInstance<WaitLoopContext>(_ctx, getState());
-  enterRule(_localctx, 30, CobraParser::RuleWaitLoop);
+  enterRule(_localctx, 32, CobraParser::RuleWaitLoop);
 
 #if __cplusplus > 201703L
   auto onExit = finally([=, this] {
@@ -1985,17 +2038,17 @@ CobraParser::WaitLoopContext* CobraParser::waitLoop() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(238);
-    match(CobraParser::T__18);
-    setState(239);
+    setState(245);
+    match(CobraParser::T__21);
+    setState(246);
     match(CobraParser::LPAR);
-    setState(240);
+    setState(247);
     match(CobraParser::TIME);
-    setState(241);
+    setState(248);
     match(CobraParser::RPAR);
-    setState(242);
+    setState(249);
     block();
-    setState(243);
+    setState(250);
     match(CobraParser::T__0);
    
   }
@@ -2061,7 +2114,7 @@ std::any CobraParser::ObjectDeclContext::accept(tree::ParseTreeVisitor *visitor)
 
 CobraParser::ObjectDeclContext* CobraParser::objectDecl() {
   ObjectDeclContext *_localctx = _tracker.createInstance<ObjectDeclContext>(_ctx, getState());
-  enterRule(_localctx, 32, CobraParser::RuleObjectDecl);
+  enterRule(_localctx, 34, CobraParser::RuleObjectDecl);
 
 #if __cplusplus > 201703L
   auto onExit = finally([=, this] {
@@ -2072,19 +2125,19 @@ CobraParser::ObjectDeclContext* CobraParser::objectDecl() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(245);
-    match(CobraParser::T__19);
-    setState(246);
+    setState(252);
+    match(CobraParser::T__22);
+    setState(253);
     match(CobraParser::IDENTIFIER);
-    setState(247);
+    setState(254);
     match(CobraParser::LPAR);
-    setState(248);
+    setState(255);
     parameterList();
-    setState(249);
+    setState(256);
     match(CobraParser::RPAR);
-    setState(250);
+    setState(257);
     block();
-    setState(251);
+    setState(258);
     match(CobraParser::T__0);
    
   }
@@ -2150,7 +2203,7 @@ std::any CobraParser::ArrayDeclContext::accept(tree::ParseTreeVisitor *visitor) 
 
 CobraParser::ArrayDeclContext* CobraParser::arrayDecl() {
   ArrayDeclContext *_localctx = _tracker.createInstance<ArrayDeclContext>(_ctx, getState());
-  enterRule(_localctx, 34, CobraParser::RuleArrayDecl);
+  enterRule(_localctx, 36, CobraParser::RuleArrayDecl);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -2162,37 +2215,37 @@ CobraParser::ArrayDeclContext* CobraParser::arrayDecl() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(253);
-    match(CobraParser::T__20);
-    setState(254);
-    match(CobraParser::T__21);
-    setState(255);
-    dataType();
-    setState(256);
-    match(CobraParser::T__22);
-    setState(257);
-    match(CobraParser::IDENTIFIER);
-    setState(258);
-    match(CobraParser::ASSIGN);
-    setState(259);
-    match(CobraParser::T__4);
     setState(260);
-    expression(0);
+    match(CobraParser::T__23);
+    setState(261);
+    match(CobraParser::T__13);
+    setState(262);
+    dataType();
+    setState(263);
+    match(CobraParser::T__15);
+    setState(264);
+    match(CobraParser::IDENTIFIER);
     setState(265);
+    match(CobraParser::ASSIGN);
+    setState(266);
+    match(CobraParser::T__4);
+    setState(267);
+    expression(0);
+    setState(272);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while (_la == CobraParser::T__3) {
-      setState(261);
+      setState(268);
       match(CobraParser::T__3);
-      setState(262);
+      setState(269);
       expression(0);
-      setState(267);
+      setState(274);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
-    setState(268);
+    setState(275);
     match(CobraParser::T__5);
-    setState(269);
+    setState(276);
     match(CobraParser::T__0);
    
   }
@@ -2258,7 +2311,7 @@ std::any CobraParser::MatrixDeclContext::accept(tree::ParseTreeVisitor *visitor)
 
 CobraParser::MatrixDeclContext* CobraParser::matrixDecl() {
   MatrixDeclContext *_localctx = _tracker.createInstance<MatrixDeclContext>(_ctx, getState());
-  enterRule(_localctx, 36, CobraParser::RuleMatrixDecl);
+  enterRule(_localctx, 38, CobraParser::RuleMatrixDecl);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -2270,69 +2323,69 @@ CobraParser::MatrixDeclContext* CobraParser::matrixDecl() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(271);
-    match(CobraParser::T__23);
-    setState(272);
-    match(CobraParser::T__21);
-    setState(273);
-    dataType();
-    setState(274);
-    match(CobraParser::T__22);
-    setState(275);
-    match(CobraParser::IDENTIFIER);
-    setState(276);
-    match(CobraParser::ASSIGN);
-    setState(277);
-    match(CobraParser::T__4);
     setState(278);
-    match(CobraParser::T__4);
+    match(CobraParser::T__24);
     setState(279);
-    expression(0);
+    match(CobraParser::T__13);
+    setState(280);
+    dataType();
+    setState(281);
+    match(CobraParser::T__15);
+    setState(282);
+    match(CobraParser::IDENTIFIER);
+    setState(283);
+    match(CobraParser::ASSIGN);
     setState(284);
+    match(CobraParser::T__4);
+    setState(285);
+    match(CobraParser::T__4);
+    setState(286);
+    expression(0);
+    setState(291);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while (_la == CobraParser::T__3) {
-      setState(280);
+      setState(287);
       match(CobraParser::T__3);
-      setState(281);
+      setState(288);
       expression(0);
-      setState(286);
+      setState(293);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
-    setState(287);
+    setState(294);
     match(CobraParser::T__5);
-    setState(302);
+    setState(309);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while (_la == CobraParser::T__3) {
-      setState(288);
-      match(CobraParser::T__3);
-      setState(289);
-      match(CobraParser::T__4);
-      setState(290);
-      expression(0);
       setState(295);
+      match(CobraParser::T__3);
+      setState(296);
+      match(CobraParser::T__4);
+      setState(297);
+      expression(0);
+      setState(302);
       _errHandler->sync(this);
       _la = _input->LA(1);
       while (_la == CobraParser::T__3) {
-        setState(291);
+        setState(298);
         match(CobraParser::T__3);
-        setState(292);
+        setState(299);
         expression(0);
-        setState(297);
+        setState(304);
         _errHandler->sync(this);
         _la = _input->LA(1);
       }
-      setState(298);
+      setState(305);
       match(CobraParser::T__5);
-      setState(304);
+      setState(311);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
-    setState(305);
+    setState(312);
     match(CobraParser::T__5);
-    setState(306);
+    setState(313);
     match(CobraParser::T__0);
    
   }
@@ -2394,7 +2447,7 @@ std::any CobraParser::ParameterListContext::accept(tree::ParseTreeVisitor *visit
 
 CobraParser::ParameterListContext* CobraParser::parameterList() {
   ParameterListContext *_localctx = _tracker.createInstance<ParameterListContext>(_ctx, getState());
-  enterRule(_localctx, 38, CobraParser::RuleParameterList);
+  enterRule(_localctx, 40, CobraParser::RuleParameterList);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -2406,21 +2459,21 @@ CobraParser::ParameterListContext* CobraParser::parameterList() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(308);
+    setState(315);
     dataType();
-    setState(309);
-    match(CobraParser::IDENTIFIER);
     setState(316);
+    match(CobraParser::IDENTIFIER);
+    setState(323);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while (_la == CobraParser::T__3) {
-      setState(310);
+      setState(317);
       match(CobraParser::T__3);
-      setState(311);
-      dataType();
-      setState(312);
-      match(CobraParser::IDENTIFIER);
       setState(318);
+      dataType();
+      setState(319);
+      match(CobraParser::IDENTIFIER);
+      setState(325);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
@@ -2468,7 +2521,7 @@ std::any CobraParser::DataTypeContext::accept(tree::ParseTreeVisitor *visitor) {
 
 CobraParser::DataTypeContext* CobraParser::dataType() {
   DataTypeContext *_localctx = _tracker.createInstance<DataTypeContext>(_ctx, getState());
-  enterRule(_localctx, 40, CobraParser::RuleDataType);
+  enterRule(_localctx, 42, CobraParser::RuleDataType);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -2480,10 +2533,10 @@ CobraParser::DataTypeContext* CobraParser::dataType() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(319);
+    setState(326);
     _la = _input->LA(1);
     if (!((((_la & ~ 0x3fULL) == 0) &&
-      ((1ULL << _la) & 1040187392) != 0))) {
+      ((1ULL << _la) & 2080374784) != 0))) {
     _errHandler->recoverInline(this);
     }
     else {
@@ -2692,8 +2745,8 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
   CobraParser::ExpressionContext *_localctx = _tracker.createInstance<ExpressionContext>(_ctx, parentState);
   CobraParser::ExpressionContext *previousContext = _localctx;
   (void)previousContext; // Silence compiler, in case the context is not used by generated code.
-  size_t startState = 42;
-  enterRecursionRule(_localctx, 42, CobraParser::RuleExpression, precedence);
+  size_t startState = 44;
+  enterRecursionRule(_localctx, 44, CobraParser::RuleExpression, precedence);
 
     size_t _la = 0;
 
@@ -2707,7 +2760,7 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
   try {
     size_t alt;
     enterOuterAlt(_localctx, 1);
-    setState(327);
+    setState(334);
     _errHandler->sync(this);
     switch (_input->LA(1)) {
       case CobraParser::LPAR: {
@@ -2715,11 +2768,11 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
         _ctx = _localctx;
         previousContext = _localctx;
 
-        setState(322);
+        setState(329);
         match(CobraParser::LPAR);
-        setState(323);
+        setState(330);
         expression(0);
-        setState(324);
+        setState(331);
         match(CobraParser::RPAR);
         break;
       }
@@ -2733,7 +2786,7 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
         _localctx = _tracker.createInstance<LitExpContext>(_localctx);
         _ctx = _localctx;
         previousContext = _localctx;
-        setState(326);
+        setState(333);
         literal();
         break;
       }
@@ -2742,27 +2795,27 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
       throw NoViableAltException(this);
     }
     _ctx->stop = _input->LT(-1);
-    setState(340);
+    setState(347);
     _errHandler->sync(this);
-    alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 25, _ctx);
+    alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 24, _ctx);
     while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
       if (alt == 1) {
         if (!_parseListeners.empty())
           triggerExitRuleEvent();
         previousContext = _localctx;
-        setState(338);
+        setState(345);
         _errHandler->sync(this);
-        switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 24, _ctx)) {
+        switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 23, _ctx)) {
         case 1: {
           auto newContext = _tracker.createInstance<PowerContext>(_tracker.createInstance<ExpressionContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpression);
-          setState(329);
+          setState(336);
 
           if (!(precpred(_ctx, 4))) throw FailedPredicateException(this, "precpred(_ctx, 4)");
-          setState(330);
+          setState(337);
           match(CobraParser::POW);
-          setState(331);
+          setState(338);
           expression(5);
           break;
         }
@@ -2771,10 +2824,10 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
           auto newContext = _tracker.createInstance<MuldivContext>(_tracker.createInstance<ExpressionContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpression);
-          setState(332);
+          setState(339);
 
           if (!(precpred(_ctx, 3))) throw FailedPredicateException(this, "precpred(_ctx, 3)");
-          setState(333);
+          setState(340);
           antlrcpp::downCast<MuldivContext *>(_localctx)->operator_ = _input->LT(1);
           _la = _input->LA(1);
           if (!(_la == CobraParser::MUL
@@ -2786,7 +2839,7 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
             _errHandler->reportMatch(this);
             consume();
           }
-          setState(334);
+          setState(341);
           expression(4);
           break;
         }
@@ -2795,10 +2848,10 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
           auto newContext = _tracker.createInstance<SubsumContext>(_tracker.createInstance<ExpressionContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpression);
-          setState(335);
+          setState(342);
 
           if (!(precpred(_ctx, 2))) throw FailedPredicateException(this, "precpred(_ctx, 2)");
-          setState(336);
+          setState(343);
           antlrcpp::downCast<SubsumContext *>(_localctx)->operator_ = _input->LT(1);
           _la = _input->LA(1);
           if (!(_la == CobraParser::ADD
@@ -2810,7 +2863,7 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
             _errHandler->reportMatch(this);
             consume();
           }
-          setState(337);
+          setState(344);
           expression(3);
           break;
         }
@@ -2819,9 +2872,9 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
           break;
         } 
       }
-      setState(342);
+      setState(349);
       _errHandler->sync(this);
-      alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 25, _ctx);
+      alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 24, _ctx);
     }
   }
   catch (RecognitionException &e) {
@@ -2999,7 +3052,7 @@ std::any CobraParser::BoolLiteralContext::accept(tree::ParseTreeVisitor *visitor
 }
 CobraParser::LiteralContext* CobraParser::literal() {
   LiteralContext *_localctx = _tracker.createInstance<LiteralContext>(_ctx, getState());
-  enterRule(_localctx, 44, CobraParser::RuleLiteral);
+  enterRule(_localctx, 46, CobraParser::RuleLiteral);
 
 #if __cplusplus > 201703L
   auto onExit = finally([=, this] {
@@ -3009,13 +3062,13 @@ CobraParser::LiteralContext* CobraParser::literal() {
     exitRule();
   });
   try {
-    setState(349);
+    setState(356);
     _errHandler->sync(this);
     switch (_input->LA(1)) {
       case CobraParser::INTEGER: {
         _localctx = _tracker.createInstance<CobraParser::IntLiteralContext>(_localctx);
         enterOuterAlt(_localctx, 1);
-        setState(343);
+        setState(350);
         match(CobraParser::INTEGER);
         break;
       }
@@ -3023,7 +3076,7 @@ CobraParser::LiteralContext* CobraParser::literal() {
       case CobraParser::DECIMAL: {
         _localctx = _tracker.createInstance<CobraParser::FloatLiteralContext>(_localctx);
         enterOuterAlt(_localctx, 2);
-        setState(344);
+        setState(351);
         match(CobraParser::DECIMAL);
         break;
       }
@@ -3031,7 +3084,7 @@ CobraParser::LiteralContext* CobraParser::literal() {
       case CobraParser::CHARACTER: {
         _localctx = _tracker.createInstance<CobraParser::CharLiteralContext>(_localctx);
         enterOuterAlt(_localctx, 3);
-        setState(345);
+        setState(352);
         match(CobraParser::CHARACTER);
         break;
       }
@@ -3039,7 +3092,7 @@ CobraParser::LiteralContext* CobraParser::literal() {
       case CobraParser::TEXT: {
         _localctx = _tracker.createInstance<CobraParser::StringLiteralContext>(_localctx);
         enterOuterAlt(_localctx, 4);
-        setState(346);
+        setState(353);
         match(CobraParser::TEXT);
         break;
       }
@@ -3047,7 +3100,7 @@ CobraParser::LiteralContext* CobraParser::literal() {
       case CobraParser::BOOLEAN: {
         _localctx = _tracker.createInstance<CobraParser::BoolLiteralContext>(_localctx);
         enterOuterAlt(_localctx, 5);
-        setState(347);
+        setState(354);
         match(CobraParser::BOOLEAN);
         break;
       }
@@ -3055,7 +3108,7 @@ CobraParser::LiteralContext* CobraParser::literal() {
       case CobraParser::IDENTIFIER: {
         _localctx = _tracker.createInstance<CobraParser::IdentifierLiteralContext>(_localctx);
         enterOuterAlt(_localctx, 6);
-        setState(348);
+        setState(355);
         match(CobraParser::IDENTIFIER);
         break;
       }
@@ -3076,7 +3129,7 @@ CobraParser::LiteralContext* CobraParser::literal() {
 
 bool CobraParser::sempred(RuleContext *context, size_t ruleIndex, size_t predicateIndex) {
   switch (ruleIndex) {
-    case 21: return expressionSempred(antlrcpp::downCast<ExpressionContext *>(context), predicateIndex);
+    case 22: return expressionSempred(antlrcpp::downCast<ExpressionContext *>(context), predicateIndex);
 
   default:
     break;

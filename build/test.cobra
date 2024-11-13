@@ -1,12 +1,4 @@
-number val1= 1;
-decimal val2=2.0;
-show(val1);
-show(val2);
-show(2.0+2.3);
-show(2+2);
-show(2+2.1);
-show(val1+val2);
-show(2*3.0);
-show(5*5);
-show(7/3);
-show(3^3);
+function main(){
+number val=2;
+return 1;
+}

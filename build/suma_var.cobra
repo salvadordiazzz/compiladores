@@ -1,3 +1,0 @@
-number val1=1;
-decimal val2=2.0;
-show(val1+val2);
