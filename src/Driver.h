@@ -514,9 +514,123 @@ std::any visitReturnBlock(CobraParser::ReturnBlockContext *ctx) override {
 
 
     std::any visitConditional(CobraParser::ConditionalContext *ctx) override {
-    return visitChildren(ctx);
-  }
+    Value* leftExpr = std::any_cast<Value*>(visit(ctx->expression(0)));
+    Value* rightExpr = std::any_cast<Value*>(visit(ctx->expression(1)));
+    std::string comparison = ctx->comparisonOperator(0)->getText();
 
+    llvm::Function *currentFunction = irBuilder->GetInsertBlock()->getParent();
+    
+    // Create all basic blocks upfront
+    llvm::BasicBlock *thenBB = llvm::BasicBlock::Create(C, "then", currentFunction);
+    llvm::BasicBlock *mergeBB = llvm::BasicBlock::Create(C, "merge");
+    llvm::BasicBlock *elseBB = nullptr;
+    llvm::BasicBlock *checkNextBB = nullptr;
+
+    // Type conversion for comparisons
+    llvm::Type *floatType = llvm::Type::getFloatTy(C);            
+    if (leftExpr->getType()->isIntegerTy()) {
+        leftExpr = irBuilder->CreateSIToFP(leftExpr, floatType, "leftToFloat");
+    } else if (leftExpr->getType()->isDoubleTy()) {
+        leftExpr = irBuilder->CreateFPCast(leftExpr, floatType, "leftToFloat");
+    }
+
+    if (rightExpr->getType()->isIntegerTy()) {
+        rightExpr = irBuilder->CreateSIToFP(rightExpr, floatType, "rightToFloat");
+    } else if (rightExpr->getType()->isDoubleTy()) {
+        rightExpr = irBuilder->CreateFPCast(rightExpr, floatType, "rightToFloat");
+    }
+
+    // Set up main comparison
+    llvm::CmpInst::Predicate pred;
+    if (comparison == "<") pred = llvm::CmpInst::FCMP_OLT;
+    else if (comparison == "<=") pred = llvm::CmpInst::FCMP_OLE;
+    else if (comparison == ">") pred = llvm::CmpInst::FCMP_OGT;
+    else if (comparison == ">=") pred = llvm::CmpInst::FCMP_OGE;
+    else if (comparison == "==") pred = llvm::CmpInst::FCMP_OEQ;
+    else if (comparison == "!=") pred = llvm::CmpInst::FCMP_ONE;
+    else throw std::runtime_error("Unknown comparison operator: " + comparison);
+    
+    Value* condition = irBuilder->CreateFCmp(pred, leftExpr, rightExpr, "fcmp");
+
+    // Create otherwiseWhen blocks
+    std::vector<llvm::BasicBlock*> otherwiseWhenBlocks;
+    size_t otherwiseWhenCount = ctx->OTHERWISEWHEN().size();
+    for (size_t i = 0; i < otherwiseWhenCount; i++) {
+        otherwiseWhenBlocks.push_back(
+            llvm::BasicBlock::Create(C, "otherwiseWhen" + std::to_string(i), currentFunction)
+        );
+    }
+
+    // Create else block if needed
+    bool hasOtherwise = ctx->OTHERWISE() != nullptr;
+    if (hasOtherwise) {
+        elseBB = llvm::BasicBlock::Create(C, "else", currentFunction);
+    }
+
+    // Create branches
+    irBuilder->CreateCondBr(condition, thenBB, otherwiseWhenBlocks.empty() ? (elseBB ? elseBB : mergeBB) : otherwiseWhenBlocks[0]);
+
+    // Generate otherwiseWhen blocks
+    for (size_t i = 0; i < otherwiseWhenBlocks.size(); i++) {
+        irBuilder->SetInsertPoint(otherwiseWhenBlocks[i]);
+
+        // Add comparison for this otherwiseWhen
+        std::string owComparison = ctx->comparisonOperator(i + 1)->getText();
+        llvm::Value* owLeftExpr = std::any_cast<Value*>(visit(ctx->expression(2 + i * 2)));
+        llvm::Value* owRightExpr = std::any_cast<Value*>(visit(ctx->expression(2 + i * 2 + 1)));
+        
+        // Type conversion for otherwiseWhen comparisons
+        if (owLeftExpr->getType()->isIntegerTy()) {
+            owLeftExpr = irBuilder->CreateSIToFP(owLeftExpr, floatType, "owLeftToFloat");
+        } else if (owLeftExpr->getType()->isDoubleTy()) {
+            owLeftExpr = irBuilder->CreateFPCast(owLeftExpr, floatType, "owLeftToFloat");
+        }
+
+        if (owRightExpr->getType()->isIntegerTy()) {
+            owRightExpr = irBuilder->CreateSIToFP(owRightExpr, floatType, "owRightToFloat");
+        } else if (owRightExpr->getType()->isDoubleTy()) {
+            owRightExpr = irBuilder->CreateFPCast(owRightExpr, floatType, "owRightToFloat");
+        }
+
+        llvm::CmpInst::Predicate owPred;
+        if (owComparison == "<") owPred = llvm::CmpInst::FCMP_OLT;
+        else if (owComparison == "<=") owPred = llvm::CmpInst::FCMP_OLE;
+        else if (owComparison == ">") owPred = llvm::CmpInst::FCMP_OGT;
+        else if (owComparison == ">=") owPred = llvm::CmpInst::FCMP_OGE;
+        else if (owComparison == "==") owPred = llvm::CmpInst::FCMP_OEQ;
+        else if (owComparison == "!=") owPred = llvm::CmpInst::FCMP_ONE;
+        else throw std::runtime_error("Unknown comparison operator in otherwiseWhen: " + owComparison);
+        
+        llvm::Value* owCondition = irBuilder->CreateFCmp(owPred, owLeftExpr, owRightExpr, "owCmp");
+
+        // Conditionally branch into next block
+        irBuilder->CreateCondBr(owCondition, thenBB, (i == otherwiseWhenBlocks.size() - 1 ? (elseBB ? elseBB : mergeBB) : otherwiseWhenBlocks[i + 1]));
+    }
+
+    // Generate then block
+    irBuilder->SetInsertPoint(thenBB);
+    visit(ctx->block(0));
+    irBuilder->CreateBr(mergeBB);
+
+    // Generate else block if it exists
+    if (elseBB) {
+        irBuilder->SetInsertPoint(elseBB);
+        visit(ctx->block(ctx->block().size() - 1));
+        irBuilder->CreateBr(mergeBB);
+    }
+
+    // Set up merge block
+    mergeBB->insertInto(currentFunction);
+    irBuilder->SetInsertPoint(mergeBB);
+
+    return nullptr;
+}
+
+
+
+    std::any visitComparisonOperator(CobraParser::ComparisonOperatorContext *ctx) override {
+    return nullptr; // Nothing ;)
+  }
     std::any visitLoopStruct(CobraParser::LoopStructContext *ctx) override {
     return visitChildren(ctx);
   }
