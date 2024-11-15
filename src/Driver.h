@@ -1,4 +1,4 @@
-#ifndef __DRIVER_H__
+#ifndef __DRIVER_H__ 
 #define __DRIVER_H__
 
 #include "CobraBaseVisitor.h"
@@ -317,7 +317,15 @@ void callPrintf(Value *valueToPrint) {
   }
 
     std::any visitAssignment(CobraParser::AssignmentContext *ctx) override {
-    return visitChildren(ctx);
+        std::string name = ctx->IDENTIFIER()->getText();
+        if (namedValues.find(name) == namedValues.end()) {
+        std::cerr << "Error: la variable '" << name << "' no ha sido declarada." << std::endl;
+            return nullptr;
+        }
+        AllocaInst *alloc = dyn_cast<AllocaInst>(namedValues[name]);
+        Value* value = any_cast<Value*>(ctx->expression()->accept(this));
+        irBuilder->CreateStore(value,alloc);
+        return nullptr;
   }
 
 std::any visitDisplay(CobraParser::DisplayContext *ctx) override {

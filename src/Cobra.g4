@@ -1,4 +1,4 @@
-grammar Cobra;
+grammar Cobra; 
 
 program: (functionDef)* EOF; //done
 
@@ -7,7 +7,7 @@ statement: varDeclaration          //done
          | assignment                    
          | display             //done          
          | getInput
-         | conditional   //done
+         | conditional   //done more or less
         |     loopStruct
         | repeatStruct
         |objectDecl
