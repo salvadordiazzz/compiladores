@@ -293,16 +293,14 @@ void callPrintf(Value *valueToPrint) {
     return nullptr; // O algún valor que necesites retornar
 }
 
-
-
-
-
-
-
-
     std::any visitInferredVarDeclaration(CobraParser::InferredVarDeclarationContext *ctx) override {
-
-    return visitChildren(ctx);
+        std::string name =ctx->IDENTIFIER()->getText();
+        Value* value = std::any_cast<Value*>(visit(ctx->expression()));
+        Type*type = value->getType();
+        AllocaInst*alloc = irBuilder->CreateAlloca(type,nullptr,name);
+        irBuilder->CreateStore(value,alloc);
+        namedValues[name] = alloc;
+        return nullptr;
   }
 
     std::any visitRangeDeclaration(CobraParser::RangeDeclarationContext *ctx) override {

@@ -1,0 +1,7 @@
+function main(){
+	auto test=4;
+	auto test2=2.0;
+	auto test3="jiji";	
+show(test,test2,test3);
+	return 1;
+}

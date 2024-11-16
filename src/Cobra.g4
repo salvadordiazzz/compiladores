@@ -10,9 +10,9 @@ statement: varDeclaration          //done
          | conditional   //done more or less
         |     loopStruct  
         | repeatStruct  //done
-        |objectDecl
+        |objectDecl //not yet to be used
         |arrayDecl //done
-        |matrixDecl
+        |matrixDecl // not yet to be used
         |waitLoop //done
         |rangeDeclaration // done
          ;               
@@ -21,7 +21,7 @@ statement: varDeclaration          //done
 varDeclaration: dataType IDENTIFIER ('=' expression)? ';' ;
 
 // Declaración de variable con inferencia de tipo
-inferredVarDeclaration: 'auto' IDENTIFIER ('=' expression)? ';' ;
+inferredVarDeclaration: 'auto' IDENTIFIER '=' expression ';' ;
 
 // Declaración de rango automático
 rangeDeclaration: 'auto' IDENTIFIER '=' 'scale' '(' expression ',' expression ')' ';';
