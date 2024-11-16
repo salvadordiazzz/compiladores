@@ -11,10 +11,10 @@ statement: varDeclaration          //done
         |     loopStruct  
         | repeatStruct  //done
         |objectDecl
-        |arrayDecl
+        |arrayDecl //done
         |matrixDecl
         |waitLoop //done
-        |rangeDeclaration
+        |rangeDeclaration // done
          ;               
 
 // Declaración de variable con tipo explícito
@@ -63,8 +63,6 @@ dataType: 'number'
         | 'string'
         | 'flag';
 
-cobraTate: 'tourner dans le vide, vide ' (GENERO)
-GENERO: 'M' | 'F'
 
 expression: '(' expression ')'                         # paren
           | expression '^' expression                  # power
@@ -72,6 +70,7 @@ expression: '(' expression ')'                         # paren
           | expression operator=('+'|'-') expression   # subsum
           | literal                                   # litExp
           | IDENTIFIER '[' expression ']' #arrayAccess 
+          | IDENTIFIER '(' (expression (',' expression)*)? ')' #functionCall
           ;
 literal
     : INTEGER         # intLiteral

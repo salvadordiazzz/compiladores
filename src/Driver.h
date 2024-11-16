@@ -509,6 +509,46 @@ std::any visitFunctionDef(CobraParser::FunctionDefContext *ctx) override {
 
     return function;
 }
+std::any visitFunctionCall(CobraParser::FunctionCallContext *ctx) override {
+    // Obtener el nombre de la función llamada
+    std::string functionName = ctx->IDENTIFIER()->getText();
+
+    // Buscar la función en el módulo
+    llvm::Function* function = M->getFunction(functionName);
+    if (!function) {
+        // Si la función no existe, lanzar un error (o manejarlo como corresponda)
+        throw std::runtime_error("Function not defined: " + functionName);
+    }
+
+    std::vector<llvm::Value*> arguments;
+    
+    // Obtener los argumentos de la llamada a la función
+    for (auto expr : ctx->expression()) {
+        // Visitar cada expresión y obtener su valor
+        std::any result = visit(expr);
+        llvm::Value* value = std::any_cast<llvm::Value*>(result);
+        arguments.push_back(value);
+    }
+
+    // Crear la llamada a la función
+    llvm::CallInst* callInst = irBuilder->CreateCall(function, arguments);
+
+    // Si la función tiene un valor de retorno, cargarlo en una variable
+    llvm::Value* returnValue = nullptr;
+    if (!function->getReturnType()->isVoidTy()) {
+        returnValue = callInst;
+    }
+
+    // Si la llamada se asigna a una variable, se debe almacenar en su ubicación
+    std::string varName = ctx->IDENTIFIER()->getText();  // Nombre de la variable
+    if (namedValues.find(varName) != namedValues.end()) {
+        Value*var=namedValues[varName];
+        llvm::AllocaInst* alloca = dyn_cast<AllocaInst>(namedValues[varName]);
+        irBuilder->CreateStore(returnValue, alloca);
+    }
+
+    return returnValue;
+}
 
 std::any visitBlock(CobraParser::BlockContext *ctx) override {
     symbolTable.enterScope();

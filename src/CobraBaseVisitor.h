@@ -111,6 +111,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitFunctionCall(CobraParser::FunctionCallContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitSubsum(CobraParser::SubsumContext *ctx) override {
     return visitChildren(ctx);
   }

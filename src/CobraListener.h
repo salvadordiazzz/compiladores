@@ -86,6 +86,9 @@ public:
   virtual void enterParen(CobraParser::ParenContext *ctx) = 0;
   virtual void exitParen(CobraParser::ParenContext *ctx) = 0;
 
+  virtual void enterFunctionCall(CobraParser::FunctionCallContext *ctx) = 0;
+  virtual void exitFunctionCall(CobraParser::FunctionCallContext *ctx) = 0;
+
   virtual void enterSubsum(CobraParser::SubsumContext *ctx) = 0;
   virtual void exitSubsum(CobraParser::SubsumContext *ctx) = 0;
 

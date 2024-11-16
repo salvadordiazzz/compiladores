@@ -9,6 +9,8 @@ function f1 (){
 }
 function main(){
 	number val1=2;
-	return 0;
+	number h=f1();
+	show(h);	
+return 0;
 }
 

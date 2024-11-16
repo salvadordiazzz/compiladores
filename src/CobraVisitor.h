@@ -67,6 +67,8 @@ public:
 
     virtual std::any visitParen(CobraParser::ParenContext *context) = 0;
 
+    virtual std::any visitFunctionCall(CobraParser::FunctionCallContext *context) = 0;
+
     virtual std::any visitSubsum(CobraParser::SubsumContext *context) = 0;
 
     virtual std::any visitArrayAccess(CobraParser::ArrayAccessContext *context) = 0;

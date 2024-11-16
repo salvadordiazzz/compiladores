@@ -88,6 +88,9 @@ public:
   virtual void enterParen(CobraParser::ParenContext * /*ctx*/) override { }
   virtual void exitParen(CobraParser::ParenContext * /*ctx*/) override { }
 
+  virtual void enterFunctionCall(CobraParser::FunctionCallContext * /*ctx*/) override { }
+  virtual void exitFunctionCall(CobraParser::FunctionCallContext * /*ctx*/) override { }
+
   virtual void enterSubsum(CobraParser::SubsumContext * /*ctx*/) override { }
   virtual void exitSubsum(CobraParser::SubsumContext * /*ctx*/) override { }
 
