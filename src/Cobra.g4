@@ -8,12 +8,12 @@ statement: varDeclaration          //done
          | display             //done          
          | getInput
          | conditional   //done more or less
-        |     loopStruct
-        | repeatStruct
+        |     loopStruct  
+        | repeatStruct  //done
         |objectDecl
         |arrayDecl
         |matrixDecl
-        |waitLoop
+        |waitLoop //done
         |rangeDeclaration
          ;               
 
@@ -63,11 +63,15 @@ dataType: 'number'
         | 'string'
         | 'flag';
 
+cobraTate: 'tourner dans le vide, vide ' (GENERO)
+GENERO: 'M' | 'F'
+
 expression: '(' expression ')'                         # paren
           | expression '^' expression                  # power
           | expression operator=('*'|'/') expression   # muldiv
           | expression operator=('+'|'-') expression   # subsum
           | literal                                   # litExp
+          | IDENTIFIER '[' expression ']' #arrayAccess 
           ;
 literal
     : INTEGER         # intLiteral

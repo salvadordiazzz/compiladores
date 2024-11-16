@@ -91,6 +91,9 @@ public:
   virtual void enterSubsum(CobraParser::SubsumContext * /*ctx*/) override { }
   virtual void exitSubsum(CobraParser::SubsumContext * /*ctx*/) override { }
 
+  virtual void enterArrayAccess(CobraParser::ArrayAccessContext * /*ctx*/) override { }
+  virtual void exitArrayAccess(CobraParser::ArrayAccessContext * /*ctx*/) override { }
+
   virtual void enterPower(CobraParser::PowerContext * /*ctx*/) override { }
   virtual void exitPower(CobraParser::PowerContext * /*ctx*/) override { }
 

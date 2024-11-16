@@ -115,6 +115,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitArrayAccess(CobraParser::ArrayAccessContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitPower(CobraParser::PowerContext *ctx) override {
     return visitChildren(ctx);
   }

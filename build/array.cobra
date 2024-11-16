@@ -1,0 +1,10 @@
+function main(){
+	array<number> arreglo=[1,20,3,4.0];
+	number i=0;
+	countFrom(0,4,1){
+	show(arreglo[i]);
+	i=i+1;
+};
+	
+	return 1;
+}

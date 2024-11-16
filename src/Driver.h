@@ -81,6 +81,7 @@ private:
     FunctionCallee putcharFunc;
     SymbolTable symbolTable; 
     std::unordered_map<std::string, llvm::Value*> namedValues;
+    std::unordered_map<std::string, std::vector<llvm::Value*>>arrayValues;
     llvm::Function *currentFunction = nullptr;
 
     llvm::AllocaInst *CreateEntryBlockAlloca(llvm::Function *function, const std::string &varName) {
@@ -644,8 +645,62 @@ std::any visitReturnBlock(CobraParser::ReturnBlockContext *ctx) override {
   }
 
     std::any visitRepeatStruct(CobraParser::RepeatStructContext *ctx) override {
-    return visitChildren(ctx);
-  }
+    // Obtener las expresiones de inicio, fin e incremento como Value*
+    Value *startValue = std::any_cast<Value*>(ctx->expression(0)->accept(this));
+    Value *endValue = std::any_cast<Value*>(ctx->expression(1)->accept(this));
+    Value *stepValue = std::any_cast<Value*>(ctx->expression(2)->accept(this));
+
+    // Convertir valores a int32 si es necesario
+    Type *int32Type = Type::getInt32Ty(C);
+    if (startValue->getType()->isFloatingPointTy()) {
+        startValue = irBuilder->CreateFPToSI(startValue, int32Type, "startToInt");
+    }
+    if (endValue->getType()->isFloatingPointTy()) {
+        endValue = irBuilder->CreateFPToSI(endValue, int32Type, "endToInt");
+    }
+    if (stepValue->getType()->isFloatingPointTy()) {
+        stepValue = irBuilder->CreateFPToSI(stepValue, int32Type, "stepToInt");
+    }
+
+    // Crear el bucle for en IR
+    Function *function = irBuilder->GetInsertBlock()->getParent();
+    BasicBlock *loopBlock = BasicBlock::Create(C, "loop", function);
+    BasicBlock *afterBlock = BasicBlock::Create(C, "afterloop", function);
+
+    // Inicializar el contador
+    Value *counter = irBuilder->CreateAlloca(int32Type, nullptr, "counter");
+    irBuilder->CreateStore(startValue, counter);
+
+    // Saltar al bloque del bucle
+    irBuilder->CreateBr(loopBlock);
+
+    // Generar el cuerpo del bucle
+    irBuilder->SetInsertPoint(loopBlock);
+
+    // Cargar y comparar el contador
+    Value *loadedCounter = irBuilder->CreateLoad(int32Type, counter);
+    Value *condition = irBuilder->CreateICmpSLT(loadedCounter, endValue);
+
+    // Incrementar el contador antes de procesar el cuerpo
+    Value *incrementedCounter = irBuilder->CreateAdd(loadedCounter, stepValue);
+    irBuilder->CreateStore(incrementedCounter, counter);
+
+    // Generar salto condicional hacia el bucle o el bloque de salida
+    BasicBlock *bodyBlock = BasicBlock::Create(C, "body", function);
+    irBuilder->CreateCondBr(condition, bodyBlock, afterBlock);
+
+    // Procesar el cuerpo del bucle
+    irBuilder->SetInsertPoint(bodyBlock);
+    ctx->block()->accept(this);
+    irBuilder->CreateBr(loopBlock); // Salto al inicio del bucle
+
+    // Continuar después del bucle
+    irBuilder->SetInsertPoint(afterBlock);
+
+    return nullptr;
+}
+
+
 
     std::any visitWaitLoop(CobraParser::WaitLoopContext *ctx) override {
          // Obtiene el texto del token TIME
@@ -682,8 +737,99 @@ std::any visitReturnBlock(CobraParser::ReturnBlockContext *ctx) override {
   }
 
     std::any visitArrayDecl(CobraParser::ArrayDeclContext *ctx) override {
-    return visitChildren(ctx);
+        auto datatype=ctx->dataType()->accept(this);
+        Type*type=std::any_cast<Type*>(datatype);
+        std::string name=ctx->IDENTIFIER()->getText();
+        std::vector<Value*> elements;
+        for (auto exprCtx : ctx->expression()) {
+            Value *value = std::any_cast<Value *>(exprCtx->accept(this));
+
+            // Realizar conversiones si el tipo de la expresión no coincide con el tipo esperado
+            if (value->getType() != type) {
+                if (type->isIntegerTy() && value->getType()->isFloatingPointTy()) {
+                    value = irBuilder->CreateFPToSI(value, type, "convertToInt");
+                } else if (type->isFloatingPointTy() && value->getType()->isIntegerTy()) {
+                    value = irBuilder->CreateSIToFP(value, type, "convertToFloat");
+                } else {
+                    std::cerr << "Error: Tipo incompatible en la inicialización del arreglo." << std::endl;
+                    return nullptr;
+                }
+            }
+
+            elements.push_back(value);
+        }
+        // Crear el tipo del arreglo en IR
+            ArrayType *arrayType = ArrayType::get(type, elements.size());
+
+            // Reservar espacio para el arreglo
+            AllocaInst *alloc = irBuilder->CreateAlloca(arrayType, nullptr, name);
+
+            // Inicializar los elementos del arreglo
+            for (size_t i = 0; i < elements.size(); ++i) {
+                Value *index = ConstantInt::get(Type::getInt32Ty(C), i);
+                std::vector<Value *> indices = {
+                    ConstantInt::get(Type::getInt32Ty(C), 0), // Base del arreglo
+                    index                                           // Índice actual
+                };
+
+                Value *elementPtr = irBuilder->CreateGEP(arrayType, alloc, indices, "elementPtr");
+                irBuilder->CreateStore(elements[i], elementPtr);
+            }
+
+            // Almacenar la referencia del arreglo en el mapa de valores nombrados
+            namedValues[name] = alloc;
+        return nullptr;
   }
+
+    std::any visitArrayAccess(CobraParser::ArrayAccessContext *ctx) override {
+    // Obtener el nombre del arreglo
+    std::string arrayName = ctx->IDENTIFIER()->getText();
+
+    // Verificar que el arreglo exista en namedValues
+    if (namedValues.find(arrayName) == namedValues.end()) {
+        std::cerr << "Error: El arreglo " << arrayName << " no está definido." << std::endl;
+        return nullptr;
+    }
+
+    // Obtener la dirección del arreglo
+    Value* arrayAddress = namedValues[arrayName];
+
+    // Verificar que es una instrucción de asignación
+    AllocaInst* alloca = dyn_cast<AllocaInst>(arrayAddress);
+    if (!alloca) {
+        std::cerr << "Error: " << arrayName << " no es un arreglo válido." << std::endl;
+        return nullptr;
+    }
+
+    // Obtener el tipo del arreglo
+    Type* arrayType = alloca->getAllocatedType();
+    if (!arrayType->isArrayTy()) {
+        std::cerr << "Error: " << arrayName << " no es un tipo de arreglo." << std::endl;
+        return nullptr;
+    }
+
+    // Evaluar el índice
+    Value* indexValue = std::any_cast<Value*>(ctx->expression()->accept(this));
+
+    // Asegurarse de que el índice sea i32
+    if (!indexValue->getType()->isIntegerTy(32)) {
+        indexValue = irBuilder->CreateIntCast(indexValue, Type::getInt32Ty(C), false, "indexCast");
+    }
+
+    // Calcular el puntero al elemento del arreglo
+    Value* elementPtr = irBuilder->CreateGEP(
+        arrayType,                       // Tipo del arreglo
+        alloca,                          // Dirección base del arreglo
+        {ConstantInt::get(Type::getInt32Ty(C), 0), indexValue}, // Índice
+        "elementPtr"
+    );
+
+    // Cargar el valor del elemento
+    Type* elementType = arrayType->getArrayElementType();
+    Value* elementValue = irBuilder->CreateLoad(elementType, elementPtr, "load_element");
+
+    return elementValue;
+}
 
     std::any visitMatrixDecl(CobraParser::MatrixDeclContext *ctx) override {
     return visitChildren(ctx);

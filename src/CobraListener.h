@@ -89,6 +89,9 @@ public:
   virtual void enterSubsum(CobraParser::SubsumContext *ctx) = 0;
   virtual void exitSubsum(CobraParser::SubsumContext *ctx) = 0;
 
+  virtual void enterArrayAccess(CobraParser::ArrayAccessContext *ctx) = 0;
+  virtual void exitArrayAccess(CobraParser::ArrayAccessContext *ctx) = 0;
+
   virtual void enterPower(CobraParser::PowerContext *ctx) = 0;
   virtual void exitPower(CobraParser::PowerContext *ctx) = 0;
 
