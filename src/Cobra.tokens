@@ -69,7 +69,7 @@ POW=50
 '!='=19
 'repeatUntil'=20
 'countFrom'=21
-'pauseThen'=22
+'pause'=22
 'entity'=23
 'array'=24
 'matrix'=25

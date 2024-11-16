@@ -21,7 +21,7 @@ null
 '!='
 'repeatUntil'
 'countFrom'
-'pauseThen'
+'pause'
 'entity'
 'array'
 'matrix'

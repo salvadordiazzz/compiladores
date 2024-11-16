@@ -1,0 +1,6 @@
+function main(){
+	pause(3 seconds){
+	show("jaj");	
+};
+	return 1;
+}

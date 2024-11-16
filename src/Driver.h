@@ -648,7 +648,33 @@ std::any visitReturnBlock(CobraParser::ReturnBlockContext *ctx) override {
   }
 
     std::any visitWaitLoop(CobraParser::WaitLoopContext *ctx) override {
-    return visitChildren(ctx);
+         // Obtiene el texto del token TIME
+        std::string timeText = ctx->TIME()->getText();
+
+        // Extraer el número de segundos desde el token TIME
+        size_t pos = timeText.find("seconds");
+        if (pos == std::string::npos) {
+            std::cerr << "Error: formato inválido para el tiempo en 'pause'." << std::endl;
+            return nullptr; // Manejar el error
+        }
+        int seconds = std::stoi(timeText.substr(0, pos));
+
+        // Generar código para la espera (simulación de un bucle o llamada a función externa)
+        Function *sleepFunc = M->getFunction("sleep");
+        if (!sleepFunc) {
+            // Si no existe, declarar la función sleep (ej. estándar POSIX)
+            FunctionType *sleepType = FunctionType::get(Type::getVoidTy(C), {Type::getInt32Ty(C)}, false);
+            sleepFunc = Function::Create(sleepType, Function::ExternalLinkage, "sleep", M);
+        }
+
+        // Llama a la función sleep con el número de segundos
+        Value *timeValue = ConstantInt::get(Type::getInt32Ty(C), seconds);
+        irBuilder->CreateCall(sleepFunc, {timeValue});
+
+        // Ejecuta el bloque de código después de la espera
+        ctx->block()->accept(this);
+
+        return nullptr;
   }
 
     std::any visitObjectDecl(CobraParser::ObjectDeclContext *ctx) override {

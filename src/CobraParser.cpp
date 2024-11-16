@@ -62,7 +62,7 @@ void cobraParserInitialize() {
     std::vector<std::string>{
       "", "';'", "'auto'", "'scale'", "','", "'['", "']'", "'{'", "':'", 
       "'}'", "'show'", "'ask'", "'function'", "'return'", "'<'", "'<='", 
-      "'>'", "'>='", "'=='", "'!='", "'repeatUntil'", "'countFrom'", "'pauseThen'", 
+      "'>'", "'>='", "'=='", "'!='", "'repeatUntil'", "'countFrom'", "'pause'", 
       "'entity'", "'array'", "'matrix'", "'number'", "'decimal'", "'letter'", 
       "'string'", "'flag'", "'when'", "'otherwiseWhen'", "'otherwise'", 
       "", "", "", "", "", "", "", "", "", "'='", "'('", "')'", "'+'", "'-'", 

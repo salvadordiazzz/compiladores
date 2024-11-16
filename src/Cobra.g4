@@ -4,7 +4,7 @@ program: (functionDef)* EOF; //done
 
 statement: varDeclaration          //done      
          | inferredVarDeclaration       
-         | assignment                    
+         | assignment                 //done   
          | display             //done          
          | getInput
          | conditional   //done more or less
@@ -48,8 +48,8 @@ loopStruct: 'repeatUntil' '(' expression ')' block ';';
 repeatStruct: 'countFrom' '(' expression ',' expression ',' expression ')' block ';';
 
 // Ciclo con duración temporal
-waitLoop: 'pauseThen' '(' TIME ')' block ';';
-TIME: [0-9]+ ('seconds' | 'minutes');
+waitLoop: 'pause' '(' TIME ')' block ';';
+TIME: [0-9]+ ' seconds';
 
 objectDecl: 'entity' IDENTIFIER '(' parameterList ')' block ';';
 arrayDecl: 'array' '<' dataType '>' IDENTIFIER '=' '[' expression (',' expression)* ']' ';';
