@@ -306,8 +306,43 @@ void callPrintf(Value *valueToPrint) {
   }
 
     std::any visitRangeDeclaration(CobraParser::RangeDeclarationContext *ctx) override {
-    return visitChildren(ctx);
-  }
+    // Obtener el nombre de la variable y los límites del rango
+    std::string name = ctx->IDENTIFIER()->getText();
+    Value* startValue = std::any_cast<Value*>(visit(ctx->expression(0)));
+    Value* endValue = std::any_cast<Value*>(visit(ctx->expression(1)));
+
+    if (!startValue->getType()->isIntegerTy() || !endValue->getType()->isIntegerTy()){
+        std::cerr << "Error: los límites del rango deben ser enteros." << std::endl;
+        return nullptr;
+    }
+    ConstantInt* start = llvm::dyn_cast<llvm::ConstantInt>(startValue);
+    ConstantInt* end = llvm::dyn_cast<llvm::ConstantInt>(endValue);
+
+    int size=end->getSExtValue() - start->getSExtValue()+1;
+    std::vector<Value*> values;
+    Type* integer=Type::getInt32Ty(C);
+    for(int i=0; i<size; i++){
+        llvm::Value* val = ConstantInt::get(integer, start->getSExtValue() + i);
+        values.push_back(val);
+    }
+    ArrayType*arrayType=ArrayType::get(integer,values.size());
+    AllocaInst*alloc=irBuilder->CreateAlloca(arrayType,nullptr,name);
+    for (int i=0; i<size; i++){
+        Value*val=ConstantInt::get(integer,i);
+        std::vector<Value*>vec={
+            ConstantInt::get(integer,0),
+            val
+        };
+        Value*arrayPtr=irBuilder->CreateGEP(arrayType,alloc,vec,"rangepointer");
+        irBuilder->CreateStore(values[i],arrayPtr);
+    }
+    namedValues[name]=alloc;
+
+    return nullptr;
+}
+
+
+
 
     std::any visitListCollection(CobraParser::ListCollectionContext *ctx) override {
     return visitChildren(ctx);

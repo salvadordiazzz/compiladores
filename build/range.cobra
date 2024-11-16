@@ -1,0 +1,9 @@
+function main(){
+	auto escala=scale(1,10);
+	number i=0;
+	countFrom(0,10,1){
+	show(escala[i]);
+	i=i+1;	
+};
+	return 1;
+}
