@@ -261,6 +261,7 @@ public:
     antlr4::tree::TerminalNode *ASSIGN();
     antlr4::tree::TerminalNode *LPAR();
     antlr4::tree::TerminalNode *TEXT();
+    DataTypeContext *dataType();
     antlr4::tree::TerminalNode *RPAR();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;

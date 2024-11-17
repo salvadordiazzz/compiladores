@@ -95,36 +95,46 @@ public:
   CobraDriver() : M(new Module("CobraModule", C)), irBuilder(nullptr) {
         declareString();
         declarePrintf();
+
+        declareScanf();
     }
 
     void declareString() {
     // Declarar las cadenas de formato para cada tipo
     new GlobalVariable(
-        *M,
-        ArrayType::get(Type::getInt8Ty(C), 4),
-        true,
-        GlobalValue::PrivateLinkage,
-        ConstantDataArray::getString(C, "%d\n", true),
-        ".str.int"
+    *M,
+    ArrayType::get(Type::getInt8Ty(C), 3),
+    true,
+    GlobalValue::PrivateLinkage,
+    ConstantDataArray::getString(C, "%d", true), // Sin \n
+    ".str.int"
     );
 
     new GlobalVariable(
         *M,
-        ArrayType::get(Type::getInt8Ty(C), 4),
+        ArrayType::get(Type::getInt8Ty(C), 3),
         true,
         GlobalValue::PrivateLinkage,
-        ConstantDataArray::getString(C, "%f\n", true),
+        ConstantDataArray::getString(C, "%f", true), // Sin \n
         ".str.float"
     );
 
     new GlobalVariable(
         *M,
-        ArrayType::get(Type::getInt8Ty(C), 4),
+        ArrayType::get(Type::getInt8Ty(C), 3),
         true,
         GlobalValue::PrivateLinkage,
-        ConstantDataArray::getString(C, "%s\n", true),
+        ConstantDataArray::getString(C, "%s", true), // Sin \n
         ".str.str"
     );
+    new GlobalVariable(
+    *M,
+    ArrayType::get(Type::getInt8Ty(C), 2),
+    true,
+    GlobalValue::PrivateLinkage,
+    ConstantDataArray::getString(C, "\n", true), // Solo un salto de línea
+    ".str.nl"
+);
 }
 
 Function *declarePrintf() {
@@ -147,26 +157,21 @@ Function *declarePrintf() {
     );
 }
 
-void callPrintf(Value *valueToPrint) {
-    Function *printfFunc = M->getFunction("printf");
-    GlobalVariable *formatStr = nullptr;
-    Value *printValue = valueToPrint;
+void callPrintf(Value* valueToPrint, bool addNewLine = true) {
+    Function* printfFunc = M->getFunction("printf");
+    GlobalVariable* formatStr = nullptr;
+    Value* printValue = valueToPrint;
 
-    // Determinar el tipo y seleccionar el formato adecuado
+    // Seleccionar el formato adecuado para el tipo del valor
     if (valueToPrint->getType()->isIntegerTy()) {
         formatStr = M->getNamedGlobal(".str.int");
-    }
-    else if (valueToPrint->getType()->isFloatingPointTy()) {
+    } else if (valueToPrint->getType()->isFloatingPointTy()) {
         formatStr = M->getNamedGlobal(".str.float");
-    }
-    else if (valueToPrint->getType()->isPointerTy()) {
-        // Si es un puntero, podría ser una cadena
+    } else if (valueToPrint->getType()->isPointerTy()) {
         formatStr = M->getNamedGlobal(".str.str");
     }
 
-    if (formatStr) {
-        // Crear GEP para el formato
-        Value *formatPtr = irBuilder->CreateInBoundsGEP(
+        Value* formatPtr = irBuilder->CreateInBoundsGEP(
             formatStr->getValueType(),
             formatStr,
             {
@@ -175,20 +180,24 @@ void callPrintf(Value *valueToPrint) {
             }
         );
 
-        // Realizar conversiones si son necesarias
-        if (valueToPrint->getType()->isIntegerTy() && 
-            valueToPrint->getType()->getIntegerBitWidth() != 32) {
-            // Convertir a i32 si es necesario
-            printValue = irBuilder->CreateSExt(valueToPrint, Type::getInt32Ty(C));
+        // Llamar a printf con el formato y valor si corresponde
+        if (printValue) {
+            irBuilder->CreateCall(printfFunc, {formatPtr, printValue});
+        } else {
+            irBuilder->CreateCall(printfFunc, {formatPtr});
         }
-        else if (valueToPrint->getType()->isFloatingPointTy() && 
-                 !valueToPrint->getType()->isDoubleTy()) {
-            // Convertir a double si es necesario
-            printValue = irBuilder->CreateFPExt(valueToPrint, Type::getDoubleTy(C));
-        }
-
-        // Llamar a printf con el formato y valor apropiados
-        irBuilder->CreateCall(printfFunc, {formatPtr, printValue});
+    
+     if (addNewLine) {
+        formatStr = M->getNamedGlobal(".str.nl");
+        Value* formatPtr = irBuilder->CreateInBoundsGEP(
+            formatStr->getValueType(),
+            formatStr,
+            {
+                ConstantInt::get(Type::getInt32Ty(C), 0),
+                ConstantInt::get(Type::getInt32Ty(C), 0)
+            }
+        );
+        irBuilder->CreateCall(printfFunc, {formatPtr});
     }
 }
 
@@ -402,8 +411,10 @@ std::any visitDisplay(CobraParser::DisplayContext *ctx) override {
     }
 
     // Llamamos a printf para imprimir los valores recogidos
-    for (Value* value : values) {
-        callPrintf(value);
+    for(int i = 0; i < values.size();i++){
+        if(values.size()>1 && i<values.size()-1) callPrintf(values[i],false);
+    
+        else callPrintf(values[i]);
     }
 
     return nullptr;
@@ -439,12 +450,78 @@ std::any visitDisplay(CobraParser::DisplayContext *ctx) override {
 }
 
 
+Function* declareScanf() {
+    std::vector<Type*> scanfArgs = { PointerType::get(Type::getInt8Ty(C), 0) };
+    FunctionType* scanfType = FunctionType::get(Type::getInt32Ty(C), scanfArgs, true);
+
+    return Function::Create(scanfType, Function::ExternalLinkage, "scanf", M);
+}
+// Función para convertir la cadena a su tipo correspondiente y almacenarla
+std::any visitGetInput(CobraParser::GetInputContext *ctx) override {
+    // Nombre de la variable a leer
+    std::string inputName = ctx->IDENTIFIER()->getText();
+
+    // Texto del prompt
+    std::string text = ctx->TEXT()->getText();
+    text = text.substr(1, text.size() - 2); // Elimina las comillas alrededor del texto
+
+    // Obtén el tipo de dato
+    auto dataType = ctx->dataType()->accept(this);
+    llvm::Type* type = std::any_cast<llvm::Type*>(dataType);
+
+    // Convierte el texto del prompt a un valor LLVM
+    Value* string = stringToValue(C, *M, text);
+
+    // Imprime el prompt
+    callPrintf(string,false);
+
+    // Crea espacio en la pila para la variable
+    llvm::AllocaInst* alloca = irBuilder->CreateAlloca(type, nullptr, inputName);
+
+    // Determina el formato de scanf adecuado según el tipo de dato
+    GlobalVariable* formatStr = nullptr;
+    if (type == llvm::Type::getInt32Ty(C)) {
+        formatStr = M->getNamedGlobal(".str.int");
+    } else if (type == llvm::Type::getFloatTy(C)) {
+        formatStr = M->getNamedGlobal(".str.float");
+    } else if (type == PointerType::get(Type::getInt8Ty(C), 0)) {
+        formatStr = M->getNamedGlobal(".str.str");
+    } else {
+        throw std::runtime_error("Error: tipo de dato no soportado para entrada.");
+    }
+
+    // Verifica que el formato exista
+    if (!formatStr) {
+        throw std::runtime_error("Error: formato para scanf no encontrado.");
+    }
+
+    // Obtén un puntero al formato
+    Value* formatPtr = irBuilder->CreateInBoundsGEP(
+        formatStr->getValueType(),
+        formatStr,
+        {
+            ConstantInt::get(Type::getInt32Ty(C), 0),
+            ConstantInt::get(Type::getInt32Ty(C), 0)
+        }
+    );
+
+    // Declara la función scanf si aún no existe
+    Function* scanfFunc = M->getFunction("scanf");
+    if (!scanfFunc) {
+        scanfFunc = declareScanf();
+    }
+
+    // Crea la llamada a scanf
+    std::vector<Value*> args = {formatPtr, alloca};
+    irBuilder->CreateCall(scanfFunc, args);
+
+    // Guarda la variable en el mapa de valores
+    namedValues[inputName] = alloca;
+
+    return alloca;
+}
 
 
-
-    std::any visitGetInput(CobraParser::GetInputContext *ctx) override {
-    return visitChildren(ctx);
-  }
 
 std::any visitFunctionDef(CobraParser::FunctionDefContext *ctx) override {
     std::string functionName = ctx->IDENTIFIER(0)->getText();
@@ -1124,12 +1201,8 @@ std::any visitStringLiteral(CobraParser::StringLiteralContext *ctx) override{
     std::string value = ctx->TEXT()->getText();
     value = value.substr(1, value.size() - 2); // Elimina las comillas alrededor de la cadena
 
-    // Convierte el string a un array de caracteres y lo guarda en una constante de LLVM
-    llvm::ArrayType* arrayType = llvm::ArrayType::get(llvm::Type::getInt8Ty(C), value.size() + 1); // +1 para el null terminator
-    llvm::Constant* constStr = llvm::ConstantDataArray::getString(C, value, true);
-    llvm::GlobalVariable* globalStr = new llvm::GlobalVariable(*M, arrayType, true, llvm::GlobalValue::PrivateLinkage, constStr);
-
-    return std::make_any<llvm::Value*>(globalStr);
+    Value*val=stringToValue(C, *M,value);
+    return std::make_any<llvm::Value*>(val);
 }
 
  std::any visitBoolLiteral(CobraParser::BoolLiteralContext *ctx) override {

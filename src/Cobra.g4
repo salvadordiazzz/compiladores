@@ -3,7 +3,7 @@ grammar Cobra;
 program: (functionDef)* EOF; //done
 
 statement: varDeclaration          //done      
-         | inferredVarDeclaration       
+         | inferredVarDeclaration       //done
          | assignment                 //done   
          | display             //done          
          | getInput
@@ -32,7 +32,7 @@ collection: '[' expression (',' expression)* ']'                   # listCollect
 
 assignment: IDENTIFIER '=' expression ';' ;
 display: 'show' '(' (TEXT | IDENTIFIER | expression) (',' (TEXT | IDENTIFIER | expression))* ')'  ';' ;
-getInput: IDENTIFIER '=' 'ask' '(' TEXT ')' ';' ;
+getInput: IDENTIFIER '=' 'ask' '(' TEXT ',' dataType ')' ';';
 
 functionDef: 'function' IDENTIFIER '(' (IDENTIFIER(','IDENTIFIER)*)? ')' (block | returnBlock);
 
