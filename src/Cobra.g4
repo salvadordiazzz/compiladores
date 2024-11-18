@@ -6,9 +6,9 @@ statement: varDeclaration          //done
          | inferredVarDeclaration       //done
          | assignment                 //done   
          | display             //done          
-         | getInput
-         | conditional   //done more or less
-        |     loopStruct  
+         | getInput             //fricking done
+         | conditional   //done, more or less bc == and != dont work 
+        |     loopStruct  // done, super basic
         | repeatStruct  //done
         |objectDecl //not yet to be used
         |arrayDecl //done
@@ -44,7 +44,7 @@ OTHERWISEWHEN: 'otherwiseWhen';
 OTHERWISE: 'otherwise';
 comparisonOperator: '<' | '<=' | '>' |'>=' | '==' | '!=' ;
 
-loopStruct: 'repeatUntil' '(' expression ')' block ';';
+loopStruct: 'repeatWhile' '(' expression comparisonOperator expression  ')' block ';';
 repeatStruct: 'countFrom' '(' expression ',' expression ',' expression ')' block ';';
 
 // Ciclo con duración temporal

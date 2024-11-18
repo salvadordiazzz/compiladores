@@ -787,12 +787,87 @@ std::any visitReturnBlock(CobraParser::ReturnBlockContext *ctx) override {
 
 
 
-    std::any visitComparisonOperator(CobraParser::ComparisonOperatorContext *ctx) override {
-    return nullptr; // Nothing ;)
-  }
     std::any visitLoopStruct(CobraParser::LoopStructContext *ctx) override {
-    return visitChildren(ctx);
-  }
+    // Obtener las expresiones de la condición
+    llvm::Value *lhsValue = std::any_cast<llvm::Value *>(ctx->expression(0)->accept(this));
+    llvm::Value *rhsValue = std::any_cast<llvm::Value *>(ctx->expression(1)->accept(this));
+    
+    // Convertir valores a int32 si es necesario
+    llvm::Type *int32Type = llvm::Type::getInt32Ty(C);
+    if (lhsValue->getType()->isFloatingPointTy()) {
+        lhsValue = irBuilder->CreateFPToSI(lhsValue, int32Type, "lhsToInt");
+    }
+    if (rhsValue->getType()->isFloatingPointTy()) {
+        rhsValue = irBuilder->CreateFPToSI(rhsValue, int32Type, "rhsToInt");
+    }
+    
+    // Crear los bloques del bucle
+    llvm::Function *function = irBuilder->GetInsertBlock()->getParent();
+    llvm::BasicBlock *condBlock = llvm::BasicBlock::Create(C, "loop.cond", function);
+    llvm::BasicBlock *bodyBlock = llvm::BasicBlock::Create(C, "loop.body", function);
+    llvm::BasicBlock *afterBlock = llvm::BasicBlock::Create(C, "loop.end", function);
+    
+    // Saltar al bloque de condición
+    irBuilder->CreateBr(condBlock);
+    
+    // Generar el bloque de condición
+    irBuilder->SetInsertPoint(condBlock);
+    
+    // Importante: Volver a evaluar la expresión izquierda en cada iteración
+    lhsValue = std::any_cast<llvm::Value *>(ctx->expression(0)->accept(this));
+    if (lhsValue->getType()->isFloatingPointTy()) {
+        lhsValue = irBuilder->CreateFPToSI(lhsValue, int32Type, "lhsToInt");
+    }
+    
+    // Comparar las expresiones con el operador
+    llvm::Value *condition = nullptr;
+    std::string op = ctx->comparisonOperator()->getText();
+    if (lhsValue->getType()->isFloatingPointTy()) {
+        if (op == "<") condition = irBuilder->CreateFCmpOLT(lhsValue, rhsValue, "cmp.lt");
+        else if (op == "<=") condition = irBuilder->CreateFCmpOLE(lhsValue, rhsValue, "cmp.le");
+        else if (op == ">") condition = irBuilder->CreateFCmpOGT(lhsValue, rhsValue, "cmp.gt");
+        else if (op == ">=") condition = irBuilder->CreateFCmpOGE(lhsValue, rhsValue, "cmp.ge");
+        else if (op == "==") condition = irBuilder->CreateFCmpOEQ(lhsValue, rhsValue, "cmp.eq");
+        else if (op == "!=") condition = irBuilder->CreateFCmpONE(lhsValue, rhsValue, "cmp.ne");
+        else throw std::runtime_error("Operador no soportado en condición flotante");
+    } else if (lhsValue->getType()->isIntegerTy()) {
+        if (op == "<") condition = irBuilder->CreateICmpSLT(lhsValue, rhsValue, "cmp.lt");
+        else if (op == "<=") condition = irBuilder->CreateICmpSLE(lhsValue, rhsValue, "cmp.le");
+        else if (op == ">") condition = irBuilder->CreateICmpSGT(lhsValue, rhsValue, "cmp.gt");
+        else if (op == ">=") condition = irBuilder->CreateICmpSGE(lhsValue, rhsValue, "cmp.ge");
+        else if (op == "==") condition = irBuilder->CreateICmpEQ(lhsValue, rhsValue, "cmp.eq");
+        else if (op == "!=") condition = irBuilder->CreateICmpNE(lhsValue, rhsValue, "cmp.ne");
+        else throw std::runtime_error("Operador no soportado en condición entera");
+    } else {
+        throw std::runtime_error("Tipo no soportado en la condición del bucle");
+    }
+    
+    // Saltar condicionalmente al cuerpo del bucle o al bloque final
+    irBuilder->CreateCondBr(condition, bodyBlock, afterBlock);
+    
+    // Generar el cuerpo del bucle
+    irBuilder->SetInsertPoint(bodyBlock);
+    
+    // Procesar el cuerpo del bucle
+    ctx->block()->accept(this);
+    
+    // Regresar al bloque de condición
+    irBuilder->CreateBr(condBlock);
+    
+    // Continuar después del bucle
+    irBuilder->SetInsertPoint(afterBlock);
+    return nullptr;
+}
+
+
+
+
+
+
+
+
+
+
 
     std::any visitRepeatStruct(CobraParser::RepeatStructContext *ctx) override {
     // Obtener las expresiones de inicio, fin e incremento como Value*

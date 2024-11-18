@@ -62,7 +62,7 @@ void cobraParserInitialize() {
     std::vector<std::string>{
       "", "';'", "'auto'", "'scale'", "','", "'['", "']'", "'{'", "':'", 
       "'}'", "'show'", "'ask'", "'function'", "'return'", "'<'", "'<='", 
-      "'>'", "'>='", "'=='", "'!='", "'repeatUntil'", "'countFrom'", "'pause'", 
+      "'>'", "'>='", "'=='", "'!='", "'repeatWhile'", "'countFrom'", "'pause'", 
       "'entity'", "'array'", "'matrix'", "'number'", "'decimal'", "'letter'", 
       "'string'", "'flag'", "'when'", "'otherwiseWhen'", "'otherwise'", 
       "", "", "", "", "", "", "", "", "", "'='", "'('", "')'", "'+'", "'-'", 
@@ -77,7 +77,7 @@ void cobraParserInitialize() {
     }
   );
   static const int32_t serializedATNSegment[] = {
-  	4,1,50,377,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,
+  	4,1,50,379,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,
   	7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,
   	14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,7,20,2,21,7,
   	21,2,22,7,22,2,23,7,23,1,0,5,0,50,8,0,10,0,12,0,53,9,0,1,0,1,0,1,1,1,
@@ -93,113 +93,113 @@ void cobraParserInitialize() {
   	11,12,11,193,9,11,1,11,1,11,1,11,1,11,1,11,1,12,1,12,1,12,1,12,1,12,1,
   	12,1,12,1,12,1,12,1,12,1,12,1,12,1,12,1,12,1,12,5,12,215,8,12,10,12,12,
   	12,218,9,12,1,12,1,12,3,12,222,8,12,1,12,1,12,1,13,1,13,1,14,1,14,1,14,
-  	1,14,1,14,1,14,1,14,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,
-  	1,15,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,17,1,17,1,17,1,17,1,17,1,17,
-  	1,17,1,17,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,5,18,271,
-  	8,18,10,18,12,18,274,9,18,1,18,1,18,1,18,1,19,1,19,1,19,1,19,1,19,1,19,
-  	1,19,1,19,1,19,1,19,1,19,5,19,290,8,19,10,19,12,19,293,9,19,1,19,1,19,
-  	1,19,1,19,1,19,1,19,5,19,301,8,19,10,19,12,19,304,9,19,1,19,1,19,5,19,
-  	308,8,19,10,19,12,19,311,9,19,1,19,1,19,1,19,1,20,1,20,1,20,1,20,1,20,
-  	1,20,5,20,322,8,20,10,20,12,20,325,9,20,1,21,1,21,1,22,1,22,1,22,1,22,
-  	1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,5,22,345,
-  	8,22,10,22,12,22,348,9,22,3,22,350,8,22,1,22,3,22,353,8,22,1,22,1,22,
-  	1,22,1,22,1,22,1,22,1,22,1,22,1,22,5,22,364,8,22,10,22,12,22,367,9,22,
-  	1,23,1,23,1,23,1,23,1,23,1,23,3,23,375,8,23,1,23,0,1,44,24,0,2,4,6,8,
-  	10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,0,4,1,0,14,19,
-  	1,0,26,30,1,0,48,49,1,0,46,47,399,0,51,1,0,0,0,2,69,1,0,0,0,4,71,1,0,
-  	0,0,6,79,1,0,0,0,8,85,1,0,0,0,10,122,1,0,0,0,12,124,1,0,0,0,14,129,1,
-  	0,0,0,16,150,1,0,0,0,18,160,1,0,0,0,20,178,1,0,0,0,22,187,1,0,0,0,24,
-  	199,1,0,0,0,26,225,1,0,0,0,28,227,1,0,0,0,30,234,1,0,0,0,32,245,1,0,0,
-  	0,34,252,1,0,0,0,36,260,1,0,0,0,38,278,1,0,0,0,40,315,1,0,0,0,42,326,
-  	1,0,0,0,44,352,1,0,0,0,46,374,1,0,0,0,48,50,3,18,9,0,49,48,1,0,0,0,50,
-  	53,1,0,0,0,51,49,1,0,0,0,51,52,1,0,0,0,52,54,1,0,0,0,53,51,1,0,0,0,54,
-  	55,5,0,0,1,55,1,1,0,0,0,56,70,3,4,2,0,57,70,3,6,3,0,58,70,3,12,6,0,59,
-  	70,3,14,7,0,60,70,3,16,8,0,61,70,3,24,12,0,62,70,3,28,14,0,63,70,3,30,
-  	15,0,64,70,3,34,17,0,65,70,3,36,18,0,66,70,3,38,19,0,67,70,3,32,16,0,
-  	68,70,3,8,4,0,69,56,1,0,0,0,69,57,1,0,0,0,69,58,1,0,0,0,69,59,1,0,0,0,
-  	69,60,1,0,0,0,69,61,1,0,0,0,69,62,1,0,0,0,69,63,1,0,0,0,69,64,1,0,0,0,
-  	69,65,1,0,0,0,69,66,1,0,0,0,69,67,1,0,0,0,69,68,1,0,0,0,70,3,1,0,0,0,
-  	71,72,3,42,21,0,72,75,5,40,0,0,73,74,5,43,0,0,74,76,3,44,22,0,75,73,1,
-  	0,0,0,75,76,1,0,0,0,76,77,1,0,0,0,77,78,5,1,0,0,78,5,1,0,0,0,79,80,5,
-  	2,0,0,80,81,5,40,0,0,81,82,5,43,0,0,82,83,3,44,22,0,83,84,5,1,0,0,84,
-  	7,1,0,0,0,85,86,5,2,0,0,86,87,5,40,0,0,87,88,5,43,0,0,88,89,5,3,0,0,89,
-  	90,5,44,0,0,90,91,3,44,22,0,91,92,5,4,0,0,92,93,3,44,22,0,93,94,5,45,
-  	0,0,94,95,5,1,0,0,95,9,1,0,0,0,96,97,5,5,0,0,97,102,3,44,22,0,98,99,5,
-  	4,0,0,99,101,3,44,22,0,100,98,1,0,0,0,101,104,1,0,0,0,102,100,1,0,0,0,
-  	102,103,1,0,0,0,103,105,1,0,0,0,104,102,1,0,0,0,105,106,5,6,0,0,106,123,
-  	1,0,0,0,107,108,5,7,0,0,108,109,5,39,0,0,109,110,5,8,0,0,110,117,3,44,
-  	22,0,111,112,5,4,0,0,112,113,5,39,0,0,113,114,5,8,0,0,114,116,3,44,22,
-  	0,115,111,1,0,0,0,116,119,1,0,0,0,117,115,1,0,0,0,117,118,1,0,0,0,118,
-  	120,1,0,0,0,119,117,1,0,0,0,120,121,5,9,0,0,121,123,1,0,0,0,122,96,1,
-  	0,0,0,122,107,1,0,0,0,123,11,1,0,0,0,124,125,5,40,0,0,125,126,5,43,0,
-  	0,126,127,3,44,22,0,127,128,5,1,0,0,128,13,1,0,0,0,129,130,5,10,0,0,130,
-  	134,5,44,0,0,131,135,5,39,0,0,132,135,5,40,0,0,133,135,3,44,22,0,134,
-  	131,1,0,0,0,134,132,1,0,0,0,134,133,1,0,0,0,135,144,1,0,0,0,136,140,5,
-  	4,0,0,137,141,5,39,0,0,138,141,5,40,0,0,139,141,3,44,22,0,140,137,1,0,
-  	0,0,140,138,1,0,0,0,140,139,1,0,0,0,141,143,1,0,0,0,142,136,1,0,0,0,143,
-  	146,1,0,0,0,144,142,1,0,0,0,144,145,1,0,0,0,145,147,1,0,0,0,146,144,1,
-  	0,0,0,147,148,5,45,0,0,148,149,5,1,0,0,149,15,1,0,0,0,150,151,5,40,0,
-  	0,151,152,5,43,0,0,152,153,5,11,0,0,153,154,5,44,0,0,154,155,5,39,0,0,
-  	155,156,5,4,0,0,156,157,3,42,21,0,157,158,5,45,0,0,158,159,5,1,0,0,159,
-  	17,1,0,0,0,160,161,5,12,0,0,161,162,5,40,0,0,162,171,5,44,0,0,163,168,
-  	5,40,0,0,164,165,5,4,0,0,165,167,5,40,0,0,166,164,1,0,0,0,167,170,1,0,
-  	0,0,168,166,1,0,0,0,168,169,1,0,0,0,169,172,1,0,0,0,170,168,1,0,0,0,171,
-  	163,1,0,0,0,171,172,1,0,0,0,172,173,1,0,0,0,173,176,5,45,0,0,174,177,
-  	3,20,10,0,175,177,3,22,11,0,176,174,1,0,0,0,176,175,1,0,0,0,177,19,1,
-  	0,0,0,178,182,5,7,0,0,179,181,3,2,1,0,180,179,1,0,0,0,181,184,1,0,0,0,
-  	182,180,1,0,0,0,182,183,1,0,0,0,183,185,1,0,0,0,184,182,1,0,0,0,185,186,
-  	5,9,0,0,186,21,1,0,0,0,187,191,5,7,0,0,188,190,3,2,1,0,189,188,1,0,0,
-  	0,190,193,1,0,0,0,191,189,1,0,0,0,191,192,1,0,0,0,192,194,1,0,0,0,193,
-  	191,1,0,0,0,194,195,5,13,0,0,195,196,3,44,22,0,196,197,5,1,0,0,197,198,
-  	5,9,0,0,198,23,1,0,0,0,199,200,5,31,0,0,200,201,5,44,0,0,201,202,3,44,
-  	22,0,202,203,3,26,13,0,203,204,3,44,22,0,204,205,5,45,0,0,205,216,3,20,
-  	10,0,206,207,5,32,0,0,207,208,5,44,0,0,208,209,3,44,22,0,209,210,3,26,
-  	13,0,210,211,3,44,22,0,211,212,5,45,0,0,212,213,3,20,10,0,213,215,1,0,
-  	0,0,214,206,1,0,0,0,215,218,1,0,0,0,216,214,1,0,0,0,216,217,1,0,0,0,217,
-  	221,1,0,0,0,218,216,1,0,0,0,219,220,5,33,0,0,220,222,3,20,10,0,221,219,
-  	1,0,0,0,221,222,1,0,0,0,222,223,1,0,0,0,223,224,5,1,0,0,224,25,1,0,0,
-  	0,225,226,7,0,0,0,226,27,1,0,0,0,227,228,5,20,0,0,228,229,5,44,0,0,229,
-  	230,3,44,22,0,230,231,5,45,0,0,231,232,3,20,10,0,232,233,5,1,0,0,233,
-  	29,1,0,0,0,234,235,5,21,0,0,235,236,5,44,0,0,236,237,3,44,22,0,237,238,
-  	5,4,0,0,238,239,3,44,22,0,239,240,5,4,0,0,240,241,3,44,22,0,241,242,5,
-  	45,0,0,242,243,3,20,10,0,243,244,5,1,0,0,244,31,1,0,0,0,245,246,5,22,
-  	0,0,246,247,5,44,0,0,247,248,5,34,0,0,248,249,5,45,0,0,249,250,3,20,10,
-  	0,250,251,5,1,0,0,251,33,1,0,0,0,252,253,5,23,0,0,253,254,5,40,0,0,254,
-  	255,5,44,0,0,255,256,3,40,20,0,256,257,5,45,0,0,257,258,3,20,10,0,258,
-  	259,5,1,0,0,259,35,1,0,0,0,260,261,5,24,0,0,261,262,5,14,0,0,262,263,
-  	3,42,21,0,263,264,5,16,0,0,264,265,5,40,0,0,265,266,5,43,0,0,266,267,
-  	5,5,0,0,267,272,3,44,22,0,268,269,5,4,0,0,269,271,3,44,22,0,270,268,1,
-  	0,0,0,271,274,1,0,0,0,272,270,1,0,0,0,272,273,1,0,0,0,273,275,1,0,0,0,
-  	274,272,1,0,0,0,275,276,5,6,0,0,276,277,5,1,0,0,277,37,1,0,0,0,278,279,
-  	5,25,0,0,279,280,5,14,0,0,280,281,3,42,21,0,281,282,5,16,0,0,282,283,
-  	5,40,0,0,283,284,5,43,0,0,284,285,5,5,0,0,285,286,5,5,0,0,286,291,3,44,
-  	22,0,287,288,5,4,0,0,288,290,3,44,22,0,289,287,1,0,0,0,290,293,1,0,0,
-  	0,291,289,1,0,0,0,291,292,1,0,0,0,292,294,1,0,0,0,293,291,1,0,0,0,294,
-  	309,5,6,0,0,295,296,5,4,0,0,296,297,5,5,0,0,297,302,3,44,22,0,298,299,
-  	5,4,0,0,299,301,3,44,22,0,300,298,1,0,0,0,301,304,1,0,0,0,302,300,1,0,
-  	0,0,302,303,1,0,0,0,303,305,1,0,0,0,304,302,1,0,0,0,305,306,5,6,0,0,306,
-  	308,1,0,0,0,307,295,1,0,0,0,308,311,1,0,0,0,309,307,1,0,0,0,309,310,1,
-  	0,0,0,310,312,1,0,0,0,311,309,1,0,0,0,312,313,5,6,0,0,313,314,5,1,0,0,
-  	314,39,1,0,0,0,315,316,3,42,21,0,316,323,5,40,0,0,317,318,5,4,0,0,318,
-  	319,3,42,21,0,319,320,5,40,0,0,320,322,1,0,0,0,321,317,1,0,0,0,322,325,
-  	1,0,0,0,323,321,1,0,0,0,323,324,1,0,0,0,324,41,1,0,0,0,325,323,1,0,0,
-  	0,326,327,7,1,0,0,327,43,1,0,0,0,328,329,6,22,-1,0,329,330,5,44,0,0,330,
-  	331,3,44,22,0,331,332,5,45,0,0,332,353,1,0,0,0,333,353,3,46,23,0,334,
-  	335,5,40,0,0,335,336,5,5,0,0,336,337,3,44,22,0,337,338,5,6,0,0,338,353,
-  	1,0,0,0,339,340,5,40,0,0,340,349,5,44,0,0,341,346,3,44,22,0,342,343,5,
-  	4,0,0,343,345,3,44,22,0,344,342,1,0,0,0,345,348,1,0,0,0,346,344,1,0,0,
-  	0,346,347,1,0,0,0,347,350,1,0,0,0,348,346,1,0,0,0,349,341,1,0,0,0,349,
-  	350,1,0,0,0,350,351,1,0,0,0,351,353,5,45,0,0,352,328,1,0,0,0,352,333,
-  	1,0,0,0,352,334,1,0,0,0,352,339,1,0,0,0,353,365,1,0,0,0,354,355,10,6,
-  	0,0,355,356,5,50,0,0,356,364,3,44,22,7,357,358,10,5,0,0,358,359,7,2,0,
-  	0,359,364,3,44,22,6,360,361,10,4,0,0,361,362,7,3,0,0,362,364,3,44,22,
-  	5,363,354,1,0,0,0,363,357,1,0,0,0,363,360,1,0,0,0,364,367,1,0,0,0,365,
-  	363,1,0,0,0,365,366,1,0,0,0,366,45,1,0,0,0,367,365,1,0,0,0,368,375,5,
-  	36,0,0,369,375,5,37,0,0,370,375,5,38,0,0,371,375,5,39,0,0,372,375,5,35,
-  	0,0,373,375,5,40,0,0,374,368,1,0,0,0,374,369,1,0,0,0,374,370,1,0,0,0,
-  	374,371,1,0,0,0,374,372,1,0,0,0,374,373,1,0,0,0,375,47,1,0,0,0,27,51,
-  	69,75,102,117,122,134,140,144,168,171,176,182,191,216,221,272,291,302,
-  	309,323,346,349,352,363,365,374
+  	1,14,1,14,1,14,1,14,1,14,1,14,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,
+  	1,15,1,15,1,15,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,17,1,17,1,17,1,17,
+  	1,17,1,17,1,17,1,17,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,
+  	5,18,273,8,18,10,18,12,18,276,9,18,1,18,1,18,1,18,1,19,1,19,1,19,1,19,
+  	1,19,1,19,1,19,1,19,1,19,1,19,1,19,5,19,292,8,19,10,19,12,19,295,9,19,
+  	1,19,1,19,1,19,1,19,1,19,1,19,5,19,303,8,19,10,19,12,19,306,9,19,1,19,
+  	1,19,5,19,310,8,19,10,19,12,19,313,9,19,1,19,1,19,1,19,1,20,1,20,1,20,
+  	1,20,1,20,1,20,5,20,324,8,20,10,20,12,20,327,9,20,1,21,1,21,1,22,1,22,
+  	1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,
+  	5,22,347,8,22,10,22,12,22,350,9,22,3,22,352,8,22,1,22,3,22,355,8,22,1,
+  	22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,5,22,366,8,22,10,22,12,22,
+  	369,9,22,1,23,1,23,1,23,1,23,1,23,1,23,3,23,377,8,23,1,23,0,1,44,24,0,
+  	2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,0,4,
+  	1,0,14,19,1,0,26,30,1,0,48,49,1,0,46,47,401,0,51,1,0,0,0,2,69,1,0,0,0,
+  	4,71,1,0,0,0,6,79,1,0,0,0,8,85,1,0,0,0,10,122,1,0,0,0,12,124,1,0,0,0,
+  	14,129,1,0,0,0,16,150,1,0,0,0,18,160,1,0,0,0,20,178,1,0,0,0,22,187,1,
+  	0,0,0,24,199,1,0,0,0,26,225,1,0,0,0,28,227,1,0,0,0,30,236,1,0,0,0,32,
+  	247,1,0,0,0,34,254,1,0,0,0,36,262,1,0,0,0,38,280,1,0,0,0,40,317,1,0,0,
+  	0,42,328,1,0,0,0,44,354,1,0,0,0,46,376,1,0,0,0,48,50,3,18,9,0,49,48,1,
+  	0,0,0,50,53,1,0,0,0,51,49,1,0,0,0,51,52,1,0,0,0,52,54,1,0,0,0,53,51,1,
+  	0,0,0,54,55,5,0,0,1,55,1,1,0,0,0,56,70,3,4,2,0,57,70,3,6,3,0,58,70,3,
+  	12,6,0,59,70,3,14,7,0,60,70,3,16,8,0,61,70,3,24,12,0,62,70,3,28,14,0,
+  	63,70,3,30,15,0,64,70,3,34,17,0,65,70,3,36,18,0,66,70,3,38,19,0,67,70,
+  	3,32,16,0,68,70,3,8,4,0,69,56,1,0,0,0,69,57,1,0,0,0,69,58,1,0,0,0,69,
+  	59,1,0,0,0,69,60,1,0,0,0,69,61,1,0,0,0,69,62,1,0,0,0,69,63,1,0,0,0,69,
+  	64,1,0,0,0,69,65,1,0,0,0,69,66,1,0,0,0,69,67,1,0,0,0,69,68,1,0,0,0,70,
+  	3,1,0,0,0,71,72,3,42,21,0,72,75,5,40,0,0,73,74,5,43,0,0,74,76,3,44,22,
+  	0,75,73,1,0,0,0,75,76,1,0,0,0,76,77,1,0,0,0,77,78,5,1,0,0,78,5,1,0,0,
+  	0,79,80,5,2,0,0,80,81,5,40,0,0,81,82,5,43,0,0,82,83,3,44,22,0,83,84,5,
+  	1,0,0,84,7,1,0,0,0,85,86,5,2,0,0,86,87,5,40,0,0,87,88,5,43,0,0,88,89,
+  	5,3,0,0,89,90,5,44,0,0,90,91,3,44,22,0,91,92,5,4,0,0,92,93,3,44,22,0,
+  	93,94,5,45,0,0,94,95,5,1,0,0,95,9,1,0,0,0,96,97,5,5,0,0,97,102,3,44,22,
+  	0,98,99,5,4,0,0,99,101,3,44,22,0,100,98,1,0,0,0,101,104,1,0,0,0,102,100,
+  	1,0,0,0,102,103,1,0,0,0,103,105,1,0,0,0,104,102,1,0,0,0,105,106,5,6,0,
+  	0,106,123,1,0,0,0,107,108,5,7,0,0,108,109,5,39,0,0,109,110,5,8,0,0,110,
+  	117,3,44,22,0,111,112,5,4,0,0,112,113,5,39,0,0,113,114,5,8,0,0,114,116,
+  	3,44,22,0,115,111,1,0,0,0,116,119,1,0,0,0,117,115,1,0,0,0,117,118,1,0,
+  	0,0,118,120,1,0,0,0,119,117,1,0,0,0,120,121,5,9,0,0,121,123,1,0,0,0,122,
+  	96,1,0,0,0,122,107,1,0,0,0,123,11,1,0,0,0,124,125,5,40,0,0,125,126,5,
+  	43,0,0,126,127,3,44,22,0,127,128,5,1,0,0,128,13,1,0,0,0,129,130,5,10,
+  	0,0,130,134,5,44,0,0,131,135,5,39,0,0,132,135,5,40,0,0,133,135,3,44,22,
+  	0,134,131,1,0,0,0,134,132,1,0,0,0,134,133,1,0,0,0,135,144,1,0,0,0,136,
+  	140,5,4,0,0,137,141,5,39,0,0,138,141,5,40,0,0,139,141,3,44,22,0,140,137,
+  	1,0,0,0,140,138,1,0,0,0,140,139,1,0,0,0,141,143,1,0,0,0,142,136,1,0,0,
+  	0,143,146,1,0,0,0,144,142,1,0,0,0,144,145,1,0,0,0,145,147,1,0,0,0,146,
+  	144,1,0,0,0,147,148,5,45,0,0,148,149,5,1,0,0,149,15,1,0,0,0,150,151,5,
+  	40,0,0,151,152,5,43,0,0,152,153,5,11,0,0,153,154,5,44,0,0,154,155,5,39,
+  	0,0,155,156,5,4,0,0,156,157,3,42,21,0,157,158,5,45,0,0,158,159,5,1,0,
+  	0,159,17,1,0,0,0,160,161,5,12,0,0,161,162,5,40,0,0,162,171,5,44,0,0,163,
+  	168,5,40,0,0,164,165,5,4,0,0,165,167,5,40,0,0,166,164,1,0,0,0,167,170,
+  	1,0,0,0,168,166,1,0,0,0,168,169,1,0,0,0,169,172,1,0,0,0,170,168,1,0,0,
+  	0,171,163,1,0,0,0,171,172,1,0,0,0,172,173,1,0,0,0,173,176,5,45,0,0,174,
+  	177,3,20,10,0,175,177,3,22,11,0,176,174,1,0,0,0,176,175,1,0,0,0,177,19,
+  	1,0,0,0,178,182,5,7,0,0,179,181,3,2,1,0,180,179,1,0,0,0,181,184,1,0,0,
+  	0,182,180,1,0,0,0,182,183,1,0,0,0,183,185,1,0,0,0,184,182,1,0,0,0,185,
+  	186,5,9,0,0,186,21,1,0,0,0,187,191,5,7,0,0,188,190,3,2,1,0,189,188,1,
+  	0,0,0,190,193,1,0,0,0,191,189,1,0,0,0,191,192,1,0,0,0,192,194,1,0,0,0,
+  	193,191,1,0,0,0,194,195,5,13,0,0,195,196,3,44,22,0,196,197,5,1,0,0,197,
+  	198,5,9,0,0,198,23,1,0,0,0,199,200,5,31,0,0,200,201,5,44,0,0,201,202,
+  	3,44,22,0,202,203,3,26,13,0,203,204,3,44,22,0,204,205,5,45,0,0,205,216,
+  	3,20,10,0,206,207,5,32,0,0,207,208,5,44,0,0,208,209,3,44,22,0,209,210,
+  	3,26,13,0,210,211,3,44,22,0,211,212,5,45,0,0,212,213,3,20,10,0,213,215,
+  	1,0,0,0,214,206,1,0,0,0,215,218,1,0,0,0,216,214,1,0,0,0,216,217,1,0,0,
+  	0,217,221,1,0,0,0,218,216,1,0,0,0,219,220,5,33,0,0,220,222,3,20,10,0,
+  	221,219,1,0,0,0,221,222,1,0,0,0,222,223,1,0,0,0,223,224,5,1,0,0,224,25,
+  	1,0,0,0,225,226,7,0,0,0,226,27,1,0,0,0,227,228,5,20,0,0,228,229,5,44,
+  	0,0,229,230,3,44,22,0,230,231,3,26,13,0,231,232,3,44,22,0,232,233,5,45,
+  	0,0,233,234,3,20,10,0,234,235,5,1,0,0,235,29,1,0,0,0,236,237,5,21,0,0,
+  	237,238,5,44,0,0,238,239,3,44,22,0,239,240,5,4,0,0,240,241,3,44,22,0,
+  	241,242,5,4,0,0,242,243,3,44,22,0,243,244,5,45,0,0,244,245,3,20,10,0,
+  	245,246,5,1,0,0,246,31,1,0,0,0,247,248,5,22,0,0,248,249,5,44,0,0,249,
+  	250,5,34,0,0,250,251,5,45,0,0,251,252,3,20,10,0,252,253,5,1,0,0,253,33,
+  	1,0,0,0,254,255,5,23,0,0,255,256,5,40,0,0,256,257,5,44,0,0,257,258,3,
+  	40,20,0,258,259,5,45,0,0,259,260,3,20,10,0,260,261,5,1,0,0,261,35,1,0,
+  	0,0,262,263,5,24,0,0,263,264,5,14,0,0,264,265,3,42,21,0,265,266,5,16,
+  	0,0,266,267,5,40,0,0,267,268,5,43,0,0,268,269,5,5,0,0,269,274,3,44,22,
+  	0,270,271,5,4,0,0,271,273,3,44,22,0,272,270,1,0,0,0,273,276,1,0,0,0,274,
+  	272,1,0,0,0,274,275,1,0,0,0,275,277,1,0,0,0,276,274,1,0,0,0,277,278,5,
+  	6,0,0,278,279,5,1,0,0,279,37,1,0,0,0,280,281,5,25,0,0,281,282,5,14,0,
+  	0,282,283,3,42,21,0,283,284,5,16,0,0,284,285,5,40,0,0,285,286,5,43,0,
+  	0,286,287,5,5,0,0,287,288,5,5,0,0,288,293,3,44,22,0,289,290,5,4,0,0,290,
+  	292,3,44,22,0,291,289,1,0,0,0,292,295,1,0,0,0,293,291,1,0,0,0,293,294,
+  	1,0,0,0,294,296,1,0,0,0,295,293,1,0,0,0,296,311,5,6,0,0,297,298,5,4,0,
+  	0,298,299,5,5,0,0,299,304,3,44,22,0,300,301,5,4,0,0,301,303,3,44,22,0,
+  	302,300,1,0,0,0,303,306,1,0,0,0,304,302,1,0,0,0,304,305,1,0,0,0,305,307,
+  	1,0,0,0,306,304,1,0,0,0,307,308,5,6,0,0,308,310,1,0,0,0,309,297,1,0,0,
+  	0,310,313,1,0,0,0,311,309,1,0,0,0,311,312,1,0,0,0,312,314,1,0,0,0,313,
+  	311,1,0,0,0,314,315,5,6,0,0,315,316,5,1,0,0,316,39,1,0,0,0,317,318,3,
+  	42,21,0,318,325,5,40,0,0,319,320,5,4,0,0,320,321,3,42,21,0,321,322,5,
+  	40,0,0,322,324,1,0,0,0,323,319,1,0,0,0,324,327,1,0,0,0,325,323,1,0,0,
+  	0,325,326,1,0,0,0,326,41,1,0,0,0,327,325,1,0,0,0,328,329,7,1,0,0,329,
+  	43,1,0,0,0,330,331,6,22,-1,0,331,332,5,44,0,0,332,333,3,44,22,0,333,334,
+  	5,45,0,0,334,355,1,0,0,0,335,355,3,46,23,0,336,337,5,40,0,0,337,338,5,
+  	5,0,0,338,339,3,44,22,0,339,340,5,6,0,0,340,355,1,0,0,0,341,342,5,40,
+  	0,0,342,351,5,44,0,0,343,348,3,44,22,0,344,345,5,4,0,0,345,347,3,44,22,
+  	0,346,344,1,0,0,0,347,350,1,0,0,0,348,346,1,0,0,0,348,349,1,0,0,0,349,
+  	352,1,0,0,0,350,348,1,0,0,0,351,343,1,0,0,0,351,352,1,0,0,0,352,353,1,
+  	0,0,0,353,355,5,45,0,0,354,330,1,0,0,0,354,335,1,0,0,0,354,336,1,0,0,
+  	0,354,341,1,0,0,0,355,367,1,0,0,0,356,357,10,6,0,0,357,358,5,50,0,0,358,
+  	366,3,44,22,7,359,360,10,5,0,0,360,361,7,2,0,0,361,366,3,44,22,6,362,
+  	363,10,4,0,0,363,364,7,3,0,0,364,366,3,44,22,5,365,356,1,0,0,0,365,359,
+  	1,0,0,0,365,362,1,0,0,0,366,369,1,0,0,0,367,365,1,0,0,0,367,368,1,0,0,
+  	0,368,45,1,0,0,0,369,367,1,0,0,0,370,377,5,36,0,0,371,377,5,37,0,0,372,
+  	377,5,38,0,0,373,377,5,39,0,0,374,377,5,35,0,0,375,377,5,40,0,0,376,370,
+  	1,0,0,0,376,371,1,0,0,0,376,372,1,0,0,0,376,373,1,0,0,0,376,374,1,0,0,
+  	0,376,375,1,0,0,0,377,47,1,0,0,0,27,51,69,75,102,117,122,134,140,144,
+  	168,171,176,182,191,216,221,274,293,304,311,325,348,351,354,365,367,376
   };
   staticData->serializedATN = antlr4::atn::SerializedATNView(serializedATNSegment, sizeof(serializedATNSegment) / sizeof(serializedATNSegment[0]));
 
@@ -1818,8 +1818,16 @@ tree::TerminalNode* CobraParser::LoopStructContext::LPAR() {
   return getToken(CobraParser::LPAR, 0);
 }
 
-CobraParser::ExpressionContext* CobraParser::LoopStructContext::expression() {
-  return getRuleContext<CobraParser::ExpressionContext>(0);
+std::vector<CobraParser::ExpressionContext *> CobraParser::LoopStructContext::expression() {
+  return getRuleContexts<CobraParser::ExpressionContext>();
+}
+
+CobraParser::ExpressionContext* CobraParser::LoopStructContext::expression(size_t i) {
+  return getRuleContext<CobraParser::ExpressionContext>(i);
+}
+
+CobraParser::ComparisonOperatorContext* CobraParser::LoopStructContext::comparisonOperator() {
+  return getRuleContext<CobraParser::ComparisonOperatorContext>(0);
 }
 
 tree::TerminalNode* CobraParser::LoopStructContext::RPAR() {
@@ -1875,10 +1883,14 @@ CobraParser::LoopStructContext* CobraParser::loopStruct() {
     setState(229);
     expression(0);
     setState(230);
-    match(CobraParser::RPAR);
+    comparisonOperator();
     setState(231);
-    block();
+    expression(0);
     setState(232);
+    match(CobraParser::RPAR);
+    setState(233);
+    block();
+    setState(234);
     match(CobraParser::T__0);
    
   }
@@ -1955,14 +1967,10 @@ CobraParser::RepeatStructContext* CobraParser::repeatStruct() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(234);
-    match(CobraParser::T__20);
-    setState(235);
-    match(CobraParser::LPAR);
     setState(236);
-    expression(0);
+    match(CobraParser::T__20);
     setState(237);
-    match(CobraParser::T__3);
+    match(CobraParser::LPAR);
     setState(238);
     expression(0);
     setState(239);
@@ -1970,10 +1978,14 @@ CobraParser::RepeatStructContext* CobraParser::repeatStruct() {
     setState(240);
     expression(0);
     setState(241);
-    match(CobraParser::RPAR);
+    match(CobraParser::T__3);
     setState(242);
-    block();
+    expression(0);
     setState(243);
+    match(CobraParser::RPAR);
+    setState(244);
+    block();
+    setState(245);
     match(CobraParser::T__0);
    
   }
@@ -2046,17 +2058,17 @@ CobraParser::WaitLoopContext* CobraParser::waitLoop() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(245);
-    match(CobraParser::T__21);
-    setState(246);
-    match(CobraParser::LPAR);
     setState(247);
-    match(CobraParser::TIME);
+    match(CobraParser::T__21);
     setState(248);
-    match(CobraParser::RPAR);
+    match(CobraParser::LPAR);
     setState(249);
-    block();
+    match(CobraParser::TIME);
     setState(250);
+    match(CobraParser::RPAR);
+    setState(251);
+    block();
+    setState(252);
     match(CobraParser::T__0);
    
   }
@@ -2133,19 +2145,19 @@ CobraParser::ObjectDeclContext* CobraParser::objectDecl() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(252);
-    match(CobraParser::T__22);
-    setState(253);
-    match(CobraParser::IDENTIFIER);
     setState(254);
-    match(CobraParser::LPAR);
+    match(CobraParser::T__22);
     setState(255);
-    parameterList();
+    match(CobraParser::IDENTIFIER);
     setState(256);
-    match(CobraParser::RPAR);
+    match(CobraParser::LPAR);
     setState(257);
-    block();
+    parameterList();
     setState(258);
+    match(CobraParser::RPAR);
+    setState(259);
+    block();
+    setState(260);
     match(CobraParser::T__0);
    
   }
@@ -2223,37 +2235,37 @@ CobraParser::ArrayDeclContext* CobraParser::arrayDecl() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(260);
-    match(CobraParser::T__23);
-    setState(261);
-    match(CobraParser::T__13);
     setState(262);
-    dataType();
+    match(CobraParser::T__23);
     setState(263);
-    match(CobraParser::T__15);
+    match(CobraParser::T__13);
     setState(264);
-    match(CobraParser::IDENTIFIER);
+    dataType();
     setState(265);
-    match(CobraParser::ASSIGN);
+    match(CobraParser::T__15);
     setState(266);
-    match(CobraParser::T__4);
+    match(CobraParser::IDENTIFIER);
     setState(267);
+    match(CobraParser::ASSIGN);
+    setState(268);
+    match(CobraParser::T__4);
+    setState(269);
     expression(0);
-    setState(272);
+    setState(274);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while (_la == CobraParser::T__3) {
-      setState(268);
+      setState(270);
       match(CobraParser::T__3);
-      setState(269);
+      setState(271);
       expression(0);
-      setState(274);
+      setState(276);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
-    setState(275);
+    setState(277);
     match(CobraParser::T__5);
-    setState(276);
+    setState(278);
     match(CobraParser::T__0);
    
   }
@@ -2331,69 +2343,69 @@ CobraParser::MatrixDeclContext* CobraParser::matrixDecl() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(278);
-    match(CobraParser::T__24);
-    setState(279);
-    match(CobraParser::T__13);
     setState(280);
-    dataType();
+    match(CobraParser::T__24);
     setState(281);
-    match(CobraParser::T__15);
+    match(CobraParser::T__13);
     setState(282);
-    match(CobraParser::IDENTIFIER);
+    dataType();
     setState(283);
-    match(CobraParser::ASSIGN);
+    match(CobraParser::T__15);
     setState(284);
-    match(CobraParser::T__4);
+    match(CobraParser::IDENTIFIER);
     setState(285);
-    match(CobraParser::T__4);
+    match(CobraParser::ASSIGN);
     setState(286);
+    match(CobraParser::T__4);
+    setState(287);
+    match(CobraParser::T__4);
+    setState(288);
     expression(0);
-    setState(291);
+    setState(293);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while (_la == CobraParser::T__3) {
-      setState(287);
+      setState(289);
       match(CobraParser::T__3);
-      setState(288);
+      setState(290);
       expression(0);
-      setState(293);
+      setState(295);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
-    setState(294);
+    setState(296);
     match(CobraParser::T__5);
-    setState(309);
+    setState(311);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while (_la == CobraParser::T__3) {
-      setState(295);
-      match(CobraParser::T__3);
-      setState(296);
-      match(CobraParser::T__4);
       setState(297);
+      match(CobraParser::T__3);
+      setState(298);
+      match(CobraParser::T__4);
+      setState(299);
       expression(0);
-      setState(302);
+      setState(304);
       _errHandler->sync(this);
       _la = _input->LA(1);
       while (_la == CobraParser::T__3) {
-        setState(298);
+        setState(300);
         match(CobraParser::T__3);
-        setState(299);
+        setState(301);
         expression(0);
-        setState(304);
+        setState(306);
         _errHandler->sync(this);
         _la = _input->LA(1);
       }
-      setState(305);
+      setState(307);
       match(CobraParser::T__5);
-      setState(311);
+      setState(313);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
-    setState(312);
+    setState(314);
     match(CobraParser::T__5);
-    setState(313);
+    setState(315);
     match(CobraParser::T__0);
    
   }
@@ -2467,21 +2479,21 @@ CobraParser::ParameterListContext* CobraParser::parameterList() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(315);
+    setState(317);
     dataType();
-    setState(316);
+    setState(318);
     match(CobraParser::IDENTIFIER);
-    setState(323);
+    setState(325);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while (_la == CobraParser::T__3) {
-      setState(317);
-      match(CobraParser::T__3);
-      setState(318);
-      dataType();
       setState(319);
+      match(CobraParser::T__3);
+      setState(320);
+      dataType();
+      setState(321);
       match(CobraParser::IDENTIFIER);
-      setState(325);
+      setState(327);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
@@ -2541,7 +2553,7 @@ CobraParser::DataTypeContext* CobraParser::dataType() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(326);
+    setState(328);
     _la = _input->LA(1);
     if (!((((_la & ~ 0x3fULL) == 0) &&
       ((1ULL << _la) & 2080374784) != 0))) {
@@ -2838,7 +2850,7 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
   try {
     size_t alt;
     enterOuterAlt(_localctx, 1);
-    setState(352);
+    setState(354);
     _errHandler->sync(this);
     switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 23, _ctx)) {
     case 1: {
@@ -2846,11 +2858,11 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
       _ctx = _localctx;
       previousContext = _localctx;
 
-      setState(329);
-      match(CobraParser::LPAR);
-      setState(330);
-      expression(0);
       setState(331);
+      match(CobraParser::LPAR);
+      setState(332);
+      expression(0);
+      setState(333);
       match(CobraParser::RPAR);
       break;
     }
@@ -2859,7 +2871,7 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
       _localctx = _tracker.createInstance<LitExpContext>(_localctx);
       _ctx = _localctx;
       previousContext = _localctx;
-      setState(333);
+      setState(335);
       literal();
       break;
     }
@@ -2868,13 +2880,13 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
       _localctx = _tracker.createInstance<ArrayAccessContext>(_localctx);
       _ctx = _localctx;
       previousContext = _localctx;
-      setState(334);
-      match(CobraParser::IDENTIFIER);
-      setState(335);
-      match(CobraParser::T__4);
       setState(336);
-      expression(0);
+      match(CobraParser::IDENTIFIER);
       setState(337);
+      match(CobraParser::T__4);
+      setState(338);
+      expression(0);
+      setState(339);
       match(CobraParser::T__5);
       break;
     }
@@ -2883,32 +2895,32 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
       _localctx = _tracker.createInstance<FunctionCallContext>(_localctx);
       _ctx = _localctx;
       previousContext = _localctx;
-      setState(339);
+      setState(341);
       match(CobraParser::IDENTIFIER);
-      setState(340);
+      setState(342);
       match(CobraParser::LPAR);
-      setState(349);
+      setState(351);
       _errHandler->sync(this);
 
       _la = _input->LA(1);
       if ((((_la & ~ 0x3fULL) == 0) &&
         ((1ULL << _la) & 19756849561600) != 0)) {
-        setState(341);
+        setState(343);
         expression(0);
-        setState(346);
+        setState(348);
         _errHandler->sync(this);
         _la = _input->LA(1);
         while (_la == CobraParser::T__3) {
-          setState(342);
+          setState(344);
           match(CobraParser::T__3);
-          setState(343);
+          setState(345);
           expression(0);
-          setState(348);
+          setState(350);
           _errHandler->sync(this);
           _la = _input->LA(1);
         }
       }
-      setState(351);
+      setState(353);
       match(CobraParser::RPAR);
       break;
     }
@@ -2917,7 +2929,7 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
       break;
     }
     _ctx->stop = _input->LT(-1);
-    setState(365);
+    setState(367);
     _errHandler->sync(this);
     alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 25, _ctx);
     while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
@@ -2925,19 +2937,19 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
         if (!_parseListeners.empty())
           triggerExitRuleEvent();
         previousContext = _localctx;
-        setState(363);
+        setState(365);
         _errHandler->sync(this);
         switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 24, _ctx)) {
         case 1: {
           auto newContext = _tracker.createInstance<PowerContext>(_tracker.createInstance<ExpressionContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpression);
-          setState(354);
+          setState(356);
 
           if (!(precpred(_ctx, 6))) throw FailedPredicateException(this, "precpred(_ctx, 6)");
-          setState(355);
+          setState(357);
           match(CobraParser::POW);
-          setState(356);
+          setState(358);
           expression(7);
           break;
         }
@@ -2946,10 +2958,10 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
           auto newContext = _tracker.createInstance<MuldivContext>(_tracker.createInstance<ExpressionContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpression);
-          setState(357);
+          setState(359);
 
           if (!(precpred(_ctx, 5))) throw FailedPredicateException(this, "precpred(_ctx, 5)");
-          setState(358);
+          setState(360);
           antlrcpp::downCast<MuldivContext *>(_localctx)->operator_ = _input->LT(1);
           _la = _input->LA(1);
           if (!(_la == CobraParser::MUL
@@ -2961,7 +2973,7 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
             _errHandler->reportMatch(this);
             consume();
           }
-          setState(359);
+          setState(361);
           expression(6);
           break;
         }
@@ -2970,10 +2982,10 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
           auto newContext = _tracker.createInstance<SubsumContext>(_tracker.createInstance<ExpressionContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpression);
-          setState(360);
+          setState(362);
 
           if (!(precpred(_ctx, 4))) throw FailedPredicateException(this, "precpred(_ctx, 4)");
-          setState(361);
+          setState(363);
           antlrcpp::downCast<SubsumContext *>(_localctx)->operator_ = _input->LT(1);
           _la = _input->LA(1);
           if (!(_la == CobraParser::ADD
@@ -2985,7 +2997,7 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
             _errHandler->reportMatch(this);
             consume();
           }
-          setState(362);
+          setState(364);
           expression(5);
           break;
         }
@@ -2994,7 +3006,7 @@ CobraParser::ExpressionContext* CobraParser::expression(int precedence) {
           break;
         } 
       }
-      setState(367);
+      setState(369);
       _errHandler->sync(this);
       alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 25, _ctx);
     }
@@ -3184,13 +3196,13 @@ CobraParser::LiteralContext* CobraParser::literal() {
     exitRule();
   });
   try {
-    setState(374);
+    setState(376);
     _errHandler->sync(this);
     switch (_input->LA(1)) {
       case CobraParser::INTEGER: {
         _localctx = _tracker.createInstance<CobraParser::IntLiteralContext>(_localctx);
         enterOuterAlt(_localctx, 1);
-        setState(368);
+        setState(370);
         match(CobraParser::INTEGER);
         break;
       }
@@ -3198,7 +3210,7 @@ CobraParser::LiteralContext* CobraParser::literal() {
       case CobraParser::DECIMAL: {
         _localctx = _tracker.createInstance<CobraParser::FloatLiteralContext>(_localctx);
         enterOuterAlt(_localctx, 2);
-        setState(369);
+        setState(371);
         match(CobraParser::DECIMAL);
         break;
       }
@@ -3206,7 +3218,7 @@ CobraParser::LiteralContext* CobraParser::literal() {
       case CobraParser::CHARACTER: {
         _localctx = _tracker.createInstance<CobraParser::CharLiteralContext>(_localctx);
         enterOuterAlt(_localctx, 3);
-        setState(370);
+        setState(372);
         match(CobraParser::CHARACTER);
         break;
       }
@@ -3214,7 +3226,7 @@ CobraParser::LiteralContext* CobraParser::literal() {
       case CobraParser::TEXT: {
         _localctx = _tracker.createInstance<CobraParser::StringLiteralContext>(_localctx);
         enterOuterAlt(_localctx, 4);
-        setState(371);
+        setState(373);
         match(CobraParser::TEXT);
         break;
       }
@@ -3222,7 +3234,7 @@ CobraParser::LiteralContext* CobraParser::literal() {
       case CobraParser::BOOLEAN: {
         _localctx = _tracker.createInstance<CobraParser::BoolLiteralContext>(_localctx);
         enterOuterAlt(_localctx, 5);
-        setState(372);
+        setState(374);
         match(CobraParser::BOOLEAN);
         break;
       }
@@ -3230,7 +3242,7 @@ CobraParser::LiteralContext* CobraParser::literal() {
       case CobraParser::IDENTIFIER: {
         _localctx = _tracker.createInstance<CobraParser::IdentifierLiteralContext>(_localctx);
         enterOuterAlt(_localctx, 6);
-        setState(373);
+        setState(375);
         match(CobraParser::IDENTIFIER);
         break;
       }

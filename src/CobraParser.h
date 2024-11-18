@@ -373,7 +373,9 @@ public:
     LoopStructContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *LPAR();
-    ExpressionContext *expression();
+    std::vector<ExpressionContext *> expression();
+    ExpressionContext* expression(size_t i);
+    ComparisonOperatorContext *comparisonOperator();
     antlr4::tree::TerminalNode *RPAR();
     BlockContext *block();
 

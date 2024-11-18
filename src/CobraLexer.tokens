@@ -67,7 +67,7 @@ POW=50
 '>='=17
 '=='=18
 '!='=19
-'repeatUntil'=20
+'repeatWhile'=20
 'countFrom'=21
 'pause'=22
 'entity'=23
