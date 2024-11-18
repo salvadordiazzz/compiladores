@@ -591,7 +591,113 @@ CMakeFiles/prog.dir/Main.cpp.o: /compilers/cobra/src/Main.cpp \
   /usr/local/include/llvm/ADT/GraphTraits.h \
   /usr/local/include/llvm/IR/ValueHandle.h \
   /usr/local/include/llvm/IR/Verifier.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/regex \
+  /usr/local/include/llvm/IR/LegacyPassManager.h \
+  /usr/local/include/llvm/Passes/PassBuilder.h \
+  /usr/local/include/llvm/Analysis/CGSCCPassManager.h \
+  /usr/local/include/llvm/Analysis/LazyCallGraph.h \
+  /usr/local/include/llvm/ADT/Any.h \
+  /usr/local/include/llvm/ADT/SetVector.h \
+  /usr/local/include/llvm/Analysis/TargetLibraryInfo.h \
+  /usr/local/include/llvm/Pass.h \
+  /usr/local/include/llvm/PassAnalysisSupport.h \
+  /usr/local/include/llvm/PassSupport.h \
+  /usr/local/include/llvm/PassInfo.h \
+  /usr/local/include/llvm/PassRegistry.h \
+  /usr/local/include/llvm/Support/RWMutex.h \
+  /usr/local/include/llvm/Analysis/TargetLibraryInfo.def \
+  /usr/local/include/llvm/CodeGen/MachinePassManager.h \
+  /usr/local/include/llvm/CodeGen/MachineFunction.h \
+  /usr/local/include/llvm/CodeGen/MachineBasicBlock.h \
+  /usr/local/include/llvm/ADT/SparseBitVector.h \
+  /usr/local/include/llvm/CodeGen/MachineInstr.h \
+  /usr/local/include/llvm/ADT/PointerSumType.h \
+  /usr/local/include/llvm/Analysis/MemoryLocation.h \
+  /usr/local/include/llvm/CodeGen/MachineMemOperand.h \
+  /usr/local/include/llvm/CodeGen/PseudoSourceValue.h \
+  /usr/local/include/llvm/CodeGenTypes/LowLevelType.h \
+  /usr/local/include/llvm/CodeGenTypes/MachineValueType.h \
+  /usr/local/include/llvm/CodeGen/GenVT.inc \
+  /usr/local/include/llvm/CodeGen/MachineOperand.h \
+  /usr/local/include/llvm/CodeGen/Register.h \
+  /usr/local/include/llvm/MC/MCRegister.h \
+  /usr/local/include/llvm/CodeGen/TargetOpcodes.h \
+  /usr/local/include/llvm/Support/TargetOpcodes.def \
+  /usr/local/include/llvm/IR/InlineAsm.h \
+  /usr/local/include/llvm/MC/MCInstrDesc.h \
+  /usr/local/include/llvm/MC/MCSymbol.h \
+  /usr/local/include/llvm/MC/MCExpr.h \
+  /usr/local/include/llvm/Support/SMLoc.h \
+  /usr/local/include/llvm/MC/MCFragment.h \
+  /usr/local/include/llvm/ADT/SmallString.h \
+  /usr/local/include/llvm/MC/MCFixup.h \
+  /usr/local/include/llvm/MC/MCInst.h \
+  /usr/local/include/llvm/MC/MCSymbolTableEntry.h \
+  /usr/local/include/llvm/Support/ArrayRecycler.h \
+  /usr/local/include/llvm/CodeGen/MachineInstrBundleIterator.h \
+  /usr/local/include/llvm/MC/LaneBitmask.h \
+  /usr/local/include/llvm/Support/Printable.h \
+  /usr/local/include/llvm/Support/BranchProbability.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/numeric \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/stl_numeric.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/pstl/glue_numeric_defs.h \
+  /usr/local/include/llvm/IR/EHPersonalities.h \
+  /usr/local/include/llvm/Support/Recycler.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/variant \
+  /usr/local/include/llvm/CodeGen/RegAllocCommon.h \
+  /usr/local/include/llvm/Passes/OptimizationLevel.h \
+  /usr/local/include/llvm/Transforms/IPO/Inliner.h \
+  /usr/local/include/llvm/Analysis/InlineAdvisor.h \
+  /usr/local/include/llvm/Analysis/InlineCost.h \
+  /usr/local/include/llvm/Analysis/InlineModelFeatureMaps.h \
+  /usr/local/include/llvm/Analysis/TensorSpec.h \
+  /usr/local/include/llvm/Analysis/Utils/ImportedFunctionsInliningStatistics.h \
+  /usr/local/include/llvm/Transforms/IPO/ModuleInliner.h \
+  /usr/local/include/llvm/Transforms/Scalar/LoopPassManager.h \
+  /usr/local/include/llvm/ADT/PriorityWorklist.h \
+  /usr/local/include/llvm/Analysis/LoopAnalysisManager.h \
+  /usr/local/include/llvm/Analysis/LoopInfo.h \
+  /usr/local/include/llvm/Support/GenericLoopInfo.h \
+  /usr/local/include/llvm/ADT/PostOrderIterator.h \
+  /usr/local/include/llvm/ADT/SetOperations.h \
+  /usr/local/include/llvm/Support/GenericDomTree.h \
+  /usr/local/include/llvm/Support/CFGDiff.h \
+  /usr/local/include/llvm/Support/CFGUpdate.h \
+  /usr/local/include/llvm/Analysis/LoopNestAnalysis.h \
+  /usr/local/include/llvm/IR/PassInstrumentation.h \
+  /usr/local/include/llvm/Transforms/Utils/LCSSA.h \
+  /usr/local/include/llvm/Transforms/Utils/LoopSimplify.h \
+  /usr/local/include/llvm/Transforms/Utils/LoopUtils.h \
+  /usr/local/include/llvm/Analysis/IVDescriptors.h \
+  /usr/local/include/llvm/IR/IntrinsicInst.h \
+  /usr/local/include/llvm/IR/DebugInfoMetadata.h \
+  /usr/local/include/llvm/IR/PseudoProbe.h \
+  /usr/local/include/llvm/Support/CommandLine.h \
+  /usr/local/include/llvm/Support/StringSaver.h \
+  /usr/local/include/llvm/Support/Discriminator.h \
+  /usr/local/include/llvm/IR/DebugInfoFlags.def \
+  /usr/local/include/llvm/Analysis/LoopAccessAnalysis.h \
+  /usr/local/include/llvm/ADT/EquivalenceClasses.h \
+  /usr/local/include/llvm/Analysis/ScalarEvolution.h \
+  /usr/local/include/llvm/ADT/FoldingSet.h \
+  /usr/local/include/llvm/Support/xxhash.h \
+  /usr/local/include/llvm/IR/ValueMap.h \
+  /usr/local/include/llvm/IR/DiagnosticInfo.h \
+  /usr/local/include/llvm/Support/SourceMgr.h \
+  /usr/local/include/llvm/Analysis/TargetTransformInfo.h \
+  /usr/local/include/llvm/Support/InstructionCost.h \
+  /usr/local/include/llvm/IR/VectorBuilder.h \
+  /usr/local/include/llvm/Transforms/Utils/ValueMapper.h \
+  /usr/local/include/llvm/Analysis/CallGraph.h \
+  /usr/local/include/llvm/Support/GraphWriter.h \
+  /usr/local/include/llvm/Support/DOTGraphTraits.h \
+  /usr/local/include/llvm/Support/FileSystem.h \
+  /usr/local/include/llvm/Support/Chrono.h \
+  /usr/local/include/llvm/Support/FormatProviders.h \
+  /usr/local/include/llvm/Support/FormatVariadicDetails.h \
+  /usr/local/include/llvm/Support/NativeFormatting.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/chrono \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/chrono_io.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/iomanip \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/locale \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/locale_facets_nonio.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/x86_64-pc-linux-gnu/bits/time_members.h \
@@ -599,6 +705,16 @@ CMakeFiles/prog.dir/Main.cpp.o: /compilers/cobra/src/Main.cpp \
   /usr/include/libintl.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/locale_facets_nonio.tcc \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/locale_conv.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/quoted_string.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/format \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/charconv \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/span \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/unicode.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/unicode-data.h \
+  /usr/local/include/llvm/Support/FileSystem/UniqueID.h \
+  /usr/local/include/llvm/Support/MD5.h \
+  /usr/local/include/llvm/Support/Endian.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/regex \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/regex_constants.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/regex_error.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../include/c++/14.2.1/bits/regex_automaton.h \

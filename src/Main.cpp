@@ -4,9 +4,17 @@
 #include "CobraLexer.h"
 #include "CobraParser.h"
 #include "Driver.h"
+#include <string>
+#include "llvm/IR/Module.h"
+#include "llvm/Analysis/CallGraph.h"
+#include "llvm/Support/raw_ostream.h"
+#include "llvm/Support/GraphWriter.h"
+#include "llvm/Support/CommandLine.h"
 
 using namespace antlr4;
 using namespace std;
+using namespace llvm;
+
 
 int main(int argc, const char* argv[]) {
     if (argc < 2) {
@@ -24,11 +32,25 @@ int main(int argc, const char* argv[]) {
     CobraLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
     CobraParser parser(&tokens);
-
+    LLVMContext Context;
+    SMDiagnostic Err;
     tree::ParseTree* tree = parser.program();
-    
-    CobraDriver driver;  // Creación del driver para manejar el Visitor
-    driver.visit(tree);
+
+    // Generar el archivo DOT con el árbol de análisis
+    {
+        std::ofstream outFile("parse_tree.dot");
+        outFile << "digraph G {\n";
+        DotTreeVisitor dotVisitor(outFile);
+        dotVisitor.visit(tree);
+        outFile << "}\n";
+        outFile.close();
+    }
+
+    // Generar IR usando tu Visitor de IR
+    {
+        CobraDriver driver; // Asumo que CobraDriver genera el IR
+        driver.visit(tree);
+    }
 
     return 0;
 }
