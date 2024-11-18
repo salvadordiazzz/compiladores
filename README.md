@@ -61,61 +61,108 @@ El aprendizaje de lenguajes de programación enfrenta una barrera idiomática, y
 ## Gramática en ANTLR4
 
 ```antlr
-grammar Cobra;
+grammar Cobra; 
 
-prog: (stmt | funcDef | loop | repeat | ifStmt | objectDecl | arrayDecl | matrixDecl)* EOF;
+program: (functionDef)* EOF; //done
 
-stmt: varDecl ';'
-    | assignStmt ';'
-    | printStmt ';'
-    | inputStmt ';';
+statement: varDeclaration          //done      
+         | inferredVarDeclaration       //done
+         | assignment                 //done   
+         | display             //done          
+         | getInput             //fricking done
+         | conditional   //done, more or less bc == and != dont work 
+        |     loopStruct  // done, super basic
+        | repeatStruct  //done
+        |objectDecl //not yet to be used
+        |arrayDecl //done
+        |matrixDecl // not yet to be used
+        |waitLoop //done
+        |rangeDeclaration // done
+         ;               
 
-varDecl: type ID ';'; 
-assignStmt: ID '=' expr ';';  
-printStmt: 'out' '(' (STRING | ID | expr) (',' (STRING | ID | expr))* ')' ';';  
-inputStmt: ID '=' 'in' '(' STRING ')' ';';  
-funcDef: 'def' ID '(' ')' block; 
+// Declaración de variable con tipo explícito
+varDeclaration: dataType IDENTIFIER ('=' expression)? ';' ;
 
-block: '{' stmt* 'end' ';' | stmt* 'return' expr 'end' ';'; 
+// Declaración de variable con inferencia de tipo
+inferredVarDeclaration: 'auto' IDENTIFIER '=' expression ';' ;
 
-ifStmt: 'if' '(' expr ')' block ('elseif' '(' expr ')' block)* ('else' block)? ';';  
-loop: 'loop' '(' expr ')' block ';'; 
-repeat: 'repeat' '(' expr ',' expr ',' expr ')' block ';';
-objectDecl: 'object' ID '(' paramList ')' block ';';  
-arrayDecl: 'arr' '<' type '>' ID '=' '[' expr (',' expr)* ']' ';';  
-matrixDecl: 'matrix' '<' type '>' ID '=' '[' '[' expr (',' expr)* ']' (',' '[' expr (',' expr)* ']' )* ']' ';'; 
+// Declaración de rango automático
+rangeDeclaration: 'auto' IDENTIFIER '=' 'scale' '(' expression ',' expression ')' ';';
 
-paramList: type ID (',' type ID)*;  
+// Declaración de listas y diccionarios simplificada
+collection: '[' expression (',' expression)* ']'                   # listCollection
+          | '{' TEXT ':' expression (',' TEXT ':' expression)* '}'  # dictCollection;
 
-type: 'int'
-    | 'dec'
-    | 'char'
-    | 'text'
-    | 'bool';
+assignment: IDENTIFIER '=' expression ';' ;
+display: 'show' '(' (TEXT | IDENTIFIER | expression) (',' (TEXT | IDENTIFIER | expression))* ')'  ';' ;
+getInput: IDENTIFIER '=' 'ask' '(' TEXT ',' dataType ')' ';';
 
-expr: expr op=('*'|'/') expr   #muldiv
-    | expr op=('+'|'-') expr   #subsum
-    | expr '^' expr            #pow
-    | '(' expr ')'             #paren
-    | atom;                    #atom
+functionDef: 'function' IDENTIFIER '(' (IDENTIFIER(','IDENTIFIER)*)? ')' (block | returnBlock);
 
-atom: INT                      #int
-    | DEC                      #dec
-    | CHAR                     #char
-    | TEXT                     #text
-    | BOOL                     #bool
-    | ID;                      #id
+block: '{' statement* '}'   ;
+returnBlock:'{'statement* 'return' expression ';''}';
+conditional: WHEN '(' expression comparisonOperator expression ')' block (OTHERWISEWHEN '(' expression comparisonOperator expression  ')' block)* (OTHERWISE block)? ';';
+WHEN: 'when';
+OTHERWISEWHEN: 'otherwiseWhen';
+OTHERWISE: 'otherwise';
+comparisonOperator: '<' | '<=' | '>' |'>=' | '==' | '!=' ;
 
-BOOL: 'yes' | 'no';
-INT: [0-9]+;
-DEC: [0-9]+'.'[0-9]+;
-CHAR: '\'' . '\'';
+loopStruct: 'repeatWhile' '(' expression comparisonOperator expression  ')' block ';';
+repeatStruct: 'countFrom' '(' expression ',' expression ',' expression ')' block ';';
+
+// Ciclo con duración temporal
+waitLoop: 'pause' '(' TIME ')' block ';';
+TIME: [0-9]+ ' seconds';
+
+objectDecl: 'entity' IDENTIFIER '(' parameterList ')' block ';';
+arrayDecl: 'array' '<' dataType '>' IDENTIFIER '=' '[' expression (',' expression)* ']' ';';
+matrixDecl: 'matrix' '<' dataType '>' IDENTIFIER '=' '[' '[' expression (',' expression)* ']' (',' '[' expression (',' expression)* ']' )* ']' ';';
+
+parameterList: dataType IDENTIFIER (',' dataType IDENTIFIER)*;
+
+dataType: 'number'
+        | 'decimal'
+        | 'letter'
+        | 'string'
+        | 'flag';
+
+
+expression: '(' expression ')'                         # paren
+          | expression '^' expression                  # power
+          | expression operator=('*'|'/') expression   # muldiv
+          | expression operator=('+'|'-') expression   # subsum
+          | literal                                   # litExp
+          | IDENTIFIER '[' expression ']' #arrayAccess 
+          | IDENTIFIER '(' (expression (',' expression)*)? ')' #functionCall
+          ;
+literal
+    : INTEGER         # intLiteral
+    | DECIMAL       # floatLiteral
+    | CHARACTER        # charLiteral
+    | TEXT      # stringLiteral
+    | BOOLEAN        # boolLiteral
+    | IDENTIFIER  # identifierLiteral
+    ;
+
+BOOLEAN: 'true' | 'false';
+INTEGER: [0-9]+;
+DECIMAL: [0-9]+'.'[0-9]+;
+CHARACTER: '\'' . '\'';
 TEXT: '"' .*? '"';
-ID: [a-zA-Z_][a-zA-Z_0-9]*;
+IDENTIFIER: [a-zA-Z_][a-zA-Z_0-9]*;
 
-STRING: '"' .*? '"';
 WS: [ \t\r\n]+ -> skip;
+
+// Comentarios interactivos
 COMMENT: '//' ~[\r\n]* -> skip;
+ASSIGN: '=' ;
+LPAR  : '(' ;
+RPAR  : ')' ;
+ADD   : '+' ;
+SUB   : '-' ;
+MUL   : '*' ;
+DIV   : '/' ;
+POW   : '^' ; 
 ```
 
 ---
