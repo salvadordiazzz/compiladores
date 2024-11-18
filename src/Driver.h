@@ -17,10 +17,51 @@
 #include "llvm/IR/Type.h"
 #include "llvm/IR/Verifier.h"
 #include "llvm/Support/raw_ostream.h"
+
+#include "llvm/IR/LegacyPassManager.h"
+#include "llvm/Passes/PassBuilder.h"
+#include "llvm/Support/CommandLine.h"
+#include "llvm/Analysis/CallGraph.h"
+#include "llvm/Support/GraphWriter.h"
+#include "llvm/ADT/GraphTraits.h"
+
 #include <regex>
 using namespace antlr4;
 using namespace llvm;
 using namespace  std;
+
+
+
+
+#include "CobraBaseVisitor.h"
+#include <fstream>
+
+class DotTreeVisitor : public CobraBaseVisitor {
+    std::ofstream& outFile;
+    int nodeCounter = 0;
+
+    std::string createNodeLabel(const std::string& label) {
+        return "node" + std::to_string(nodeCounter++) + "[label=\"" + label + "\"];";
+    }
+
+public:
+    explicit DotTreeVisitor(std::ofstream& output) : outFile(output) {}
+
+    antlrcpp::Any visit(tree::ParseTree* ctx) override {
+        int parent = nodeCounter;
+        outFile << createNodeLabel(ctx->getText()) << "\n";
+
+        for (size_t i = 0; i < ctx->children.size(); ++i) {
+            int child = nodeCounter;
+            visit(ctx->children[i]);
+            outFile << "node" << parent << " -> node" << child << ";\n";
+        }
+
+        return nullptr;
+    }
+};
+
+
 class SymbolTable {
 private:
     // Una pila de mapas, cada mapa representa un scope
