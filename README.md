@@ -65,19 +65,19 @@ grammar Cobra;
 
 program: (functionDef)* EOF; //done
 
-statement: varDeclaration          //done      
-         | inferredVarDeclaration       //done
-         | assignment                 //done   
-         | display             //done          
-         | getInput             //fricking done
-         | conditional   //done, more or less bc == and != dont work 
-        |     loopStruct  // done, super basic
-        | repeatStruct  //done
-        |objectDecl //not yet to be used
-        |arrayDecl //done
-        |matrixDecl // not yet to be used
-        |waitLoop //done
-        |rangeDeclaration // done
+statement: varDeclaration          // 
+         | inferredVarDeclaration       //
+         | assignment                 //  
+         | display             //         
+         | getInput             //
+         | conditional   //
+        |     loopStruct  // 
+        | repeatStruct  //
+        |objectDecl //
+        |arrayDecl //
+        |matrixDecl //
+        |waitLoop //
+        |rangeDeclaration //
          ;               
 
 // Declaración de variable con tipo explícito
