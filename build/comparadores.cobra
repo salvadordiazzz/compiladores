@@ -1,0 +1,15 @@
+function main(){
+    number opcion = 1;
+
+    when (opcion == 2){
+        show("Escogiste 2");
+    }
+    otherwiseWhen(opcion == 1){
+        show("Funciona, ingreso al otherwiseWhen en 1");
+    }
+    otherwise {
+        show("Que poronga hiciste? xd");
+    };
+
+    return 1;
+}
