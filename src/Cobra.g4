@@ -6,9 +6,9 @@ statement: varDeclaration          //done
          | inferredVarDeclaration       //done
          | assignment                 //done   
          | display             //done          
-         | getInput             //fricking done
-         | conditional   //done, more or less bc == and != dont work 
-        |     loopStruct  // done, super basic
+         | getInput             // done
+         | conditional   //done
+        |     loopStruct  // done
         | repeatStruct  //done
         |objectDecl //not yet to be used
         |arrayDecl //done
