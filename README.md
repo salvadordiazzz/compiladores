@@ -227,12 +227,12 @@ countFrom (inicio, fin, incremento) {
 
 - **Arreglos**:
 ```plaintext
-auto<int> nombre = [1, 2, 3, 4]; // Arreglo de enteros
+array<int> nombre = [1, 2, 3, 4]; // Arreglo de enteros
 ```
 
 - **Matrices**:
 ```plaintext
-auto <int> nombre = [[1, 2, 3], [4, 5, 6]]; // Matriz de enteros
+matrix <int> nombre = [[1, 2, 3], [4, 5, 6]]; // Matriz de enteros
 ```
 
 - **Clases**:
