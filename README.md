@@ -184,9 +184,9 @@ POW   : '^' ;
 -->
 
 ### Tipos de datos
-- **Números**: `int`, `dec` (Para operaciones matemáticas).
-- **Caracteres**: `char`, `text` (Manipulación de cadenas).
-- **Booleanos**: `yes/no` (Valores booleanos intuitivos).
+- **Números**: `number`, `decimal` (Para operaciones matemáticas).
+- **Caracteres**: `letter`, `string` (Manipulación de cadenas).
+- **Booleanos**: `true/false` (Valores booleanos intuitivos).
 - **Operaciones**: Potencia `^`, Suma `+`, Resta `-`, División `/`, Multiplicación `*` (Operadores comunes).
 
 
@@ -194,7 +194,7 @@ POW   : '^' ;
 
 Las funciones se declaran de manera compacta para facilitar su uso:
 ```plaintext
-def nombre() {
+function nombre() {
     // Cuerpo de la función
 }
 ```
@@ -203,22 +203,22 @@ def nombre() {
 
 - **Condicionales**:
 ```plaintext
-if (condición) {
+when (condición) {
     // Código si la condición es verdadera
-} elseif (condición) {
+} otherwiseWhen (condición) {
     // Código si la anterior es falsa y esta es verdadera
-} else {
+} otherwise {
     // Código si todas las condiciones son falsas
 }
 ```
 
 - **Bucles**:
 ```plaintext
-loop (condición) {
+repeatWhile (condición) {
     // Código mientras la condición sea verdadera
 }
 
-repeat (inicio, fin, incremento) {
+countFrom (inicio, fin, incremento) {
     // Código desde 'inicio' hasta 'fin' con 'incremento'
 }
 ```
@@ -227,22 +227,22 @@ repeat (inicio, fin, incremento) {
 
 - **Arreglos**:
 ```plaintext
-arr<int> nombre = [1, 2, 3, 4]; // Arreglo de enteros
+auto<int> nombre = [1, 2, 3, 4]; // Arreglo de enteros
 ```
 
 - **Matrices**:
 ```plaintext
-matrix<int> nombre = [[1, 2, 3], [4, 5, 6]]; // Matriz de enteros
+auto <int> nombre = [[1, 2, 3], [4, 5, 6]]; // Matriz de enteros
 ```
 
 - **Clases**:
 ```plaintext
-class NombreClase {
-    def NombreClase(parametro) {
+entity NombreClase {
+    function NombreClase(parametro) {
         // Inicialización
     }
 
-    def metodo() {
+    function metodo() {
         // Código del método
     }
 }
