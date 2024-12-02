@@ -1,5 +1,5 @@
 
-// Generated from ../src/Cobra.g4 by ANTLR 4.13.2
+// Generated from Cobra.g4 by ANTLR 4.13.2
 
 #pragma once
 
@@ -61,9 +61,15 @@ public:
 
     virtual std::any visitMatrixDecl(CobraParser::MatrixDeclContext *context) = 0;
 
+    virtual std::any visitMatrixBody(CobraParser::MatrixBodyContext *context) = 0;
+
+    virtual std::any visitMatrixRow(CobraParser::MatrixRowContext *context) = 0;
+
     virtual std::any visitParameterList(CobraParser::ParameterListContext *context) = 0;
 
     virtual std::any visitDataType(CobraParser::DataTypeContext *context) = 0;
+
+    virtual std::any visitMatrixIndexExpr(CobraParser::MatrixIndexExprContext *context) = 0;
 
     virtual std::any visitParen(CobraParser::ParenContext *context) = 0;
 

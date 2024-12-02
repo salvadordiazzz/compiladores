@@ -1,5 +1,5 @@
 
-// Generated from ../src/Cobra.g4 by ANTLR 4.13.2
+// Generated from Cobra.g4 by ANTLR 4.13.2
 
 #pragma once
 
@@ -79,11 +79,20 @@ public:
   virtual void enterMatrixDecl(CobraParser::MatrixDeclContext * /*ctx*/) override { }
   virtual void exitMatrixDecl(CobraParser::MatrixDeclContext * /*ctx*/) override { }
 
+  virtual void enterMatrixBody(CobraParser::MatrixBodyContext * /*ctx*/) override { }
+  virtual void exitMatrixBody(CobraParser::MatrixBodyContext * /*ctx*/) override { }
+
+  virtual void enterMatrixRow(CobraParser::MatrixRowContext * /*ctx*/) override { }
+  virtual void exitMatrixRow(CobraParser::MatrixRowContext * /*ctx*/) override { }
+
   virtual void enterParameterList(CobraParser::ParameterListContext * /*ctx*/) override { }
   virtual void exitParameterList(CobraParser::ParameterListContext * /*ctx*/) override { }
 
   virtual void enterDataType(CobraParser::DataTypeContext * /*ctx*/) override { }
   virtual void exitDataType(CobraParser::DataTypeContext * /*ctx*/) override { }
+
+  virtual void enterMatrixIndexExpr(CobraParser::MatrixIndexExprContext * /*ctx*/) override { }
+  virtual void exitMatrixIndexExpr(CobraParser::MatrixIndexExprContext * /*ctx*/) override { }
 
   virtual void enterParen(CobraParser::ParenContext * /*ctx*/) override { }
   virtual void exitParen(CobraParser::ParenContext * /*ctx*/) override { }

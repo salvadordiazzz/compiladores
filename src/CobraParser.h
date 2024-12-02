@@ -1,5 +1,5 @@
 
-// Generated from ../src/Cobra.g4 by ANTLR 4.13.2
+// Generated from Cobra.g4 by ANTLR 4.13.2
 
 #pragma once
 
@@ -28,8 +28,8 @@ public:
     RuleGetInput = 8, RuleFunctionDef = 9, RuleBlock = 10, RuleReturnBlock = 11, 
     RuleConditional = 12, RuleComparisonOperator = 13, RuleLoopStruct = 14, 
     RuleRepeatStruct = 15, RuleWaitLoop = 16, RuleObjectDecl = 17, RuleArrayDecl = 18, 
-    RuleMatrixDecl = 19, RuleParameterList = 20, RuleDataType = 21, RuleExpression = 22, 
-    RuleLiteral = 23
+    RuleMatrixDecl = 19, RuleMatrixBody = 20, RuleMatrixRow = 21, RuleParameterList = 22, 
+    RuleDataType = 23, RuleExpression = 24, RuleLiteral = 25
   };
 
   explicit CobraParser(antlr4::TokenStream *input);
@@ -69,6 +69,8 @@ public:
   class ObjectDeclContext;
   class ArrayDeclContext;
   class MatrixDeclContext;
+  class MatrixBodyContext;
+  class MatrixRowContext;
   class ParameterListContext;
   class DataTypeContext;
   class ExpressionContext;
@@ -470,6 +472,37 @@ public:
     DataTypeContext *dataType();
     antlr4::tree::TerminalNode *IDENTIFIER();
     antlr4::tree::TerminalNode *ASSIGN();
+    MatrixBodyContext *matrixBody();
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  MatrixDeclContext* matrixDecl();
+
+  class  MatrixBodyContext : public antlr4::ParserRuleContext {
+  public:
+    MatrixBodyContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    std::vector<MatrixRowContext *> matrixRow();
+    MatrixRowContext* matrixRow(size_t i);
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  MatrixBodyContext* matrixBody();
+
+  class  MatrixRowContext : public antlr4::ParserRuleContext {
+  public:
+    MatrixRowContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
     std::vector<ExpressionContext *> expression();
     ExpressionContext* expression(size_t i);
 
@@ -480,7 +513,7 @@ public:
    
   };
 
-  MatrixDeclContext* matrixDecl();
+  MatrixRowContext* matrixRow();
 
   class  ParameterListContext : public antlr4::ParserRuleContext {
   public:
@@ -525,6 +558,19 @@ public:
     virtual size_t getRuleIndex() const override;
 
    
+  };
+
+  class  MatrixIndexExprContext : public ExpressionContext {
+  public:
+    MatrixIndexExprContext(ExpressionContext *ctx);
+
+    antlr4::tree::TerminalNode *IDENTIFIER();
+    std::vector<ExpressionContext *> expression();
+    ExpressionContext* expression(size_t i);
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
   class  ParenContext : public ExpressionContext {

@@ -1,0 +1,8 @@
+function main(){
+	matrix<number>m=[[1,2],[3,4]];
+	show(m[0][0]);
+	show(m[0][1]);
+	show(m[1][0]);
+	show(m[1][1]);
+	return 1;
+}

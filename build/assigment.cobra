@@ -1,6 +1,0 @@
-function main(){
-	number val;
-	val=3;
-	show(val);
-	return 1;
-}

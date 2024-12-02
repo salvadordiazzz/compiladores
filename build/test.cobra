@@ -1,4 +1,0 @@
-function main(){
-number val=2;
-return 1;
-}

@@ -1,7 +1,0 @@
-Métricas del Programa:
-Funciones: 0
-Bloques Básicos: 0
-Instrucciones: 0
-Complejidad Ciclomática Total: 0
-
-Complejidad por Función:

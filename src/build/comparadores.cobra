@@ -1,0 +1,15 @@
+function main(){
+    number opcion = 1;
+
+    when (opcion == 2){
+        show("Mal funcionamiento, ingreso al when");
+    }
+    otherwiseWhen(opcion == 1){
+        show("Funciona, ingreso al otherwiseWhen en 1");
+    }
+    otherwise {
+        show("Mal funcionamiento, ingreso al otherwise");
+    };
+
+    return 1;
+}

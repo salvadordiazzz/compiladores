@@ -1,9 +1,0 @@
-function main(){
-	number val1=0;
-	number i=0;
-	countFrom(0,10,1){
-	val1=val1+i;
-	show(val1);
-	i=i+2;
-};
-	return 1;}

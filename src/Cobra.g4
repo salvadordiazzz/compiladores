@@ -53,8 +53,17 @@ TIME: [0-9]+ ' seconds';
 
 objectDecl: 'entity' IDENTIFIER '(' parameterList ')' block ';';
 arrayDecl: 'array' '<' dataType '>' IDENTIFIER '=' '[' expression (',' expression)* ']' ';';
-matrixDecl: 'matrix' '<' dataType '>' IDENTIFIER '=' '[' '[' expression (',' expression)* ']' (',' '[' expression (',' expression)* ']' )* ']' ';';
+matrixDecl
+    : 'matrix' '<' dataType '>' IDENTIFIER '=' matrixBody ';'
+    ;
 
+matrixBody
+    : '[' matrixRow (',' matrixRow)* ']' // Cuerpo de la matriz: una lista de filas
+    ;
+
+matrixRow
+    : '[' expression (',' expression)* ']' // Una fila: una lista de expresiones
+    ;
 parameterList: dataType IDENTIFIER (',' dataType IDENTIFIER)*;
 
 dataType: 'number'
@@ -71,6 +80,7 @@ expression: '(' expression ')'                         # paren
           | literal                                   # litExp
           | IDENTIFIER '[' expression ']' #arrayAccess 
           | IDENTIFIER '(' (expression (',' expression)*)? ')' #functionCall
+          | IDENTIFIER '[' expression ']' '[' expression ']' # MatrixIndexExpr
           ;
 literal
     : INTEGER         # intLiteral

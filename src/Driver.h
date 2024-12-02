@@ -283,7 +283,6 @@ void callPrintf(Value* valueToPrint, bool addNewLine = true) {
             // Aquí podrías agregar más tipos de declaraciones si es necesario
         }
     //irBuilder->CreateRet(llvm::ConstantInt::get(llvm::Type::getInt32Ty(C), 1));
-
         // Imprimir el IR generado
     M->print(llvm::outs(), nullptr);
     return {};
@@ -563,68 +562,80 @@ std::any visitGetInput(CobraParser::GetInputContext *ctx) override {
 }
 
 
-
 std::any visitFunctionDef(CobraParser::FunctionDefContext *ctx) override {
+    // Extract function name
     std::string functionName = ctx->IDENTIFIER(0)->getText();
     
-    // First analyze the return type by looking at the return block if it exists
-    llvm::Type* returnType = nullptr;
-    if (ctx->returnBlock()) {
-        auto returnExpr = ctx->returnBlock()->expression();
-        if (returnExpr) {
-            // Visit the expression to determine its type
-            std::any result = visit(returnExpr);
-            llvm::Value* returnValue = std::any_cast<llvm::Value*>(result);
-            returnType = returnValue->getType();
-        }
-    }
-    
-    // If no return type could be determined, default to double
-    if (!returnType) {
-        returnType = llvm::Type::getDoubleTy(C);
-    }
+    // Determine return type (default to double)
+    llvm::Type* returnType = llvm::Type::getDoubleTy(C);
 
+    // Collect parameter names and types
     std::vector<std::string> paramNames;
     std::vector<llvm::Type*> paramTypes;
-
-    // Collecting parameter names and types
     for (size_t i = 1; i < ctx->IDENTIFIER().size(); i++) {
-        paramNames.push_back(ctx->IDENTIFIER(i)->getText());
-        paramTypes.push_back(llvm::Type::getDoubleTy(C));
+        std::string paramName = ctx->IDENTIFIER(i)->getText();
+        paramNames.push_back(paramName);
+        paramTypes.push_back(llvm::Type::getDoubleTy(C));  // Default to double
     }
     
+    // Create function type
     llvm::FunctionType* functionType = llvm::FunctionType::get(returnType, paramTypes, false);
-    llvm::Function* function = llvm::Function::Create(functionType, llvm::Function::ExternalLinkage, functionName, M);
+    
+    // Create function
+    llvm::Function* function = llvm::Function::Create(
+        functionType, 
+        llvm::Function::ExternalLinkage, 
+        functionName, 
+        M
+    );
 
-    // Create the entry block for the function
+    // Create entry basic block
     llvm::BasicBlock* entryBB = llvm::BasicBlock::Create(C, "entry", function);
     irBuilder->SetInsertPoint(entryBB);
     
-    currentFunction = function;
+    // Enter a new scope for this function
+    symbolTable.enterScope();
 
     // Handle function parameters
     size_t idx = 0;
     for (auto &arg : function->args()) {
+        // Set parameter name
         arg.setName(paramNames[idx]);
-        llvm::AllocaInst* alloca = irBuilder->CreateAlloca(arg.getType(), nullptr, paramNames[idx]);
-        irBuilder->CreateStore(&arg, alloca);
-        namedValues[paramNames[idx]] = alloca;
+
+        // Create an alloca for the parameter
+        llvm::AllocaInst* paramAlloca = irBuilder->CreateAlloca(
+            arg.getType(), 
+            nullptr, 
+            paramNames[idx]
+        );
+
+        // Store the argument value into the alloca
+        irBuilder->CreateStore(&arg, paramAlloca);
+
+        // Define the parameter in the current scope
+        symbolTable.define(paramNames[idx], paramAlloca);
+
         idx++;
     }
 
-    // Visit either block or returnBlock
-    if (ctx->block()) {
-        visit(ctx->block());
-        // If regular block, add default return since there's no explicit return
-        if (currentFunction->getReturnType()->isDoubleTy()) {
-            irBuilder->CreateRet(llvm::ConstantFP::get(llvm::Type::getDoubleTy(C), 0.0));
-        }
-    } else if (ctx->returnBlock()) {
-        visit(ctx->returnBlock());
+    // Store the current function context
+    llvm::Function* prevFunction = currentFunction;
+    currentFunction = function;
+
+    for (auto* stmt : ctx->children) {
+        visit(stmt);
     }
+
+    // Restore previous function context
+    currentFunction = prevFunction;
+
+    // Exit the function's scope
+    symbolTable.exitScope();
 
     return function;
 }
+
+
 std::any visitFunctionCall(CobraParser::FunctionCallContext *ctx) override {
     // Obtener el nombre de la función llamada
     std::string functionName = ctx->IDENTIFIER()->getText();
@@ -1110,9 +1121,152 @@ std::any visitConditional(CobraParser::ConditionalContext *ctx) override {
     return elementValue;
 }
 
-    std::any visitMatrixDecl(CobraParser::MatrixDeclContext *ctx) override {
-    return visitChildren(ctx);
-  }
+std::any visitMatrixDecl(CobraParser::MatrixDeclContext *ctx) override {
+    // Obtener el tipo de datos
+    auto datatype = ctx->dataType()->accept(this);
+    Type *type = std::any_cast<Type *>(datatype);
+
+    // Obtener el identificador
+    std::string name = ctx->IDENTIFIER()->getText();
+
+    // Procesar el cuerpo de la matriz
+    std::vector<std::vector<Value*>> rows = std::any_cast<std::vector<std::vector<Value*>>>(ctx->matrixBody()->accept(this));
+
+    // Validar que todas las filas tengan la misma longitud
+    size_t cols = rows.front().size();
+    for (const auto &row : rows) {
+        if (row.size() != cols) {
+            std::cerr << "Error: Todas las filas deben tener el mismo número de columnas." << std::endl;
+            return nullptr;
+        }
+    }
+
+    // Crear el tipo de la matriz en IR
+    ArrayType *rowType = ArrayType::get(type, cols);      // Tipo de cada fila
+    ArrayType *matrixType = ArrayType::get(rowType, rows.size()); // Tipo de toda la matriz
+
+    // Reservar espacio para la matriz
+    AllocaInst *alloc = irBuilder->CreateAlloca(matrixType, nullptr, name);
+
+    // Inicializar los elementos de la matriz
+    for (size_t i = 0; i < rows.size(); ++i) {
+        for (size_t j = 0; j < cols; ++j) {
+            Value *rowIndex = ConstantInt::get(Type::getInt32Ty(C), i);
+            Value *colIndex = ConstantInt::get(Type::getInt32Ty(C), j);
+            std::vector<Value *> indices = {
+                ConstantInt::get(Type::getInt32Ty(C), 0), // Base del array
+                rowIndex,                                 // Índice de fila
+                colIndex                                  // Índice de columna
+            };
+
+            Value *elementPtr = irBuilder->CreateGEP(matrixType, alloc, indices, "elementPtr");
+            irBuilder->CreateStore(rows[i][j], elementPtr);
+        }
+    }
+
+    // Registrar la matriz en el mapa de valores
+    namedValues[name] = alloc;
+    return nullptr;
+}
+std::any visitMatrixBody(CobraParser::MatrixBodyContext *ctx) override {
+    std::vector<std::vector<Value*>> rows;
+
+    // Procesar cada fila
+    for (auto rowCtx : ctx->matrixRow()) {
+
+        auto row = std::any_cast<std::vector<Value*>>(rowCtx->accept(this));
+
+        rows.push_back(row);
+    }
+
+    return rows;
+}
+std::any visitMatrixRow(CobraParser::MatrixRowContext *ctx) override {
+    std::vector<Value*> row;
+
+    // Procesar cada expresión de la fila
+    for (auto exprCtx : ctx->expression()) {
+        Value *value = std::any_cast<Value *>(exprCtx->accept(this));
+        row.push_back(value);
+    }
+
+    return row;
+}
+
+Value* convertTypeIfNeeded(Value* value, Type* targetType) {
+    if (value->getType() != targetType) {
+        if (targetType->isIntegerTy() && value->getType()->isFloatingPointTy()) {
+            return irBuilder->CreateFPToSI(value, targetType, "convertToInt");
+        } else if (targetType->isFloatingPointTy() && value->getType()->isIntegerTy()) {
+            return irBuilder->CreateSIToFP(value, targetType, "convertToFloat");
+        } else {
+            std::cerr << "Error: Tipo incompatible en la conversión." << std::endl;
+            return nullptr;
+        }
+    }
+    return value;
+}
+std::any visitMatrixIndexExpr(CobraParser::MatrixIndexExprContext *ctx) override {
+    // Obtener el nombre de la matriz
+    std::string matrixName = ctx->IDENTIFIER()->getText();
+    
+    // Obtener los índices de fila y columna
+    Value *rowIndex = std::any_cast<Value *>(ctx->expression(0)->accept(this));
+    Value *colIndex = std::any_cast<Value *>(ctx->expression(1)->accept(this));
+    
+    // Asegurarse de que los índices sean de tipo i32
+    if (!rowIndex->getType()->isIntegerTy(32)) {
+        rowIndex = irBuilder->CreateIntCast(rowIndex, Type::getInt32Ty(C), false, "rowIndexCast");
+    }
+    if (!colIndex->getType()->isIntegerTy(32)) {
+        colIndex = irBuilder->CreateIntCast(colIndex, Type::getInt32Ty(C), false, "colIndexCast");
+    }
+    
+    // Obtener la referencia a la matriz desde el mapa de valores
+    Value *matrixAlloc = namedValues[matrixName];
+    if (!matrixAlloc) {
+        std::cerr << "Error: Variable no declarada: " << matrixName << std::endl;
+        return nullptr;
+    }
+    
+    // Obtener el tipo de la matriz y verificar su validez
+    AllocaInst *alloca = dyn_cast<AllocaInst>(matrixAlloc);
+    if (!alloca) {
+        std::cerr << "Error: La variable " << matrixName << " no es una matriz válida." << std::endl;
+        return nullptr;
+    }
+    
+    Type *matrixType = alloca->getAllocatedType();
+    if (!matrixType->isArrayTy()) {
+        std::cerr << "Error: La variable " << matrixName << " no es de tipo matriz." << std::endl;
+        return nullptr;
+    }
+    
+    // Obtener el tipo de los elementos de la matriz
+    Type *rowType = matrixType->getArrayElementType(); // Tipo de las filas (arrays internos)
+    if (!rowType->isArrayTy()) {
+        std::cerr << "Error: Tipo incorrecto para las filas de la matriz." << std::endl;
+        return nullptr;
+    }
+    Type *elementType = rowType->getArrayElementType(); // Tipo de los elementos (e.g., i32)
+    
+    // Generar el GEP para acceder al elemento específico
+    Value *elementPtr = irBuilder->CreateGEP(
+        matrixType, matrixAlloc,
+        {ConstantInt::get(Type::getInt32Ty(C), 0), rowIndex, colIndex},
+        "elementPtr"
+    );
+    
+    // Cargar el valor del elemento
+    Value *matrixElement = irBuilder->CreateLoad(elementType, elementPtr, "matrixElement");
+    
+
+    
+    return matrixElement;
+}
+
+
+
 
     std::any visitParameterList(CobraParser::ParameterListContext *ctx) override {
     return visitChildren(ctx);

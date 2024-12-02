@@ -1,0 +1,4 @@
+function main(){
+	show(2+2);
+	return 1;
+}

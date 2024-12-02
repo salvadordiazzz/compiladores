@@ -1,8 +1,0 @@
-function main(){
-	number val=0;
-	repeatWhile(val<5){
-	show("holi");
-	val=val+2;
-};
-return 1;
-}

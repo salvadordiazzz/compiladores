@@ -1,5 +1,5 @@
 
-// Generated from ../src/Cobra.g4 by ANTLR 4.13.2
+// Generated from Cobra.g4 by ANTLR 4.13.2
 
 #pragma once
 
@@ -99,11 +99,23 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitMatrixBody(CobraParser::MatrixBodyContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitMatrixRow(CobraParser::MatrixRowContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitParameterList(CobraParser::ParameterListContext *ctx) override {
     return visitChildren(ctx);
   }
 
   virtual std::any visitDataType(CobraParser::DataTypeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitMatrixIndexExpr(CobraParser::MatrixIndexExprContext *ctx) override {
     return visitChildren(ctx);
   }
 

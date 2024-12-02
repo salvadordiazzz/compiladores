@@ -1,5 +1,5 @@
 
-// Generated from ../src/Cobra.g4 by ANTLR 4.13.2
+// Generated from Cobra.g4 by ANTLR 4.13.2
 
 #pragma once
 
@@ -77,11 +77,20 @@ public:
   virtual void enterMatrixDecl(CobraParser::MatrixDeclContext *ctx) = 0;
   virtual void exitMatrixDecl(CobraParser::MatrixDeclContext *ctx) = 0;
 
+  virtual void enterMatrixBody(CobraParser::MatrixBodyContext *ctx) = 0;
+  virtual void exitMatrixBody(CobraParser::MatrixBodyContext *ctx) = 0;
+
+  virtual void enterMatrixRow(CobraParser::MatrixRowContext *ctx) = 0;
+  virtual void exitMatrixRow(CobraParser::MatrixRowContext *ctx) = 0;
+
   virtual void enterParameterList(CobraParser::ParameterListContext *ctx) = 0;
   virtual void exitParameterList(CobraParser::ParameterListContext *ctx) = 0;
 
   virtual void enterDataType(CobraParser::DataTypeContext *ctx) = 0;
   virtual void exitDataType(CobraParser::DataTypeContext *ctx) = 0;
+
+  virtual void enterMatrixIndexExpr(CobraParser::MatrixIndexExprContext *ctx) = 0;
+  virtual void exitMatrixIndexExpr(CobraParser::MatrixIndexExprContext *ctx) = 0;
 
   virtual void enterParen(CobraParser::ParenContext *ctx) = 0;
   virtual void exitParen(CobraParser::ParenContext *ctx) = 0;
