@@ -3,8 +3,8 @@ function f1 (var2){
 	return var2+var1;
 }
 function main(){
-	number val1=2;
-	number h=f1(val1);
+	decimal var1=2.2;
+	number h=f1(var1);
 	show(h);	
 return 0;
 }

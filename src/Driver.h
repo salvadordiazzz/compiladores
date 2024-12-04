@@ -330,14 +330,19 @@ void callPrintf(Value* valueToPrint, bool addNewLine = true) {
             std::cout << "Tipo almacenado en result: " << result.type().name() << std::endl;
             return nullptr; // Manejar el error de tipo
         }
-
         // Ahora puedes hacer el cast a Value* porque el tipo ha sido validado
         Value *initValue = std::any_cast<Value*>(result);
+        if (type->isDoubleTy() && initValue->getType()->isIntegerTy()){
+            initValue = irBuilder->CreateSIToFP(initValue, type, "double_cast");
+        }
+        else if(type->isIntegerTy() && initValue->getType()->isDoubleTy()){
+            initValue = irBuilder->CreateFPToSI(initValue, type, "int_cast");
+        }
         irBuilder->CreateStore(initValue, alloc);
     }
-
+    symbolTable.define(varName,alloc);
     // Puedes almacenar el puntero a la variable en un mapa o estructura para usarlo más tarde
-    namedValues[varName] = alloc; // Guardar la dirección de la variable
+    //namedValues[varName] = alloc; // Guardar la dirección de la variable
 
     return nullptr; // O algún valor que necesites retornar
 }
@@ -348,7 +353,8 @@ void callPrintf(Value* valueToPrint, bool addNewLine = true) {
         Type*type = value->getType();
         AllocaInst*alloc = irBuilder->CreateAlloca(type,nullptr,name);
         irBuilder->CreateStore(value,alloc);
-        namedValues[name] = alloc;
+        symbolTable.define(name, alloc);
+        //namedValues[name] = alloc;
         return nullptr;
   }
 
@@ -383,7 +389,8 @@ void callPrintf(Value* valueToPrint, bool addNewLine = true) {
         Value*arrayPtr=irBuilder->CreateGEP(arrayType,alloc,vec,"rangepointer");
         irBuilder->CreateStore(values[i],arrayPtr);
     }
-    namedValues[name]=alloc;
+    symbolTable.define(name, alloc);
+    //namedValues[name]=alloc;
 
     return nullptr;
 }
@@ -401,11 +408,17 @@ void callPrintf(Value* valueToPrint, bool addNewLine = true) {
 
     std::any visitAssignment(CobraParser::AssignmentContext *ctx) override {
         std::string name = ctx->IDENTIFIER()->getText();
-        if (namedValues.find(name) == namedValues.end()) {
-        std::cerr << "Error: la variable '" << name << "' no ha sido declarada." << std::endl;
+        if (symbolTable.resolve(name)==nullptr) {
+            std::cerr << "Error: la variable '" << name << "' no ha sido declarada." << std::endl;
             return nullptr;
         }
-        AllocaInst *alloc = dyn_cast<AllocaInst>(namedValues[name]);
+        
+        //if (namedValues.find(name) == namedValues.end()) {
+        //std::cerr << "Error: la variable '" << name << "' no ha sido declarada." << std::endl;
+        //    return nullptr;
+        //}
+        //AllocaInst *alloc = dyn_cast<AllocaInst>(namedValues[name]);
+        AllocaInst *alloc=dyn_cast<AllocaInst>(symbolTable.resolve(name));
         Value* value = any_cast<Value*>(ctx->expression()->accept(this));
         irBuilder->CreateStore(value,alloc);
         return nullptr;
@@ -428,9 +441,9 @@ std::any visitDisplay(CobraParser::DisplayContext *ctx) override {
         // Verifica si es un identificador (nombre de variable)
         else if (std::regex_match(child->getText(), std::regex("^[a-zA-Z_][a-zA-Z_0-9]*$"))) {
             std::string varName = child->getText();
-            if (namedValues.find(varName) != namedValues.end()) {
+            if (symbolTable.resolve(varName)!=nullptr) {
                 // Si es un nombre de variable conocido, obtenemos la dirección de memoria
-                Value* varAddress = namedValues[varName];
+                Value* varAddress = symbolTable.resolve(varName);
                 
                 // Deducimos el tipo a partir del alloca
                 if (AllocaInst* alloca = dyn_cast<AllocaInst>(varAddress)) {
@@ -439,6 +452,17 @@ std::any visitDisplay(CobraParser::DisplayContext *ctx) override {
                     values.push_back(loadedValue);
                 }
             }
+            //if (namedValues.find(varName) != namedValues.end()) {
+            //    // Si es un nombre de variable conocido, obtenemos la dirección de memoria
+            //    Value* varAddress = namedValues[varName];
+            //    
+            //    // Deducimos el tipo a partir del alloca
+            //    if (AllocaInst* alloca = dyn_cast<AllocaInst>(varAddress)) {
+            //        Type* allocatedType = alloca->getAllocatedType();
+            //        LoadInst* loadedValue = irBuilder->CreateLoad(allocatedType, varAddress, "load_value");
+            //        values.push_back(loadedValue);
+            //    }
+            //}
         }
         // Si es una expresión, la procesamos
         else {
@@ -556,9 +580,12 @@ std::any visitGetInput(CobraParser::GetInputContext *ctx) override {
     irBuilder->CreateCall(scanfFunc, args);
 
     // Guarda la variable en el mapa de valores
-    namedValues[inputName] = alloca;
+    symbolTable.define(inputName, alloca);
 
     return alloca;
+    //namedValues[inputName] = alloca;
+//
+    //return alloca;
 }
 
 
@@ -668,11 +695,16 @@ std::any visitFunctionCall(CobraParser::FunctionCallContext *ctx) override {
 
     // Si la llamada se asigna a una variable, se debe almacenar en su ubicación
     std::string varName = ctx->IDENTIFIER()->getText();  // Nombre de la variable
-    if (namedValues.find(varName) != namedValues.end()) {
-        Value*var=namedValues[varName];
-        llvm::AllocaInst* alloca = dyn_cast<AllocaInst>(namedValues[varName]);
+    if (symbolTable.resolve(varName)!=nullptr){
+        Value* var=symbolTable.resolve(varName);
+        llvm::AllocaInst* alloca = dyn_cast<AllocaInst>(symbolTable.resolve(varName));
         irBuilder->CreateStore(returnValue, alloca);
     }
+    //if (namedValues.find(varName) != namedValues.end()) {
+    //    Value*var=namedValues[varName];
+    //    llvm::AllocaInst* alloca = dyn_cast<AllocaInst>(namedValues[varName]);
+    //    irBuilder->CreateStore(returnValue, alloca);
+    //} 
 
     return returnValue;
 }
@@ -1067,7 +1099,8 @@ std::any visitConditional(CobraParser::ConditionalContext *ctx) override {
             }
 
             // Almacenar la referencia del arreglo en el mapa de valores nombrados
-            namedValues[name] = alloc;
+            symbolTable.define(name,alloc);
+            //namedValues[name] = alloc;
         return nullptr;
   }
 
@@ -1076,14 +1109,18 @@ std::any visitConditional(CobraParser::ConditionalContext *ctx) override {
     std::string arrayName = ctx->IDENTIFIER()->getText();
 
     // Verificar que el arreglo exista en namedValues
-    if (namedValues.find(arrayName) == namedValues.end()) {
+    if (symbolTable.resolve(arrayName)==nullptr) {
         std::cerr << "Error: El arreglo " << arrayName << " no está definido." << std::endl;
         return nullptr;
     }
+    //if (namedValues.find(arrayName) == namedValues.end()) {
+    //    std::cerr << "Error: El arreglo " << arrayName << " no está definido." << std::endl;
+    //    return nullptr;
+    //}
 
     // Obtener la dirección del arreglo
-    Value* arrayAddress = namedValues[arrayName];
-
+    //Value* arrayAddress = namedValues[arrayName];
+    Value* arrayAddress=symbolTable.resolve(arrayName);
     // Verificar que es una instrucción de asignación
     AllocaInst* alloca = dyn_cast<AllocaInst>(arrayAddress);
     if (!alloca) {
@@ -1165,7 +1202,9 @@ std::any visitMatrixDecl(CobraParser::MatrixDeclContext *ctx) override {
     }
 
     // Registrar la matriz en el mapa de valores
-    namedValues[name] = alloc;
+    symbolTable.define(name, alloc);
+    //
+    //namedValues[name] = alloc;
     return nullptr;
 }
 std::any visitMatrixBody(CobraParser::MatrixBodyContext *ctx) override {
@@ -1223,7 +1262,8 @@ std::any visitMatrixIndexExpr(CobraParser::MatrixIndexExprContext *ctx) override
     }
     
     // Obtener la referencia a la matriz desde el mapa de valores
-    Value *matrixAlloc = namedValues[matrixName];
+    //Value *matrixAlloc = namedValues[matrixName];
+    Value*matrixAlloc=symbolTable.resolve(matrixName);
     if (!matrixAlloc) {
         std::cerr << "Error: Variable no declarada: " << matrixName << std::endl;
         return nullptr;
@@ -1499,7 +1539,8 @@ std::any visitStringLiteral(CobraParser::StringLiteralContext *ctx) override{
     std::string varName = ctx->getText();
 
     // Busca el valor de la variable en el mapa de variables
-    llvm::Value *varValue = namedValues[varName];
+    //llvm::Value *varValue = namedValues[varName];
+    Value*varValue=symbolTable.resolve(varName);
     if (!varValue) {
         throw std::runtime_error("Variable '" + varName + "' is not defined");
     }
